@@ -1,0 +1,17 @@
+@import '../variables';
+
+:host {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+:host > main {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background-color: $main_bg_color;
+}

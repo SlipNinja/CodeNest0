@@ -1,0 +1,39 @@
+@import '../../variables';
+@import '../../fonts';
+
+:host {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 60px;
+	background-color: $secondary_bg_color;
+	color: $main_text_color;
+	font-family: 'Roboto', sans-serif;
+}
+
+@mixin navmenu {
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.menu_left {
+	@include navmenu;
+	gap: 30px;
+	margin-left: 30px;
+}
+
+.logo_container {
+	@include navmenu;
+	gap: 10px;
+}
+
+.logo {
+	height: 50%;
+	object-fit: contain;
+}
+
+.menu_link:hover {
+	filter: drop-shadow(0px 0px 5px $main_text_color);
+	text-decoration: underline;
+}
