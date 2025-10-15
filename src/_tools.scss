@@ -6,9 +6,13 @@
 	align-items: center;
 }
 
-@mixin main_button {
+@mixin img_contained {
+	width: 100%;
+	object-fit: contain;
+}
+
+@mixin button {
 	@include flex_center;
-	background-color: variables.$main_button_color;
 	font-family: Roboto, sans-serif;
 	border: 1px solid black;
 	padding: 5px 30px;
@@ -16,18 +20,22 @@
 	font-size: variables.$menu_font_size * 1.2;
 
 	&:hover {
+		filter: drop-shadow(0px 0px 2px variables.$main_button_color_light);
+	}
+}
+
+@mixin main_button {
+	@include button;
+	background-color: variables.$main_button_color;
+
+	&:hover {
 		background-color: variables.$main_button_color_light;
-		filter: drop-shadow(0px 0px 3px variables.$main_button_color_light);
 	}
 }
 
 @mixin course_button {
-	@include flex_center;
+	@include button;
 	background-color: variables.$light_bg_color;
-	font-family: Roboto, sans-serif;
-	border: 1px solid black;
-	padding: 5px 30px;
-	border-radius: 4px;
 	height: 3rem;
 	font-size: variables.$menu_font_size * 1.2;
 	color: variables.$main_text_color;
@@ -35,15 +43,14 @@
 
 	&:hover {
 		background-color: variables.$lighter_bg_color;
-		filter: drop-shadow(0px 0px 2px variables.$main_button_color_light);
 	}
 
 	& > div {
 		height: 100%;
+		aspect-ratio: 1;
 
 		& > img {
-			height: 100%;
-			object-fit: contain;
+			@include img_contained;
 		}
 	}
 }
