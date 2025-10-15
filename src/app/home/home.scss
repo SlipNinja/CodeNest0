@@ -1,6 +1,49 @@
 @use '../../variables';
+@use '../../tools';
 @use '../../fonts';
+
+$home_gap_size: 50px;
 
 :host {
 	color: variables.$main_text_color;
+	font-family: Roboto, sans-serif;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	gap: $home_gap_size;
+
+	& > * {
+		width: 80%;
+	}
+}
+
+h1 {
+	font-family: Audiowide, Roboto, sans-serif;
+	color: variables.$main_button_color;
+	font-size: variables.$h1_font_size;
+	text-align: center;
+	margin-top: $home_gap_size * 2;
+
+	& + div {
+		@include tools.flex_center;
+		flex-direction: column;
+		gap: $home_gap_size / 2;
+	}
+}
+
+#main_description {
+	font-size: variables.$h2_font_size;
+	vertical-align: middle;
+	text-align: center;
+
+	& > span {
+		color: variables.$main_button_color;
+		font-size: variables.$h2_font_size * 1.3;
+		vertical-align: -8%;
+	}
+}
+
+button {
+	@include tools.main_button;
 }

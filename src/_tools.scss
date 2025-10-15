@@ -1,0 +1,22 @@
+@use 'variables';
+
+@mixin flex_center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin main_button {
+	@include flex_center;
+	background-color: variables.$main_button_color;
+	font-family: Roboto, sans-serif;
+	border: 1px solid black;
+	padding: 5px 30px;
+	border-radius: 4px;
+	font-size: variables.$menu_font_size * 1.2;
+
+	&:hover {
+		background-color: variables.$main_button_color_light;
+		filter: drop-shadow(0px 0px 3px variables.$main_button_color_light);
+	}
+}

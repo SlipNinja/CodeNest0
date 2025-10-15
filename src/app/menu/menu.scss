@@ -1,4 +1,5 @@
 @use '../../variables';
+@use '../../tools';
 @use '../../fonts';
 
 $menu_margin: 30px;
@@ -14,31 +15,26 @@ $menu_margin: 30px;
 	font-size: variables.$menu_font_size;
 }
 
-@mixin flexcenter {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
 .menu_left {
-	@include flexcenter;
+	@include tools.flex_center;
 	height: 100%;
 	gap: $menu_margin;
 	margin-left: $menu_margin;
 }
 
 .logo_container {
-	@include flexcenter;
-	height: 100%;
+	@include tools.flex_center;
+	height: 60%;
 	gap: 10px;
 }
 
 .logo {
-	height: 50%;
+	height: 80%;
 	object-fit: contain;
 }
 
 .menu_link {
+	padding: 10px;
 	&:hover {
 		filter: drop-shadow(0px 0px 5px variables.$main_text_color);
 		text-decoration: underline;
@@ -48,18 +44,6 @@ $menu_margin: 30px;
 }
 
 button {
-	@include flexcenter;
-	background-color: variables.$main_button_color;
+	@include tools.main_button;
 	margin-right: $menu_margin;
-	font-family: Roboto, sans-serif;
-	border: 1px solid black;
-	height: 50%;
-	aspect-ratio: 4;
-	border-radius: 3px;
-	font-size: variables.$menu_font_size;
-
-	&:hover {
-		background-color: variables.$main_button_color_light;
-		filter: drop-shadow(0px 0px 3px variables.$main_button_color_light);
-	}
 }
