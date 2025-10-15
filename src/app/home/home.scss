@@ -14,6 +14,7 @@ $home_gap_size: 14vh;
 	align-items: center;
 	gap: $home_gap_size;
 	width: 80%;
+	padding-bottom: $home_gap_size;
 
 	& > * {
 		@include tools.flex_center;
@@ -29,6 +30,10 @@ h1 {
 	font-size: variables.$h1_font_size;
 	text-align: center;
 	margin-top: $home_gap_size * 2;
+}
+
+h2 {
+	font-size: variables.$h2_font_size;
 }
 
 #main_description {
@@ -65,5 +70,44 @@ h1 {
 	width: 100%;
 	& > img {
 		@include tools.img_contained;
+	}
+}
+
+details {
+	width: 100%;
+}
+
+summary {
+	@include tools.hoverable;
+	font-size: variables.$h3_font_size;
+	margin-bottom: $home_gap_size / 4;
+}
+
+.user_comment_container {
+	background-color: variables.$light_bg_color;
+	padding: 2%;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	gap: $home_gap_size / 6;
+
+	& > div {
+		display: flex;
+		align-items: center;
+		gap: $home_gap_size / 6;
+		width: 100%;
+
+		& > div {
+			width: 10%;
+			aspect-ratio: 1;
+
+			& > img {
+				@include tools.img_contained;
+			}
+		}
+
+		& > p {
+			font-size: variables.$menu_font_size;
+		}
 	}
 }
