@@ -1,0 +1,6 @@
+@use '../../variables';
+@use '../../fonts';
+
+:host {
+	color: variables.$main_text_color;
+}
