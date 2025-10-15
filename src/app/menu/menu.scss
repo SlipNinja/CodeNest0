@@ -1,30 +1,35 @@
-@import '../../variables';
-@import '../../fonts';
+@use '../../variables';
+@use '../../fonts';
+
+$menu_margin: 30px;
 
 :host {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 60px;
-	background-color: $secondary_bg_color;
-	color: $main_text_color;
-	font-family: 'Roboto', sans-serif;
+	height: 70px;
+	background-color: variables.$secondary_bg_color;
+	color: variables.$main_text_color;
+	font-family: Roboto, sans-serif;
+	font-size: variables.$menu_font_size;
 }
 
-@mixin navmenu {
-	height: 100%;
+@mixin flexcenter {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 .menu_left {
-	@include navmenu;
-	gap: 30px;
-	margin-left: 30px;
+	@include flexcenter;
+	height: 100%;
+	gap: $menu_margin;
+	margin-left: $menu_margin;
 }
 
 .logo_container {
-	@include navmenu;
+	@include flexcenter;
+	height: 100%;
 	gap: 10px;
 }
 
@@ -33,7 +38,28 @@
 	object-fit: contain;
 }
 
-.menu_link:hover {
-	filter: drop-shadow(0px 0px 5px $main_text_color);
-	text-decoration: underline;
+.menu_link {
+	&:hover {
+		filter: drop-shadow(0px 0px 5px variables.$main_text_color);
+		text-decoration: underline;
+		text-underline-offset: 0.4rem;
+		cursor: pointer;
+	}
+}
+
+button {
+	@include flexcenter;
+	background-color: variables.$main_button_color;
+	margin-right: $menu_margin;
+	font-family: Roboto, sans-serif;
+	border: 1px solid black;
+	height: 50%;
+	aspect-ratio: 4;
+	border-radius: 3px;
+	font-size: variables.$menu_font_size;
+
+	&:hover {
+		background-color: variables.$main_button_color_light;
+		filter: drop-shadow(0px 0px 3px variables.$main_button_color_light);
+	}
 }
