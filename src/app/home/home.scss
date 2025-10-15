@@ -2,7 +2,7 @@
 @use '../../tools';
 @use '../../fonts';
 
-$home_gap_size: 50px;
+$home_gap_size: 12vh;
 
 :host {
 	color: variables.$main_text_color;
@@ -14,7 +14,10 @@ $home_gap_size: 50px;
 	gap: $home_gap_size;
 
 	& > * {
+		@include tools.flex_center;
+		flex-direction: column;
 		width: 80%;
+		gap: $home_gap_size / 2;
 	}
 }
 
@@ -24,12 +27,6 @@ h1 {
 	font-size: variables.$h1_font_size;
 	text-align: center;
 	margin-top: $home_gap_size * 2;
-
-	& + div {
-		@include tools.flex_center;
-		flex-direction: column;
-		gap: $home_gap_size / 2;
-	}
 }
 
 #main_description {
@@ -44,6 +41,21 @@ h1 {
 	}
 }
 
-button {
+.main_button {
 	@include tools.main_button;
+}
+
+.course_button {
+	@include tools.course_button;
+}
+
+.course_list {
+	@include tools.flex_center;
+	flex-wrap: wrap;
+	gap: $home_gap_size / 4;
+	width: 100%;
+
+	& + .main_button {
+		align-self: flex-end;
+	}
 }

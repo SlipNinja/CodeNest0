@@ -20,3 +20,30 @@
 		filter: drop-shadow(0px 0px 3px variables.$main_button_color_light);
 	}
 }
+
+@mixin course_button {
+	@include flex_center;
+	background-color: variables.$light_bg_color;
+	font-family: Roboto, sans-serif;
+	border: 1px solid black;
+	padding: 5px 30px;
+	border-radius: 4px;
+	height: 3rem;
+	font-size: variables.$menu_font_size * 1.2;
+	color: variables.$main_text_color;
+	gap: 10px;
+
+	&:hover {
+		background-color: variables.$lighter_bg_color;
+		filter: drop-shadow(0px 0px 2px variables.$main_button_color_light);
+	}
+
+	& > div {
+		height: 100%;
+
+		& > img {
+			height: 100%;
+			object-fit: contain;
+		}
+	}
+}
