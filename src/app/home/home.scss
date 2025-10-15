@@ -60,10 +60,6 @@ h2 {
 	flex-wrap: wrap;
 	gap: $home_gap_size / 4;
 	width: 100%;
-
-	& + .main_button {
-		align-self: flex-end;
-	}
 }
 
 #hero_img {

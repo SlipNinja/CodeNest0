@@ -1,0 +1,38 @@
+@use '../../variables';
+@use '../../tools';
+
+:host {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 80px;
+	padding: 0px 30px;
+	background-color: variables.$secondary_bg_color;
+	color: variables.$main_text_color;
+	font-family: Roboto, sans-serif;
+	font-size: variables.$menu_font_size;
+
+	& > div {
+		@include tools.flex_center;
+		height: 100%;
+		gap: 10px;
+
+		& > div {
+			@include tools.flex_center;
+			height: 80%;
+			aspect-ratio: 1;
+
+			& > img {
+				@include tools.img_contained;
+				@include tools.hoverable;
+				padding: 10px;
+			}
+		}
+	}
+
+	& > p {
+		@include tools.hoverable;
+		@include tools.flex_center;
+		padding: 10px;
+	}
+}
