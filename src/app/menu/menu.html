@@ -1,5 +1,5 @@
 <div class="menu_left">
-	<a class="logo_container menu_link">
+	<a [routerLink]="['/']" class="logo_container menu_link">
 		<img class="logo" src="assets/imgs/logo.png" alt="logo" aria-hidden="true" />
 		<h2>CodeNest0</h2>
 	</a>
@@ -7,4 +7,4 @@
 	<a class="menu_link">Courses</a>
 	<a class="menu_link">Profile</a>
 </div>
-<button>Sign in</button>
+<button [routerLink]="['/sign-in']">Sign in</button>

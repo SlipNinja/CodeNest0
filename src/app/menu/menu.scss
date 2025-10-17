@@ -36,6 +36,8 @@ $menu_margin: 30px;
 }
 
 .menu_link {
+	color: variables.$main_text_color;
+	text-decoration: none;
 	@include tools.hoverable;
 	padding: 10px;
 }

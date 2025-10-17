@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { DataParser } from '../services/data-parser';
-import { skip } from 'rxjs';
 
 @Component({
 	selector: 'app-home',
