@@ -6,13 +6,9 @@
 	box-sizing: border-box;
 }
 
-@mixin initmain {
+html {
 	height: 100%;
 	width: 100%;
-}
-
-html {
-	@include initmain;
 	font-size: 16px;
 	background-color: variables.$main_bg_color;
 }
@@ -30,5 +26,6 @@ html {
 }
 
 body {
-	@include initmain;
+	min-height: 100%;
+	width: 100%;
 }
