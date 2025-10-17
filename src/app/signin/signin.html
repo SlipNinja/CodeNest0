@@ -1,1 +1,14 @@
-<p>signin works!</p>
+<form [formGroup]="signInForm" (submit)="submitSignIn()">
+	<fieldset>
+		<legend>Connect to your account</legend>
+
+		<label for="username">Username</label>
+		<input type="text" formControlName="username" />
+		<label for="password">Password</label>
+		<div>
+			<input type="password" formControlName="password" />
+			<div class="bi bi-eye" (click)="togglePassword($event)" (keydown)="(null)"></div>
+		</div>
+		<button type="submit" class="main_button" (click)="submitSignIn()">Connection</button>
+	</fieldset>
+</form>
