@@ -49,39 +49,12 @@
 </div>
 <div>
 	<h2>Frequently asked questions</h2>
+	@for (question of parser.questions.keys(); track parser.questions.get(question)) {
 	<details>
-		<summary>Some good question</summary>
-		<p>
-			Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio dolore, omnis soluta
-			dolorem ratione consequatur saepe eligendi sed vero necessitatibus nihil asperiores,
-			veritatis illo odit non atque debitis voluptates mollitia! Earum illum dignissimos nam
-			corporis illo facilis? Cumque modi autem enim voluptatem rerum id magnam ea, nam vero,
-			molestiae dolorum voluptates necessitatibus eum aut corporis! Quis debitis fugiat quo
-			quia!
-		</p>
+		<summary>{{ question }}</summary>
+		<p>{{ parser.questions.get(question) }}</p>
 	</details>
-	<details>
-		<summary>Some good question</summary>
-		<p>
-			Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio dolore, omnis soluta
-			dolorem ratione consequatur saepe eligendi sed vero necessitatibus nihil asperiores,
-			veritatis illo odit non atque debitis voluptates mollitia! Earum illum dignissimos nam
-			corporis illo facilis? Cumque modi autem enim voluptatem rerum id magnam ea, nam vero,
-			molestiae dolorum voluptates necessitatibus eum aut corporis! Quis debitis fugiat quo
-			quia!
-		</p>
-	</details>
-	<details>
-		<summary>Some good question</summary>
-		<p>
-			Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio dolore, omnis soluta
-			dolorem ratione consequatur saepe eligendi sed vero necessitatibus nihil asperiores,
-			veritatis illo odit non atque debitis voluptates mollitia! Earum illum dignissimos nam
-			corporis illo facilis? Cumque modi autem enim voluptatem rerum id magnam ea, nam vero,
-			molestiae dolorum voluptates necessitatibus eum aut corporis! Quis debitis fugiat quo
-			quia!
-		</p>
-	</details>
+	}
 </div>
 <div>
 	<h2>They use CodeNest0 and they like it</h2>
