@@ -29,7 +29,7 @@ export class DataParser {
 		}
 	}
 
-	getCourses(n: number | undefined) {
+	getCourses(n: number | undefined = undefined) {
 		if (n == undefined) {
 			this.homepage_courses = this.tmp_courses;
 		} else {
