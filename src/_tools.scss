@@ -8,6 +8,7 @@
 
 @mixin img_contained {
 	width: 100%;
+	height: 100%;
 	object-fit: contain;
 }
 
@@ -15,7 +16,7 @@
 	@include flex_center;
 	font-family: Roboto, sans-serif;
 	border: 1px solid black;
-	padding: 5px 30px;
+	padding: 5px;
 	border-radius: 4px;
 	font-size: variables.$menu_font_size * 1.2;
 
@@ -36,10 +37,12 @@
 @mixin course_button {
 	@include button;
 	background-color: variables.$light_bg_color;
-	height: 3rem;
+	width: 30%;
+	min-width: 220px;
+	height: 4rem;
 	font-size: variables.$menu_font_size * 1.2;
 	color: variables.$main_text_color;
-	gap: 10px;
+	gap: 0.5rem;
 
 	&:hover {
 		background-color: variables.$lighter_bg_color;

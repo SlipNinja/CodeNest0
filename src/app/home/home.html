@@ -8,36 +8,13 @@
 </div>
 <div>
 	<div class="course_list">
+		@for (course of parser.homepage_courses; track course) {
 		<button class="course_button">
-			<div><img alt="javascript" src="./assets/imgs/js.png" /></div>
-			<p>First steps</p>
-			<div><img alt="beginner" src="./assets/imgs/beginner.png" /></div>
+			<div><img alt="language" src="{{ course.logo }}" /></div>
+			<p>{{ course.name }}</p>
+			<div><img alt="level" src="{{ course.level }}" /></div>
 		</button>
-		<button class="course_button">
-			<div><img alt="javascript" src="./assets/imgs/js.png" /></div>
-			<p>First steps</p>
-			<div><img alt="beginner" src="./assets/imgs/beginner.png" /></div>
-		</button>
-		<button class="course_button">
-			<div><img alt="javascript" src="./assets/imgs/js.png" /></div>
-			<p>First steps</p>
-			<div><img alt="beginner" src="./assets/imgs/beginner.png" /></div>
-		</button>
-		<button class="course_button">
-			<div><img alt="javascript" src="./assets/imgs/js.png" /></div>
-			<p>First steps</p>
-			<div><img alt="beginner" src="./assets/imgs/beginner.png" /></div>
-		</button>
-		<button class="course_button">
-			<div><img alt="javascript" src="./assets/imgs/js.png" /></div>
-			<p>First steps</p>
-			<div><img alt="beginner" src="./assets/imgs/beginner.png" /></div>
-		</button>
-		<button class="course_button">
-			<div><img alt="javascript" src="./assets/imgs/js.png" /></div>
-			<p>First steps</p>
-			<div><img alt="beginner" src="./assets/imgs/beginner.png" /></div>
-		</button>
+		}
 	</div>
 	<button class="main_button">See all courses</button>
 </div>

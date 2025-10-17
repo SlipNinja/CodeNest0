@@ -1,5 +1,6 @@
-import { Component, inject, output, OutputEmitterRef } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DataParser } from '../services/data-parser';
+import { skip } from 'rxjs';
 
 @Component({
 	selector: 'app-home',
@@ -12,9 +13,14 @@ export class Home {
 
 	constructor() {
 		this.loadQuestions();
+		this.loadCourses();
 	}
 
 	loadQuestions() {
 		this.parser.getQuestions();
+	}
+
+	loadCourses() {
+		this.parser.getCourses(6);
 	}
 }
