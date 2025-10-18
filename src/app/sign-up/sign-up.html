@@ -1,0 +1,21 @@
+<form [formGroup]="sign_up_form" (submit)="submitSignIn()">
+	<fieldset>
+		<legend>Create free account</legend>
+
+		<label for="username">Username</label>
+		<input id="username" type="text" formControlName="username" />
+		<label for="email">Email</label>
+		<input id="email" type="email" formControlName="email" />
+		<label for="password">Password</label>
+		<div>
+			<input id="password" type="password" formControlName="password" />
+			<div class="bi bi-eye" (click)="togglePassword($event)" (keydown)="(null)"></div>
+		</div>
+		<label for="confirm_password">Confirm password</label>
+		<div>
+			<input id="confirm_password" type="password" formControlName="confirm_password" />
+			<div class="bi bi-eye" (click)="togglePassword($event)" (keydown)="(null)"></div>
+		</div>
+		<button type="submit" class="main_button" (click)="submitSignIn()">Connection</button>
+	</fieldset>
+</form>

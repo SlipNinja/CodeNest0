@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { DataParser } from '../services/data-parser';
+import { RouterModule } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
-	imports: [],
+	imports: [RouterModule],
 	templateUrl: './home.html',
 	styleUrl: './home.scss',
 })

@@ -1,7 +1,6 @@
 @use '../../tools';
 @use '../../variables';
 @use '../../fonts';
-@import '../../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 
 :host {
 	@include tools.flex_center;
