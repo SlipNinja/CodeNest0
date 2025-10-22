@@ -6,10 +6,12 @@
 	</p>
 	<button class="main_button" [routerLink]="['/sign-up']">Create free account</button>
 </div>
+
 <div>
+	<app-course-dialog></app-course-dialog>
 	<div class="course_list">
 		@for (course of parser.homepage_courses; track course) {
-		<button class="course_button">
+		<button class="course_button" (click)="openDialog(course)">
 			<div><img alt="language" src="{{ course.logo }}" /></div>
 			<p>{{ course.name }}</p>
 			<div><img alt="level" src="{{ course.level }}" /></div>

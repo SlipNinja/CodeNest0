@@ -3,4 +3,5 @@ export interface CourseInfo {
 	name: string;
 	logo: string;
 	level: string;
+	description: string;
 }
