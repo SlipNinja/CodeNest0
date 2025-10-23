@@ -1,32 +1,54 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { DataParser } from '../services/data-parser';
-import { RouterModule } from '@angular/router';
-import { CourseDialog } from '../course-dialog/course-dialog';
+import { Component, inject } from '@angular/core';
 import { CourseInfo } from '../interfaces/course-info';
+import { DataParser } from '../services/data-parser';
 import { MatDialog } from '@angular/material/dialog';
+import { CourseDialog } from '../course-dialog/course-dialog';
+import { RouterModule } from '@angular/router';
 
 @Component({
-	selector: 'app-home',
+	selector: 'app-course-list',
 	imports: [RouterModule],
-	templateUrl: './home.html',
-	styleUrl: './home.scss',
+	templateUrl: './course-list.html',
+	styleUrl: './course-list.scss',
 })
-export class Home {
+export class CourseList {
 	parser: DataParser = inject(DataParser);
 	dialog = inject(MatDialog);
 	course_list: CourseInfo[] = [];
+	filtered_list: CourseInfo[] = [];
+	sortTags: { [key: string]: number } = {};
+	display_tags: string[] = [];
 
 	constructor() {
-		this.loadQuestions();
 		this.loadCourses();
-	}
-
-	loadQuestions() {
-		this.parser.getQuestions();
+		this.loadTags();
 	}
 
 	loadCourses() {
-		this.course_list = this.parser.getCourses(3);
+		this.course_list = this.parser.getCourses();
+		this.filtered_list = this.course_list;
+	}
+
+	filterCourses(e: any = undefined): CourseInfo[] {
+		console.log(e.originalTarget);
+		return this.course_list;
+	}
+
+	loadTags() {
+		const tags: { [tag: string]: number } = {};
+
+		for (const course of this.course_list) {
+			for (const tag of course['tags']) {
+				if (tags[tag] == undefined) {
+					tags[tag] = 1;
+				} else {
+					tags[tag] += 1;
+				}
+			}
+		}
+
+		this.sortTags = Object.fromEntries(Object.entries(tags).sort(([, a], [, b]) => b - a));
+		this.display_tags = Object.keys(this.sortTags);
 	}
 
 	generateData(course: CourseInfo) {

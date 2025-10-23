@@ -1,21 +1,28 @@
-<dialog>
-	<form method="dialog">
-		<button class="close">Close</button>
-	</form>
-	<div class="course_details">
-		<div class="course_banner">
-			<div><img alt="language" src="" /></div>
-			<h3>Course name</h3>
-			<div><img alt="level" src="" /></div>
-		</div>
-		<p></p>
+<div class="course_details">
+	<div class="course_banner">
+		<div><img alt="language" src="{{ data.logo }}" /></div>
+		<h3>{{ data.name }}</h3>
+		<div><img alt="level" src="{{ data.level }}" /></div>
 	</div>
+	<p>{{ data.description }}</p>
+</div>
 
-	<div>
-		<h3>Recommended courses</h3>
-		<div></div>
+<div>
+	<h3>Recommended courses</h3>
+	<div class="course_list">
+		@for (course of data.dependencies; track course) {
+		<button class="course_button" mat-dialog-close="{&quot;preview&quot;:{{ course.id }}}">
+			<div><img alt="language" src="{{ course.logo }}" /></div>
+			<p>{{ course.name }}</p>
+			<div><img alt="level" src="{{ course.level }}" /></div>
+		</button>
+		}
 	</div>
-	<form method="dialog">
-		<button class="close">Start course</button>
-	</form>
-</dialog>
+</div>
+<button
+	class="main_button"
+	mat-dialog-close="{&quot;start&quot;:{{ data.id }}}"
+	[routerLink]="['/sign-in']"
+>
+	Start course
+</button>

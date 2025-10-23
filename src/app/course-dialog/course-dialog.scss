@@ -1,13 +1,14 @@
 @use '../../tools';
 @use '../../variables';
 
-dialog[open] {
+:host {
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
 	background-color: variables.$main_bg_color;
 	color: variables.$main_text_color;
 	height: 80%;
+	width: 60%;
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -17,16 +18,16 @@ dialog[open] {
 	padding: 1rem;
 
 	& button {
-		@include tools.main_button;
-	}
+		width: 35%;
+		padding: 0.5rem;
+		align-self: flex-end;
 
-	& form {
-		&:first-of-type {
-			align-self: flex-start;
+		&.main_button {
+			@include tools.main_button;
 		}
 
-		&:last-of-type {
-			align-self: flex-end;
+		&.course_button {
+			@include tools.course_button;
 		}
 	}
 
@@ -34,6 +35,7 @@ dialog[open] {
 		@include tools.flex_center;
 		flex-direction: column;
 		gap: 2rem;
+		padding-top: 2rem;
 
 		& > .course_banner {
 			@include tools.flex_center;
@@ -41,7 +43,7 @@ dialog[open] {
 			background-color: variables.$light_bg_color;
 			width: 80%;
 			padding: 0.5rem;
-			gap: 0.5rem;
+			gap: 1rem;
 			border-radius: 5px;
 
 			& > div {
@@ -54,9 +56,20 @@ dialog[open] {
 			}
 		}
 	}
+}
 
-	&::backdrop {
-		background-color: rgba(50, 50, 50, 0.6);
-		backdrop-filter: blur(3px);
-	}
+h3 {
+	font-size: variables.$h3_font_size;
+}
+
+.course_list {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 3%;
+	gap: 10px;
+}
+
+.backdrop {
+	background-color: rgba(50, 50, 50, 0.6);
+	backdrop-filter: blur(3px);
 }

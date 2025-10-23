@@ -20,14 +20,14 @@ $menu_margin: 30px;
 .menu_left {
 	@include tools.flex_center;
 	height: 100%;
-	gap: $menu_margin;
-	margin-left: $menu_margin;
+	gap: variables.$base_gap * 3;
+	margin-left: variables.$base_gap * 3;
 }
 
 .logo_container {
 	@include tools.flex_center;
 	height: 60%;
-	gap: 10px;
+	gap: variables.$base_gap;
 }
 
 .logo {
@@ -39,10 +39,10 @@ $menu_margin: 30px;
 	color: variables.$main_text_color;
 	text-decoration: none;
 	@include tools.hoverable;
-	padding: 10px;
+	padding: variables.$base_gap;
 }
 
 button {
 	@include tools.main_button;
-	margin-right: $menu_margin;
+	margin-right: variables.$base_gap * 3;
 }

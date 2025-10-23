@@ -1,0 +1,86 @@
+@use '../../variables';
+@use '../../tools';
+@use '../../fonts';
+
+:host {
+	display: flex;
+	align-items: center;
+	color: variables.$main_text_color;
+	font-family: Roboto, sans-serif;
+	align-self: center;
+	width: 80%;
+	height: 100%;
+	padding-bottom: variables.$base_gap;
+
+	& > fieldset {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		max-width: fit-content;
+		padding: variables.$base_gap * 4;
+		margin: variables.$base_gap * 4;
+		gap: variables.$base_gap * 2;
+
+		& > legend {
+			padding: 0 variables.$base_gap;
+		}
+
+		& > div {
+			@include tools.hoverable;
+			display: flex;
+			align-items: center;
+			gap: variables.$base_gap;
+
+			& > input {
+				appearance: none;
+				background-color: #fff;
+				margin: 0;
+				color: red;
+				height: 1rem;
+				aspect-ratio: 1;
+				border-radius: 0.15rem;
+				display: grid;
+				place-content: center;
+
+				&::before {
+					content: '';
+					width: 0.75rem;
+					height: 0.75rem;
+					transform: scale(0);
+					transform-origin: center;
+					transition: 50ms transform ease-in-out;
+					background-color: variables.$light_bg_color;
+					border-radius: 0.15rem;
+				}
+
+				&:checked::before {
+					transform: scale(1);
+				}
+			}
+		}
+	}
+
+	& > .all_courses {
+		display: flex;
+		flex-wrap: wrap;
+		flex: 3;
+		width: 100%;
+		height: 100%;
+		gap: variables.$base_gap * 2;
+	}
+}
+
+.main_button {
+	@include tools.main_button;
+}
+
+.course_button {
+	@include tools.course_button;
+}
+
+.course_list {
+	@include tools.flex_center;
+	flex-wrap: wrap;
+	gap: variables.$base_gap;
+	width: 100%;
+}

@@ -4,4 +4,6 @@ export interface CourseInfo {
 	logo: string;
 	level: string;
 	description: string;
+	dependencies: number[];
+	tags: string[];
 }

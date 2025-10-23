@@ -8,9 +8,8 @@
 </div>
 
 <div>
-	<app-course-dialog></app-course-dialog>
 	<div class="course_list">
-		@for (course of parser.homepage_courses; track course) {
+		@for (course of course_list; track course) {
 		<button class="course_button" (click)="openDialog(course)">
 			<div><img alt="language" src="{{ course.logo }}" /></div>
 			<p>{{ course.name }}</p>
@@ -18,7 +17,7 @@
 		</button>
 		}
 	</div>
-	<button class="main_button">See all courses</button>
+	<button class="main_button" [routerLink]="['/course-list']">See all courses</button>
 </div>
 <div>
 	<div id="hero_img">
