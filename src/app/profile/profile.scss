@@ -7,14 +7,39 @@
 	font-family: Roboto, sans-serif;
 	align-self: center;
 	display: grid;
-	grid-template-columns: 1fr 4fr;
-	grid-template-rows: 1fr 1fr 2fr;
+	grid-template-columns: 2fr 3fr;
+	grid-template-rows: repeat(3, 1fr);
 	gap: variables.$base_gap;
 	width: 80%;
 	height: 100%;
-	background-color: red;
+	padding: variables.$base_gap;
 
 	& > * {
 		background-color: variables.$light_bg_color;
+		border-radius: 5px;
+		padding: variables.$base_gap;
+	}
+}
+
+#user_stats {
+	grid-row-start: span 2;
+}
+
+#user_badges {
+	grid-column-start: span 2;
+}
+
+@media (max-width: 800px) {
+	:host {
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(4, 1fr);
+	}
+
+	#user_stats {
+		grid-row-start: auto;
+	}
+
+	#user_badges {
+		grid-column-start: auto;
 	}
 }
