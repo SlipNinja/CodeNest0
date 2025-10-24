@@ -18,22 +18,55 @@ export class CourseList {
 	filtered_list: CourseInfo[] = [];
 	sortTags: { [key: string]: number } = {};
 	display_tags: string[] = [];
+	filters: string[] = [];
+	total_tags: number = -1;
 
 	constructor() {
-		this.loadCourses();
-		this.loadTags();
-	}
-
-	loadCourses() {
 		this.course_list = this.parser.getCourses();
-		this.filtered_list = this.course_list;
+		this.loadTags();
+		this.filterCourses();
 	}
 
-	filterCourses(e: any = undefined): CourseInfo[] {
-		console.log(e.originalTarget);
-		return this.course_list;
+	// Populate filtered courses based on filters
+	filterCourses() {
+		this.filtered_list = this.course_list.filter((course) =>
+			this.filters.find((filter) => course['tags'].includes(filter))
+		);
 	}
 
+	// Called on checkbox change
+	boxChecked(e: any) {
+		// Uncheck all_tags checkbox
+		const all_check: HTMLInputElement | null = document.querySelector('#all_tags');
+		if (all_check != null) {
+			all_check.checked = false;
+		}
+
+		// Reload filters and courses
+		this.loadFilters();
+		this.filterCourses();
+	}
+
+	// Called on all_tags change
+	allChecked(e: any) {
+		// If checked, uncheck all checkboxes
+		if (e.originalTarget.checked) {
+			this.filters = this.display_tags;
+			const checkbox_selector = 'input[type="checkbox"]:checked:not(#all_tags)';
+			const checked: NodeListOf<HTMLInputElement> =
+				document.querySelectorAll(checkbox_selector);
+			for (const checkbox of checked) {
+				checkbox.checked = false;
+			}
+			// If unchecked, empty filters
+		} else {
+			this.filters = [];
+		}
+
+		this.filterCourses();
+	}
+
+	// Populate checkboxes based on course tags
 	loadTags() {
 		const tags: { [tag: string]: number } = {};
 
@@ -49,8 +82,20 @@ export class CourseList {
 
 		this.sortTags = Object.fromEntries(Object.entries(tags).sort(([, a], [, b]) => b - a));
 		this.display_tags = Object.keys(this.sortTags);
+		this.filters = this.display_tags;
 	}
 
+	// Populate filters based on checked checkboxes
+	loadFilters() {
+		const checkbox_selector = 'input[type="checkbox"]:checked';
+		const checked: NodeListOf<HTMLInputElement> = document.querySelectorAll(checkbox_selector);
+		this.filters = [];
+		for (const checkbox of checked) {
+			this.filters.push(checkbox['name']);
+		}
+	}
+
+	// Generate data for the dialog replacing CourseInfo ids by CourseInfo data
 	generateData(course: CourseInfo) {
 		const dependencies: CourseInfo[] = [];
 		const data = {
@@ -70,13 +115,16 @@ export class CourseList {
 		return data;
 	}
 
+	// Handles dialog
 	openDialog(course: CourseInfo) {
+		// Opens dialog
 		const dialogRef = this.dialog.open(CourseDialog, {
 			data: this.generateData(course),
 			backdropClass: 'backdrop',
 			hasBackdrop: true,
 		});
 
+		// After dialog closed
 		dialogRef.afterClosed().subscribe((result) => {
 			// Click outside the dialog
 			if (result == undefined) {
@@ -84,10 +132,13 @@ export class CourseList {
 			}
 
 			const parsed_result = JSON.parse(result);
+			// CLicked on start course
 			if (parsed_result['start'] != undefined) {
 				//Go to course
-			} else if (parsed_result['preview'] != undefined) {
-				// Display another dialog
+			}
+			// Clicked on a recommended course
+			else if (parsed_result['preview'] != undefined) {
+				// Open the course
 				this.openDialog(this.parser.getCourse(parsed_result['preview']) as CourseInfo);
 			}
 		});
