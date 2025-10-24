@@ -8,7 +8,7 @@ $menu_margin: 30px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 70px;
+	height: variables.$menu_height;
 	background-color: variables.$secondary_bg_color;
 	color: variables.$main_text_color;
 	font-family: Roboto, sans-serif;

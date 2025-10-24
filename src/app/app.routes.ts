@@ -3,8 +3,14 @@ import { Home } from './home/home';
 import { SignIn } from './signin/signin';
 import { SignUp } from './sign-up/sign-up';
 import { CourseList } from './course-list/course-list';
+import { Profile } from './profile/profile';
 
 export const routes: Routes = [
+	{
+		path: '',
+		component: Home,
+		title: 'Home page',
+	},
 	{
 		path: 'course-list',
 		component: CourseList,
@@ -21,8 +27,8 @@ export const routes: Routes = [
 		title: 'Sign-up page',
 	},
 	{
-		path: '',
-		component: Home,
-		title: 'Home page',
+		path: 'profile',
+		component: Profile,
+		title: 'Profile page',
 	},
 ];

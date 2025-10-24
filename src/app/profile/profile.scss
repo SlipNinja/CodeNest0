@@ -1,0 +1,20 @@
+@use '../../variables';
+@use '../../tools';
+@use '../../fonts';
+
+:host {
+	color: variables.$main_text_color;
+	font-family: Roboto, sans-serif;
+	align-self: center;
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+	grid-template-rows: 1fr 1fr 2fr;
+	gap: variables.$base_gap;
+	width: 80%;
+	height: 100%;
+	background-color: red;
+
+	& > * {
+		background-color: variables.$light_bg_color;
+	}
+}
