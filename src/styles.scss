@@ -41,3 +41,8 @@ body {
 	margin: 0;
 	font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+.backdrop {
+	background-color: rgba(50, 50, 50, 0.6);
+	backdrop-filter: blur(3px);
+}
