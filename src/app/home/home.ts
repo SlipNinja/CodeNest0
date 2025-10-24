@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DataParser } from '../services/data-parser';
 import { RouterModule } from '@angular/router';
 import { CourseDialog } from '../course-dialog/course-dialog';
@@ -15,14 +15,15 @@ export class Home {
 	parser: DataParser = inject(DataParser);
 	dialog = inject(MatDialog);
 	course_list: CourseInfo[] = [];
+	questions: Map<string, string> = new Map();
 
 	constructor() {
 		this.loadQuestions();
 		this.loadCourses();
 	}
 
-	loadQuestions() {
-		this.parser.getQuestions();
+	async loadQuestions() {
+		this.questions = await this.parser.getQuestions();
 	}
 
 	loadCourses() {

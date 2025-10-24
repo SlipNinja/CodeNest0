@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CourseInfo } from '../interfaces/course-info';
+import { User } from '../interfaces/user';
 
 type QuestionsInfos = { [key: string]: string | number };
 
@@ -7,27 +8,27 @@ type QuestionsInfos = { [key: string]: string | number };
 	providedIn: 'root',
 })
 export class DataParser {
-	public questions: Map<string, string> = new Map();
-	users: { [key: string]: string | number }[] = [];
-
 	base_url: string = 'https://jsonplaceholder.typicode.com';
 	users_url: string = this.base_url + '/users';
 	questions_url: string = this.base_url + '/posts';
 
-	async getUsers(): Promise<void> {
+	async getUsers(): Promise<User[]> {
 		const data = await fetch(this.users_url);
-		this.users = await data.json();
+		return await data.json();
 	}
 
-	async getQuestions(): Promise<void> {
+	async getQuestions(): Promise<Map<string, string>> {
+		const questions: Map<string, string> = new Map();
 		const data = await fetch(this.questions_url);
 		const json: QuestionsInfos[] = (await data.json()).slice(0, 5);
 
 		for (const question of json) {
 			const user_question: string = question['title'] as string;
 			const user_response: string = question['body'] as string;
-			this.questions.set(user_question, user_response);
+			questions.set(user_question, user_response);
 		}
+
+		return questions;
 	}
 
 	getCourse(id: number): CourseInfo | undefined {

@@ -27,10 +27,10 @@
 </div>
 <div>
 	<h2>Frequently asked questions</h2>
-	@for (question of parser.questions.keys(); track parser.questions.get(question)) {
+	@for (question of questions.keys(); track questions.get(question)) {
 	<details>
 		<summary>{{ question }}</summary>
-		<p>{{ parser.questions.get(question) }}</p>
+		<p>{{ questions.get(question) }}</p>
 	</details>
 	}
 </div>
