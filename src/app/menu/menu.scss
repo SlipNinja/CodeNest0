@@ -14,6 +14,7 @@ $menu_margin: 30px;
 	font-size: variables.$menu_font_size;
 	position: sticky;
 	top: 0;
+	z-index: 10;
 }
 
 .menu_left {

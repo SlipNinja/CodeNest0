@@ -11,4 +11,8 @@ import { Footer } from './footer/footer';
 })
 export class App {
 	protected readonly title = signal('CodeNest0');
+
+	scrollOnTop(e: any) {
+		document.body.scrollTop = 0;
+	}
 }
