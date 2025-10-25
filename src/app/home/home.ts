@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { DataParser } from '../services/data-parser';
 import { RouterModule } from '@angular/router';
-import { CourseDialog } from '../course-dialog/course-dialog';
 import { CourseInfo } from '../interfaces/course-info';
-import { MatDialog } from '@angular/material/dialog';
+import { DialogHandler } from '../services/dialog-handler';
 
 @Component({
 	selector: 'app-home',
@@ -12,8 +11,9 @@ import { MatDialog } from '@angular/material/dialog';
 	styleUrl: './home.scss',
 })
 export class Home {
+	dialog_handler = inject(DialogHandler);
 	parser: DataParser = inject(DataParser);
-	dialog = inject(MatDialog);
+
 	course_list: CourseInfo[] = [];
 	questions: Map<string, string> = new Map();
 
@@ -30,45 +30,7 @@ export class Home {
 		this.course_list = this.parser.getCourses(3);
 	}
 
-	generateData(course: CourseInfo) {
-		const dependencies: CourseInfo[] = [];
-		const data = {
-			id: course.id,
-			name: course.name,
-			logo: course.logo,
-			level: course.level,
-			description: course.description,
-			dependencies: dependencies,
-		};
-
-		for (const dep of course['dependencies']) {
-			const course_dep: CourseInfo = this.parser.getCourse(dep) as CourseInfo;
-			data.dependencies.push(course_dep);
-		}
-
-		return data;
-	}
-
 	openDialog(course: CourseInfo) {
-		const dialogRef = this.dialog.open(CourseDialog, {
-			data: this.generateData(course),
-			backdropClass: 'backdrop',
-			hasBackdrop: true,
-		});
-
-		dialogRef.afterClosed().subscribe((result) => {
-			// Click outside the dialog
-			if (result == undefined) {
-				return;
-			}
-
-			const parsed_result = JSON.parse(result);
-			if (parsed_result['start'] != undefined) {
-				//Go to course
-			} else if (parsed_result['preview'] != undefined) {
-				// Display another dialog
-				this.openDialog(this.parser.getCourse(parsed_result['preview']) as CourseInfo);
-			}
-		});
+		this.dialog_handler.openDialog(course);
 	}
 }

@@ -7,11 +7,11 @@
 	font-family: Roboto, sans-serif;
 	align-self: center;
 	display: grid;
-	grid-template-columns: 2fr 3fr;
+	grid-template-columns: 1fr 2fr;
 	grid-template-rows: repeat(3, 1fr);
 	gap: variables.$base_gap;
 	width: 80%;
-	height: 100%;
+	min-height: 120vh;
 	padding: variables.$base_gap;
 
 	& > * {
@@ -21,8 +21,16 @@
 	}
 }
 
+#user_main {
+	@include tools.flex_center;
+	flex-direction: column;
+}
 #user_stats {
 	grid-row-start: span 2;
+}
+#user_last {
+	@include tools.flex_center;
+	flex-direction: column;
 }
 
 #user_badges {
