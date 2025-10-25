@@ -5,8 +5,9 @@ export interface User {
 	username: string;
 	email: string;
 	password: string;
-	courses_complete: number[];
+	courses_completed: number[];
 	xp: number;
 	last_course: number;
 	profile_photo: string;
+	badges: number[];
 }

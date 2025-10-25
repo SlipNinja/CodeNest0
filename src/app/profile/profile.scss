@@ -16,7 +16,7 @@
 	& > * {
 		background-color: variables.$light_bg_color;
 		border-radius: 5px;
-		padding: variables.$base_gap;
+		padding: variables.$base_gap * 2;
 	}
 }
 
@@ -35,15 +35,52 @@
 	}
 }
 #user_stats {
+	display: flex;
+	flex-direction: column;
 	grid-row-start: span 2;
+	gap: variables.$base_gap;
 }
 #user_last {
-	@include tools.flex_center;
+	display: flex;
+	justify-content: center;
 	flex-direction: column;
+	gap: variables.$base_gap * 2;
+
+	& > button {
+		@include tools.course_button;
+	}
 }
 
 #user_badges {
 	grid-column-start: span 2;
+	display: flex;
+	gap: variables.$base_gap;
+
+	& > div {
+		height: 3rem;
+		position: relative;
+
+		& > span {
+			visibility: hidden;
+			position: absolute;
+			background-color: variables.$main_bg_color;
+			z-index: 1;
+			padding: variables.$base_gap;
+			border-radius: 5px;
+			border: solid 1px white;
+			width: 15rem;
+		}
+
+		&:hover > span {
+			visibility: visible;
+			transition-delay: 0.2s;
+		}
+
+		& > img {
+			@include tools.hoverable;
+			@include tools.img_contained;
+		}
+	}
 }
 
 @media (max-width: 800px) {

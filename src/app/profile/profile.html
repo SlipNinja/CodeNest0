@@ -2,8 +2,23 @@
 	<div>
 		<img src="{{ user.profile_photo }}" alt="profile" aria-hidden="true" />
 	</div>
-	<h2>{{ user.username }}</h2>
+	<h3>{{ user.username }}</h3>
 </div>
-<div id="user_stats">user_stats</div>
-<div id="user_last">user_last</div>
-<div id="user_badges">user_badges</div>
+<div id="user_stats">
+	<p>Courses completed : {{ user.courses_completed.length }}</p>
+	<p>XP gained : {{ user.xp }}</p>
+</div>
+<div id="user_last">
+	<p>Last course :</p>
+	<button class="course_button" (click)="openDialog(last_course)">
+		<div><img alt="language" src="{{ last_course.logo }}" /></div>
+		<p>{{ last_course.name }}</p>
+		<div><img alt="level" src="{{ last_course.level }}" /></div>
+	</button>
+</div>
+<div id="user_badges">
+	<div>
+		<img src="{{ badge.logo }}" alt="{{ badge.name }}" />
+		<span>{{ badge.description }}</span>
+	</div>
+</div>

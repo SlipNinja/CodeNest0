@@ -26,13 +26,12 @@ $menu_margin: 30px;
 
 .logo_container {
 	@include tools.flex_center;
-	height: 60%;
+	height: 100%;
 	gap: variables.$base_gap;
 }
 
 .logo {
-	height: 80%;
-	object-fit: contain;
+	@include tools.img_contained;
 }
 
 .menu_link {
