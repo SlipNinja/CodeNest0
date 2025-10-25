@@ -8,4 +8,5 @@ export interface User {
 	courses_complete: number[];
 	xp: number;
 	last_course: number;
+	profile_photo: string;
 }

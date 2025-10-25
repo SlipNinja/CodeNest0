@@ -40,8 +40,19 @@ body {
 
 body {
 	margin: 0;
-	font-family: Roboto, 'Helvetica Neue', sans-serif;
+	font-family: Roboto, sans-serif;
 	overflow: scroll;
+}
+
+h1 {
+	font-family: Audiowide, Roboto, sans-serif;
+	color: variables.$main_button_color;
+	font-size: variables.$h1_font_size;
+	text-align: center;
+}
+
+h2 {
+	font-size: variables.$h2_font_size;
 }
 
 .backdrop {

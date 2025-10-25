@@ -4,7 +4,6 @@
 
 :host {
 	color: variables.$main_text_color;
-	font-family: Roboto, sans-serif;
 	align-self: center;
 	display: grid;
 	grid-template-columns: 1fr 2fr;
@@ -24,6 +23,16 @@
 #user_main {
 	@include tools.flex_center;
 	flex-direction: column;
+	gap: variables.$base_gap;
+
+	& > div {
+		height: 60%;
+		aspect-ratio: 1;
+
+		& > img {
+			@include tools.img_contained;
+		}
+	}
 }
 #user_stats {
 	grid-row-start: span 2;

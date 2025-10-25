@@ -18,5 +18,6 @@ export class Profile {
 		courses_complete: [1, 2],
 		xp: 123,
 		last_course: 3,
+		profile_photo: './assets/imgs/empty_profile.png',
 	};
 }
