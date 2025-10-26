@@ -96,5 +96,6 @@ export class CourseList {
 
 	openDialog(course: CourseInfo) {
 		this.dialog_handler.openDialog(course);
+		//this.dialog_handler.openDialog({ hint: 'Test hint' });
 	}
 }

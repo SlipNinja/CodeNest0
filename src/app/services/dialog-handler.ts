@@ -3,6 +3,11 @@ import { CourseInfo } from '../interfaces/course-info';
 import { DataParser } from './data-parser';
 import { CourseDialog } from '../course-dialog/course-dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { HintDialog } from '../hint-dialog/hint-dialog';
+
+type Hint = {
+	hint: string;
+};
 
 @Injectable({
 	providedIn: 'root',
@@ -31,8 +36,26 @@ export class DialogHandler {
 		return data;
 	}
 
+	isCourseInfo(data: any): data is CourseInfo {
+		console.log('dependencies' in data && 'tags' in data);
+		return 'dependencies' in data && 'tags' in data;
+	}
+
+	isHint(data: any): data is Hint {
+		return 'hint' in data;
+	}
+
 	// Handles dialog
-	openDialog(course: CourseInfo) {
+	openDialog(data: object) {
+		console.log('Enter open');
+		if (this.isCourseInfo(data)) {
+			this.openCourseDialog(data);
+		} else if (this.isHint(data)) {
+			this.openHintDialog(data);
+		}
+	}
+
+	openCourseDialog(course: CourseInfo) {
 		// Opens dialog
 		const dialogRef = this.dialog.open(CourseDialog, {
 			data: this.generateData(course),
@@ -57,6 +80,22 @@ export class DialogHandler {
 				// Open the course
 				this.openDialog(this.parser.getCourse(parsed_result['preview']) as CourseInfo);
 			}
+		});
+	}
+
+	openHintDialog(hint: Hint) {
+		console.log('hint dialog');
+		// Opens dialog
+		const dialogRef = this.dialog.open(HintDialog, {
+			data: hint['hint'],
+			backdropClass: 'backdrop',
+			hasBackdrop: true,
+		});
+		console.log('Openned');
+
+		// After dialog closed
+		dialogRef.afterClosed().subscribe((result) => {
+			console.log('Closed');
 		});
 	}
 }

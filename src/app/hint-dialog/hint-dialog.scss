@@ -1,0 +1,9 @@
+@use '../../tools';
+@use '../../variables';
+
+:host {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	@include tools.dialog;
+}
