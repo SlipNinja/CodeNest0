@@ -9,12 +9,14 @@
 	width: 80%;
 	height: 100%;
 	padding-bottom: variables.$base_gap;
+	overflow: scroll;
 
 	& > fieldset {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
 		max-width: fit-content;
+		height: fit-content;
 		padding: variables.$base_gap * 4;
 		margin: variables.$base_gap * 4;
 		gap: variables.$base_gap * 2;
