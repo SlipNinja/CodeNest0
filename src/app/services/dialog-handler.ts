@@ -45,6 +45,7 @@ export class DialogHandler {
 		return 'hint' in data;
 	}
 
+	// Surcharge d'opérateur ?
 	// Handles dialog
 	openDialog(data: object) {
 		console.log('Enter open');
@@ -84,14 +85,12 @@ export class DialogHandler {
 	}
 
 	openHintDialog(hint: Hint) {
-		console.log('hint dialog');
 		// Opens dialog
 		const dialogRef = this.dialog.open(HintDialog, {
 			data: hint['hint'],
 			backdropClass: 'backdrop',
 			hasBackdrop: true,
 		});
-		console.log('Openned');
 
 		// After dialog closed
 		dialogRef.afterClosed().subscribe((result) => {
