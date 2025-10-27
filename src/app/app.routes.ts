@@ -4,6 +4,7 @@ import { SignIn } from './signin/signin';
 import { SignUp } from './sign-up/sign-up';
 import { CourseList } from './course-list/course-list';
 import { Profile } from './profile/profile';
+import { CoursePage } from './course-page/course-page';
 
 export const routes: Routes = [
 	{
@@ -30,5 +31,10 @@ export const routes: Routes = [
 		path: 'profile',
 		component: Profile,
 		title: 'Profile page',
+	},
+	{
+		path: 'course/:id',
+		component: CoursePage,
+		title: 'Course',
 	},
 ];

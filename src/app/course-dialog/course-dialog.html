@@ -22,7 +22,7 @@
 <button
 	class="main_button"
 	mat-dialog-close="{&quot;start&quot;:{{ data.id }}}"
-	[routerLink]="['/sign-in']"
+	[routerLink]="['/course', data.id]"
 >
 	Start course
 </button>
