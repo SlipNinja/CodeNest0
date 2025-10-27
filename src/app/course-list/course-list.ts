@@ -21,9 +21,15 @@ export class CourseList {
 	total_tags: number = -1;
 
 	constructor() {
-		this.course_list = this.parser.getCourses();
-		this.loadTags();
-		this.filterCourses();
+		this.getCourses();
+	}
+
+	getCourses() {
+		this.parser.fetchCourses().then((result) => {
+			this.course_list = result;
+			this.loadTags();
+			this.filterCourses();
+		});
 	}
 
 	// Populate filtered courses based on filters

@@ -18,16 +18,20 @@ export class Home {
 	questions: Map<string, string> = new Map();
 
 	constructor() {
-		this.loadQuestions();
 		this.loadCourses();
+		this.loadQuestions();
 	}
 
-	async loadQuestions() {
-		this.questions = await this.parser.getQuestions();
+	loadQuestions() {
+		this.parser.getQuestions().then((result) => {
+			this.questions = result;
+		});
 	}
 
 	loadCourses() {
-		this.course_list = this.parser.getCourses(3);
+		this.parser.fetchCourses(3).then((result) => {
+			this.course_list = result;
+		});
 	}
 
 	openDialog(course: CourseInfo) {
