@@ -15,6 +15,8 @@ type Hint = {
 export class DialogHandler {
 	parser: DataParser = inject(DataParser);
 	dialog = inject(MatDialog);
+	// Example for ng-template/container
+	// https://blog.angular-university.io/angular-ng-template-ng-container-ngtemplateoutlet/
 
 	// Generate data for the dialog replacing CourseInfo ids by CourseInfo data
 	generateData(course: CourseInfo) {
