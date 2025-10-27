@@ -1,4 +1,29 @@
 {
+	"badges": [
+		{
+			"id": 1,
+			"name": "Good start !",
+			"description": "Obtained for completing your first course",
+			"logo": "./assets/badges/1.png"
+		}
+	],
+
+	"users": [
+		{
+			"id": 1,
+			"firstname": "Jean",
+			"lastname": "Neymar",
+			"username": "Brice-de-Nice",
+			"email": "papaoutay@pasla.com",
+			"password": "turlututu",
+			"courses_completed": [1, 2],
+			"xp": 123,
+			"last_course": 3,
+			"profile_photo": "./assets/imgs/empty_profile.png",
+			"badges": []
+		}
+	],
+
 	"courses": [
 		{
 			"id": 1,

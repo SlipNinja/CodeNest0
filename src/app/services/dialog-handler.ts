@@ -29,8 +29,11 @@ export class DialogHandler {
 		};
 
 		for (const dep of course['dependencies']) {
-			const course_dep: CourseInfo = this.parser.getCourse(dep) as CourseInfo;
-			data.dependencies.push(course_dep);
+			let course_dep: CourseInfo;
+			this.parser.fetchCourse(dep).then((result) => {
+				course_dep = result;
+				data.dependencies.push(course_dep);
+			});
 		}
 
 		return data;
@@ -79,7 +82,9 @@ export class DialogHandler {
 			// Clicked on a recommended course
 			else if (parsed_result['preview'] != undefined) {
 				// Open the course
-				this.openDialog(this.parser.getCourse(parsed_result['preview']) as CourseInfo);
+				this.parser.fetchCourse(parsed_result['preview']).then((result) => {
+					this.openDialog(result);
+				});
 			}
 		});
 	}
