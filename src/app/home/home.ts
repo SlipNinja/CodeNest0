@@ -35,6 +35,6 @@ export class Home {
 	}
 
 	openDialog(course: CourseInfo) {
-		this.dialog_handler.openDialog(course);
+		this.dialog_handler.openDialog('course', course);
 	}
 }

@@ -15,8 +15,7 @@ type Hint = {
 export class DialogHandler {
 	parser: DataParser = inject(DataParser);
 	dialog = inject(MatDialog);
-	// Example for ng-template/container
-	// https://blog.angular-university.io/angular-ng-template-ng-container-ngtemplateoutlet/
+	dialogRef: any;
 
 	// Generate data for the dialog replacing CourseInfo ids by CourseInfo data
 	generateData(course: CourseInfo) {
@@ -41,53 +40,29 @@ export class DialogHandler {
 		return data;
 	}
 
-	isCourseInfo(data: any): data is CourseInfo {
-		console.log('dependencies' in data && 'tags' in data);
-		return 'dependencies' in data && 'tags' in data;
-	}
-
-	isHint(data: any): data is Hint {
-		return 'hint' in data;
-	}
-
-	// Surcharge d'opérateur ?
 	// Handles dialog
-	openDialog(data: object) {
-		console.log('Enter open');
-		if (this.isCourseInfo(data)) {
-			this.openCourseDialog(data);
-		} else if (this.isHint(data)) {
-			this.openHintDialog(data);
+	openDialog(dialog_type: string, data: object) {
+		if (dialog_type == 'course') {
+			this.openCourseDialog(data as CourseInfo);
+		} else if (dialog_type == 'hint') {
+			this.openHintDialog(data as Hint);
 		}
 	}
 
+	// Open course dialog
 	openCourseDialog(course: CourseInfo) {
 		// Opens dialog
-		const dialogRef = this.dialog.open(CourseDialog, {
+		this.dialogRef = this.dialog.open(CourseDialog, {
 			data: this.generateData(course),
 			backdropClass: 'backdrop',
 			hasBackdrop: true,
 		});
+	}
 
-		// After dialog closed
-		dialogRef.afterClosed().subscribe((result) => {
-			// Click outside the dialog
-			if (result == undefined) {
-				return;
-			}
-
-			const parsed_result = JSON.parse(result);
-			// CLicked on start course
-			if (parsed_result['start'] != undefined) {
-				//Go to course
-			}
-			// Clicked on a recommended course
-			else if (parsed_result['preview'] != undefined) {
-				// Open the course
-				this.parser.fetchCourse(parsed_result['preview']).then((result) => {
-					this.openDialog(result);
-				});
-			}
+	// Update dialog data with a new course
+	openNewCourseDialog(id: number) {
+		this.parser.fetchCourse(id).then((result) => {
+			this.dialogRef.componentInstance.data = this.generateData(result);
 		});
 	}
 

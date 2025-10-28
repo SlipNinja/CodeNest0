@@ -11,7 +11,7 @@
 	<h3>Recommended courses</h3>
 	<div class="course_list">
 		@for (course of data.dependencies; track course) {
-		<button class="course_button" mat-dialog-close="{&quot;preview&quot;:{{ course.id }}}">
+		<button class="course_button" (click)="openNew(course.id)">
 			<div><img alt="language" src="{{ course.logo }}" /></div>
 			<p>{{ course.name }}</p>
 			<div><img alt="level" src="{{ course.level }}" /></div>
@@ -19,10 +19,6 @@
 		}
 	</div>
 </div>
-<button
-	class="main_button"
-	mat-dialog-close="{&quot;start&quot;:{{ data.id }}}"
-	[routerLink]="['/course', data.id]"
->
+<button class="main_button" mat-dialog-close [routerLink]="['/course', data.id]">
 	Start course
 </button>
