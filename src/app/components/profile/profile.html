@@ -17,8 +17,10 @@
 	</button>
 </div>
 <div id="user_badges">
+	@for (badge of badges; track badge.name) {
 	<div>
 		<img src="{{ badge.logo }}" alt="{{ badge.name }}" />
 		<span>{{ badge.description }}</span>
 	</div>
+	}
 </div>

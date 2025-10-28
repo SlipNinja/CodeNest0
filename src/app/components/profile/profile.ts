@@ -16,10 +16,10 @@ export class Profile {
 	dialog_handler = inject(DialogHandler);
 	user_handler = inject(UserHandler);
 	parser = inject(DataParser);
-	last_course: CourseInfo;
 
+	last_course: CourseInfo;
 	user: User;
-	badge: Badge;
+	badges: Badge[] = [];
 
 	constructor() {
 		this.loadUser();
@@ -44,10 +44,9 @@ export class Profile {
 		});
 	}
 
-	// TODO : Get badges from user
 	loadBadges() {
-		this.user_handler.fetchBadges().then((result) => {
-			this.badge = result[0];
+		this.user_handler.fetchBadges(this.user.badges).then((result) => {
+			this.badges = result;
 		});
 	}
 }

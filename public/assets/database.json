@@ -20,7 +20,7 @@
 			"xp": 123,
 			"last_course": 3,
 			"profile_photo": "./assets/imgs/empty_profile.png",
-			"badges": []
+			"badges": [1]
 		}
 	],
 
