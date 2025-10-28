@@ -5,7 +5,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 80px;
+	height: variables.$menu_height * 0.8;
 	padding: 0px 30px;
 	background-color: variables.$secondary_bg_color;
 	color: variables.$main_text_color;

@@ -1,0 +1,31 @@
+@use 'variables';
+@use 'tools';
+
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	& > #steps {
+		height: 4rem;
+		background-color: green;
+	}
+
+	& > #activity {
+		height: 100%;
+		width: 100%;
+		background-color: grey;
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		grid-template-rows: 1fr 1fr 2fr;
+		gap: variables.$base_gap;
+		& > div {
+			background-color: red;
+		}
+
+		& > #code_zone,
+		& > #game {
+			grid-row: span 2;
+		}
+	}
+}

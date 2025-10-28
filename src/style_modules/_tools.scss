@@ -1,5 +1,5 @@
 @use 'variables';
-@import '../../../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+@use 'bootstrap_extract';
 
 @mixin flex_center {
 	display: flex;
