@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { Home } from './home/home';
-import { SignIn } from './signin/signin';
-import { SignUp } from './sign-up/sign-up';
-import { CourseList } from './course-list/course-list';
-import { Profile } from './profile/profile';
-import { CoursePage } from './course-page/course-page';
+import { Home } from './components/home/home';
+import { SignIn } from './components/signin/signin';
+import { SignUp } from './components/sign-up/sign-up';
+import { CourseList } from './components/course-list/course-list';
+import { Profile } from './components/profile/profile';
+import { CoursePage } from './components/course-page/course-page';
 
 export const routes: Routes = [
 	{

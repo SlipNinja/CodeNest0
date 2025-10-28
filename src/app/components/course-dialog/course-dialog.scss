@@ -1,5 +1,5 @@
-@use '../../tools';
-@use '../../variables';
+@use '../../../style_modules/tools';
+@use '../../../style_modules/variables';
 
 :host {
 	display: flex;
