@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { DataParser } from '../services/data-parser';
+import { DataParser } from '@services/data-parser';
 import { RouterModule } from '@angular/router';
-import { CourseInfo } from '../interfaces/course-info';
-import { DialogHandler } from '../services/dialog-handler';
+import { CourseInfo } from '@interfaces/course-info';
+import { DialogHandler } from '@services/dialog-handler';
 
 @Component({
 	selector: 'app-home',

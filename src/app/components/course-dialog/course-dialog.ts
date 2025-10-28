@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
-import { DialogHandler } from '../services/dialog-handler';
+import { DialogHandler } from '@services/dialog-handler';
 
 @Component({
 	selector: 'app-course-dialog',

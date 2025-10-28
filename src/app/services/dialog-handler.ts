@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { CourseInfo } from '../interfaces/course-info';
-import { DataParser } from './data-parser';
-import { CourseDialog } from '../course-dialog/course-dialog';
+import { CourseInfo } from '@interfaces/course-info';
+import { DataParser } from '@services/data-parser';
+import { CourseDialog } from '@components/course-dialog/course-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { HintDialog } from '../hint-dialog/hint-dialog';
+import { HintDialog } from '@components/hint-dialog/hint-dialog';
 
 type Hint = {
 	hint: string;

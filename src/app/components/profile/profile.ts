@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { User } from '../interfaces/user';
-import { DataParser } from '../services/data-parser';
-import { CourseInfo } from '../interfaces/course-info';
-import { DialogHandler } from '../services/dialog-handler';
-import { Badge } from '../interfaces/badge';
-import { UserHandler } from '../services/user-handler';
+import { User } from '@interfaces/user';
+import { DataParser } from '@services/data-parser';
+import { CourseInfo } from '@interfaces/course-info';
+import { DialogHandler } from '@services/dialog-handler';
+import { Badge } from '@interfaces/badge';
+import { UserHandler } from '@services/user-handler';
 
 @Component({
 	selector: 'app-profile',

@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { CourseInfo } from '../interfaces/course-info';
-import { DataParser } from '../services/data-parser';
+import { CourseInfo } from '@interfaces/course-info';
+import { DataParser } from '@services/data-parser';
 import { RouterModule } from '@angular/router';
-import { DialogHandler } from '../services/dialog-handler';
+import { DialogHandler } from '@services/dialog-handler';
 
 @Component({
 	selector: 'app-course-list',

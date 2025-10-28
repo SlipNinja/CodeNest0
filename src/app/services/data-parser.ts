@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CourseInfo } from '../interfaces/course-info';
+import { CourseInfo } from '@interfaces/course-info';
 
 type QuestionsInfos = { [key: string]: string | number };
 
