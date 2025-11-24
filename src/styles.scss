@@ -71,6 +71,10 @@ div.cm-editor {
 	border: 2px solid variables.$main_button_color;
 	color: variables.$main_text_color;
 
+	& .cm-cursor {
+		border-left-color: variables.$main_button_color;
+	}
+
 	& .cm-gutters {
 		background-color: variables.$main_button_color;
 		color: black;

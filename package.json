@@ -30,6 +30,7 @@
     "@angular/material": "^20.2.10",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@codemirror/lang-javascript": "^6.2.4",
     "@codemirror/view": "^6.38.6",
     "bootstrap-icons": "^1.13.1",
     "codemirror": "^6.0.2",
