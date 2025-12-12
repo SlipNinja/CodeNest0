@@ -15,13 +15,14 @@ export class SignUp {
 		confirm_password: new FormControl(''),
 	});
 
-	submitSignIn(): void {
+	// Handles sign up
+	submitSignUp(): void {
 		console.log(this.sign_up_form.value.username);
 		console.log(this.sign_up_form.value.password);
 	}
 
+	// Handles the password visibility toggle on icon click
 	togglePassword(e: any) {
-		console.log(e.originalTarget.previousElementSibling);
 		const button = e.originalTarget;
 		const password = button.previousElementSibling;
 

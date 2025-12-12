@@ -9,6 +9,7 @@ export class UserHandler {
 	database_url = './assets/database.json';
 	users: User[] = [];
 
+	// Fetch users
 	async fetchUsers(): Promise<User[]> {
 		const data = await fetch(this.database_url);
 		const data_json = await data.json();
@@ -16,6 +17,7 @@ export class UserHandler {
 		return data_json['users'];
 	}
 
+	// Fetch badges, id list is optionnal
 	async fetchBadges(ids?: number[]): Promise<Badge[]> {
 		const data = await fetch(this.database_url);
 		const data_json = await data.json();

@@ -13,6 +13,7 @@ import { DialogHandler } from '@services/dialog-handler';
 export class CourseList {
 	dialog_handler = inject(DialogHandler);
 	parser: DataParser = inject(DataParser);
+
 	course_list: CourseInfo[] = [];
 	filtered_list: CourseInfo[] = [];
 	sortTags: { [key: string]: number } = {};
@@ -24,6 +25,7 @@ export class CourseList {
 		this.getCourses();
 	}
 
+	// Get all courses and tags and display them
 	getCourses() {
 		this.parser.fetchCourses().then((result) => {
 			this.course_list = result;
@@ -100,6 +102,7 @@ export class CourseList {
 		}
 	}
 
+	// Open course dialog on click
 	openDialog(course: CourseInfo) {
 		this.dialog_handler.openDialog('course', course);
 	}

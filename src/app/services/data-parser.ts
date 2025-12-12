@@ -13,6 +13,7 @@ export class DataParser {
 	database_url = './assets/database.json';
 	courses: CourseInfo[] = [];
 
+	// Fetch questions
 	async getQuestions(): Promise<Map<string, string>> {
 		const questions: Map<string, string> = new Map();
 		const data = await fetch(this.questions_url);
@@ -27,6 +28,7 @@ export class DataParser {
 		return questions;
 	}
 
+	// Fetch course by id
 	async fetchCourse(id: number): Promise<CourseInfo> {
 		const data = await fetch(this.database_url);
 		const data_json = await data.json();
@@ -35,6 +37,7 @@ export class DataParser {
 		return this.courses.find((course) => course['id'] == id) as CourseInfo;
 	}
 
+	// Fetch n courses
 	async fetchCourses(n?: number): Promise<CourseInfo[]> {
 		const data = await fetch(this.database_url);
 		const data_json = await data.json();

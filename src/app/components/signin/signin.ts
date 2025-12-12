@@ -13,11 +13,13 @@ export class SignIn {
 		password: new FormControl(''),
 	});
 
+	// Handles sign in
 	submitSignIn(): void {
 		console.log(this.sign_in_form.value.username);
 		console.log(this.sign_in_form.value.password);
 	}
 
+	// Handles toggle password visibility on icon click
 	togglePassword(e: any) {
 		console.log(e.originalTarget.previousElementSibling);
 		const button = e.originalTarget;

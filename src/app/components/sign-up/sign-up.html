@@ -1,4 +1,4 @@
-<form [formGroup]="sign_up_form" (submit)="submitSignIn()">
+<form [formGroup]="sign_up_form" (submit)="submitSignUp()">
 	<fieldset>
 		<legend>Create free account</legend>
 
@@ -16,6 +16,6 @@
 			<input id="confirm_password" type="password" formControlName="confirm_password" />
 			<div class="bi bi-eye" (click)="togglePassword($event)" (keydown)="(null)"></div>
 		</div>
-		<button type="submit" class="main_button" (click)="submitSignIn()">Connection</button>
+		<button type="submit" class="main_button" (click)="submitSignUp()">Connection</button>
 	</fieldset>
 </form>

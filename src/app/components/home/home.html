@@ -7,6 +7,7 @@
 	<button class="main_button" [routerLink]="['/sign-up']">Create free account</button>
 </div>
 
+<!--Display a few courses-->
 <div>
 	<div class="course_list">
 		@for (course of course_list; track course) {
@@ -19,12 +20,16 @@
 	</div>
 	<button class="main_button" [routerLink]="['/course-list']">See all courses</button>
 </div>
+
+<!--Display hero-->
 <div>
 	<div id="hero_img">
 		<img src="./assets/imgs/activity.png" alt="activity example" />
 	</div>
 	<button class="main_button" [routerLink]="['/sign-in']">Get Started</button>
 </div>
+
+<!--Display faq-->
 <div>
 	<h2>Frequently asked questions</h2>
 	@for (question of questions.keys(); track questions.get(question)) {
@@ -34,6 +39,8 @@
 	</details>
 	}
 </div>
+
+<!--Display user opinions-->
 <div>
 	<h2>They use CodeNest0 and they like it</h2>
 	<div class="user_comment_container">

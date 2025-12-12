@@ -25,10 +25,12 @@ export class Profile {
 		this.loadUser();
 	}
 
+	// Open course dialog on click on last course
 	openDialog(course: CourseInfo) {
 		this.dialog_handler.openDialog('course', course);
 	}
 
+	// Load user data (TODO: Handle authentification)
 	loadUser() {
 		this.user_handler.fetchUsers().then((result) => {
 			this.user = result[0];
@@ -37,13 +39,14 @@ export class Profile {
 		});
 	}
 
-	// TODO : Handle User authentification
+	// Load last course done by user
 	loadLastCourse() {
 		this.parser.fetchCourse(this.user['last_course']).then((result) => {
 			this.last_course = result;
 		});
 	}
 
+	// Load user badges
 	loadBadges() {
 		this.user_handler.fetchBadges(this.user.badges).then((result) => {
 			this.badges = result;

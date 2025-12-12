@@ -1,3 +1,4 @@
+<!--Display course details-->
 <div class="course_details">
 	<div class="course_banner">
 		<div><img alt="language" src="{{ data.logo }}" /></div>
@@ -7,6 +8,7 @@
 	<p>{{ data.description }}</p>
 </div>
 
+<!--Display recommended courses-->
 <div>
 	<h3>Recommended courses</h3>
 	<div class="course_list">
@@ -19,6 +21,8 @@
 		}
 	</div>
 </div>
+
+<!--Display start course button-->
 <button class="main_button" mat-dialog-close [routerLink]="['/course', data.id]">
 	Start course
 </button>

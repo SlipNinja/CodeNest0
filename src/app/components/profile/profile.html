@@ -1,13 +1,18 @@
+<!--Display profile pic and username-->
 <div id="user_main">
 	<div>
 		<img src="{{ user.profile_photo }}" alt="profile" aria-hidden="true" />
 	</div>
 	<h3>{{ user.username }}</h3>
 </div>
+
+<!--Display user stats-->
 <div id="user_stats">
 	<p>Courses completed : {{ user.courses_completed.length }}</p>
 	<p>XP gained : {{ user.xp }}</p>
 </div>
+
+<!--Display user last course-->
 <div id="user_last">
 	<p>Last course :</p>
 	<button class="course_button" (click)="openDialog(last_course)">
@@ -16,6 +21,8 @@
 		<div><img alt="level" src="{{ last_course.level }}" /></div>
 	</button>
 </div>
+
+<!--Display user badges-->
 <div id="user_badges">
 	@for (badge of badges; track badge.name) {
 	<div>

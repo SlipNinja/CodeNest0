@@ -13,6 +13,7 @@ export class CourseDialog {
 	dialog_handler: DialogHandler = inject(DialogHandler);
 	data: any = inject(MAT_DIALOG_DATA);
 
+	// On click on dependency course
 	openNew(id: number) {
 		this.dialog_handler.openNewCourseDialog(id);
 	}

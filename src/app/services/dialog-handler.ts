@@ -29,6 +29,7 @@ export class DialogHandler {
 			dependencies: dependencies,
 		};
 
+		// Display course dependencies
 		for (const dep of course['dependencies']) {
 			let course_dep: CourseInfo;
 			this.parser.fetchCourse(dep).then((result) => {

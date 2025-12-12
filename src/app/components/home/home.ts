@@ -22,18 +22,21 @@ export class Home {
 		this.loadQuestions();
 	}
 
+	// Load questions on homepage
 	loadQuestions() {
 		this.parser.getQuestions().then((result) => {
 			this.questions = result;
 		});
 	}
 
+	// Load courses on homepage
 	loadCourses() {
 		this.parser.fetchCourses(3).then((result) => {
 			this.course_list = result;
 		});
 	}
 
+	// Open course dialog on click
 	openDialog(course: CourseInfo) {
 		this.dialog_handler.openDialog('course', course);
 	}

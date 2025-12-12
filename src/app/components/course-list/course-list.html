@@ -1,3 +1,4 @@
+<!--Display tags-->
 <fieldset>
 	<legend><h3>Tags</h3></legend>
 	<div>
@@ -17,6 +18,8 @@
 	</div>
 	}
 </fieldset>
+
+<!--Display courses-->
 <div class="all_courses">
 	@for (course of filtered_list; track course) {
 	<button class="course_button" (click)="openDialog(course)">
