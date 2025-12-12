@@ -21,10 +21,10 @@ export class SignUp {
 		console.log(this.sign_up_form.value.password);
 	}
 
-	// Handles the password visibility toggle on icon click
-	togglePassword(e: any) {
-		const button = e.originalTarget;
-		const password = button.previousElementSibling;
+	// Handles toggle password visibility on icon click
+	togglePassword(e: Event) {
+		const button = e.target as HTMLInputElement;
+		const password = button.previousElementSibling as HTMLInputElement;
 
 		if (password.type == 'text') {
 			button.classList = 'bi bi-eye';
