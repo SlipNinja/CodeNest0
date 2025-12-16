@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { LucideAngularModule, Eye, EyeOff } from 'lucide-angular';
 
 @Component({
 	selector: 'app-signin',
-	imports: [ReactiveFormsModule],
+	imports: [ReactiveFormsModule, LucideAngularModule],
 	templateUrl: './signin.html',
 	styleUrl: './signin.scss',
 })
 export class SignIn {
+	readonly Eye_open = Eye;
+	readonly Eye_closed = EyeOff;
+	eye_open: boolean = true;
+
 	sign_in_form = new FormGroup({
 		username: new FormControl(''),
 		password: new FormControl(''),
@@ -21,15 +26,6 @@ export class SignIn {
 
 	// Handles toggle password visibility on icon click
 	togglePassword(e: Event) {
-		const button = e.target as HTMLInputElement;
-		const password = button.previousElementSibling as HTMLInputElement;
-
-		if (password.type == 'text') {
-			button.classList = 'bi bi-eye';
-			password.type = 'password';
-		} else {
-			button.classList = 'bi bi-eye-slash';
-			password.type = 'text';
-		}
+		this.eye_open = !this.eye_open;
 	}
 }

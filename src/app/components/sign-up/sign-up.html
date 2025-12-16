@@ -8,13 +8,31 @@
 		<input id="email" type="email" formControlName="email" />
 		<label for="password">Password</label>
 		<div>
-			<input id="password" type="password" formControlName="password" />
-			<div class="bi bi-eye" (click)="togglePassword($event)" (keydown)="(null)"></div>
+			<input
+				id="password"
+				[type]="eye_open ? 'password' : 'text'"
+				formControlName="password"
+			/>
+			<lucide-angular
+				[img]="eye_open ? Eye_open : Eye_closed"
+				[size]="35"
+				(click)="togglePassword($event)"
+				class="eye_icon"
+			></lucide-angular>
 		</div>
 		<label for="confirm_password">Confirm password</label>
 		<div>
-			<input id="confirm_password" type="password" formControlName="confirm_password" />
-			<div class="bi bi-eye" (click)="togglePassword($event)" (keydown)="(null)"></div>
+			<input
+				id="confirm_password"
+				[type]="eye_open_confirm ? 'password' : 'text'"
+				formControlName="password"
+			/>
+			<lucide-angular
+				[img]="eye_open_confirm ? Eye_open : Eye_closed"
+				[size]="35"
+				(click)="togglePasswordConfirm($event)"
+				class="eye_icon"
+			></lucide-angular>
 		</div>
 		<button type="submit" class="main_button" (click)="submitSignUp()">Connection</button>
 	</fieldset>

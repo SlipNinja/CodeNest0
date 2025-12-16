@@ -6,8 +6,13 @@
 		<input type="text" formControlName="username" />
 		<label for="password">Password</label>
 		<div>
-			<input type="password" formControlName="password" />
-			<div class="bi bi-eye" (click)="togglePassword($event)" (keydown)="(null)"></div>
+			<input [type]="eye_open ? 'password' : 'text'" formControlName="password" />
+			<lucide-angular
+				[img]="eye_open ? Eye_open : Eye_closed"
+				[size]="35"
+				(click)="togglePassword($event)"
+				class="eye_icon"
+			></lucide-angular>
 		</div>
 		<button type="submit" class="main_button" (click)="submitSignIn()">Connection</button>
 	</fieldset>
