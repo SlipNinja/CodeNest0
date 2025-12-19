@@ -79,6 +79,10 @@
 	padding: variables.$base_gap;
 	min-width: fit-content;
 
+	& .eye_icon {
+		cursor: pointer;
+	}
+
 	& fieldset {
 		display: flex;
 		flex-direction: column;
@@ -87,8 +91,11 @@
 		padding: variables.$base_gap;
 		border-radius: 5px;
 
-		& > input {
-			height: 4rem;
+		& input {
+			padding: 0px variables.$base_gap;
+			height: 3rem;
+			font-family: Roboto, sans-serif;
+			font-size: variables.$paragraph_font_size;
 		}
 
 		& > div {
@@ -96,7 +103,6 @@
 			align-items: center;
 			gap: variables.$base_gap;
 			width: 100%;
-			height: 4rem;
 
 			& > input {
 				flex-grow: 1;
@@ -120,13 +126,6 @@
 		& > label {
 			flex: 1;
 			font-size: variables.$menu_font_size;
-		}
-
-		& input {
-			padding: 0px variables.$base_gap;
-			height: 3rem;
-			font-family: Roboto, sans-serif;
-			font-size: variables.$paragraph_font_size;
 		}
 	}
 }
