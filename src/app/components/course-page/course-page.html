@@ -1,7 +1,7 @@
 <div id="steps">
 	<div>
-		<div><img src="{{ current_course.logo }}" alt="course_logo" /></div>
-		<h3>{{ current_course.name }}</h3>
+		<div><img src="{{ current_course?.logo }}" alt="course_logo" /></div>
+		<h3>{{ current_course?.name }}</h3>
 	</div>
 	<div id="dot_list">
 		@for (step of step_quantity; track step.step_number) { @if (step.done){
