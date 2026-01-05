@@ -19,6 +19,7 @@ export class CoursePage implements OnInit, OnDestroy {
 	view: EditorView;
 	parser: DataParser = inject(DataParser);
 	current_course: CourseInfo;
+	game_frame: HTMLIFrameElement;
 
 	step_quantity = [
 		{ step_number: 1, done: true },
@@ -54,21 +55,19 @@ export class CoursePage implements OnInit, OnDestroy {
 			});
 		});
 
+		this.game_frame = document.getElementsByTagName('iframe')[0];
 		this.init_editor();
 
 		window.addEventListener('message', (e) => {
-			const results = JSON.parse(e.data);
+			// Verify it's from the sandboxed iframe
+			if (e.origin === null && e.source === this.game_frame.contentWindow) return;
+
+			const results = e.data;
 			console.log(results);
 		});
 
-		const data = {
-			f_name: this.example_exercice['f_name'],
-			tests: this.example_exercice['tests'],
-			code: this.get_code(),
-		};
-
 		document.getElementById('run_button')?.addEventListener('click', (e) => {
-			this.send_iframe(data);
+			this.send_iframe();
 		});
 	}
 
@@ -89,13 +88,21 @@ export class CoursePage implements OnInit, OnDestroy {
 		this.view.dispatch(transaction);
 	}
 
-	send_iframe(data: object) {
-		const game_frame = document.getElementsByTagName('iframe')[0];
+	send_iframe() {
+		if (!this.game_frame.contentWindow) {
+			console.error('Game frame not found');
+			return;
+		}
 
-		// const iframe_origin = new URL(game_frame.src).origin;
-		// console.log(iframe_origin);
+		const data = {
+			f_name: this.example_exercice['f_name'],
+			tests: this.example_exercice['tests'],
+			code: this.get_code(),
+		};
 
-		game_frame.contentWindow?.postMessage(data, '*');
+		// Sandboxed iframes which lack the 'allow-same-origin' header
+		// don't have an origin which you can target
+		this.game_frame.contentWindow.postMessage(data, '*');
 	}
 
 	get_code() {

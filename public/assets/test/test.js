@@ -17,9 +17,7 @@ window.addEventListener('message', (e) => {
 		try {
 			r['output'] = new Function(f_call)();
 		} catch (e) {
-			r['output'] = undefined;
 			r['result'] = `Error : ${e.message}`;
-			r['passed'] = false;
 			continue;
 		}
 
@@ -34,6 +32,9 @@ window.addEventListener('message', (e) => {
 		results.push(r);
 	}
 
-	document.body.textContent = JSON.stringify(results);
-	window.top.postMessage(result, '*');
+	const results_str = JSON.stringify(results);
+	document.body.textContent = results_str;
+
+	const parent_origin = globalThis.location.origin; // Change when deployed
+	window.parent.postMessage(results, parent_origin);
 });
