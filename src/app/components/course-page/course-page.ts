@@ -6,6 +6,7 @@ import { EditorView } from '@codemirror/view';
 import { DataParser } from '@services/data-parser';
 import { CourseInfo } from '@interfaces/course-info';
 import { javascript } from '@codemirror/lang-javascript';
+import { EditorState } from '@codemirror/state';
 
 @Component({
 	selector: 'app-course-page',
@@ -32,6 +33,7 @@ export class CoursePage implements OnInit, OnDestroy {
 	example_exercice: any = {
 		lang: javascript(),
 		f_name: 'multiply',
+		text: "Write a function named 'multiply' that takes two parameters and returns the product of them.",
 		tests: [
 			{
 				f_params: [5, 5],
@@ -69,11 +71,18 @@ export class CoursePage implements OnInit, OnDestroy {
 		document.getElementById('run_button')?.addEventListener('click', (e) => {
 			this.send_iframe();
 		});
+
+		const exercise_text = document.getElementById('exercise');
+		if (exercise_text) exercise_text.textContent = this.example_exercice['text'];
 	}
 
 	init_editor() {
+		let state = EditorState.create({
+			extensions: [basicSetup, this.example_exercice['lang'], EditorState.tabSize.of(4)],
+		});
+
 		this.view = new EditorView({
-			extensions: [basicSetup, this.example_exercice['lang']],
+			state,
 		});
 
 		document.querySelector('#code_zone')?.appendChild(this.view.dom);
