@@ -85,14 +85,18 @@ div.cm-editor {
 
 	& .cm-content {
 		& > .cm-activeLine {
-			background-color: variables.$secondary_bg_color;
-			color: variables.$main_button_color;
+			background-color: transparent;
+			color: variables.$main_button_color_light;
 		}
 	}
 
 	// SELECTION
 	&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
-		background-color: variables.$light_bg_color;
+		background-color: darken(variables.$main_button_color, 45%);
+	}
+
+	& .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+		background-color: darken(variables.$main_button_color, 50%);
 	}
 
 	// AFTER SELECTION
