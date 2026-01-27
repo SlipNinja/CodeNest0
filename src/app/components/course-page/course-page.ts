@@ -1,12 +1,16 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { basicSetup } from 'codemirror';
-import { EditorView } from '@codemirror/view';
+import { minimalSetup } from 'codemirror';
+import { dropCursor, EditorView, lineNumbers } from '@codemirror/view';
 import { DataParser } from '@services/data-parser';
 import { CourseInfo } from '@interfaces/course-info';
 import { javascript } from '@codemirror/lang-javascript';
 import { EditorState } from '@codemirror/state';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { bracketMatching, foldGutter, indentOnInput, indentUnit } from '@codemirror/language';
+import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
+import { VM } from 'vm2';
 
 @Component({
 	selector: 'app-course-page',
@@ -69,16 +73,32 @@ export class CoursePage implements OnInit, OnDestroy {
 		});
 
 		document.getElementById('run_button')?.addEventListener('click', (e) => {
-			this.send_iframe();
+			//this.send_iframe();
+			this.test_code();
 		});
 
 		const exercise_text = document.getElementById('exercise');
 		if (exercise_text) exercise_text.textContent = this.example_exercice['text'];
 	}
 
+	// TODO: choose and configure extensions and remove basic setup ( nearly done )
+	// TODO: improve editor style ( a bit more )
 	init_editor() {
 		let state = EditorState.create({
-			extensions: [basicSetup, this.example_exercice['lang'], EditorState.tabSize.of(4)],
+			extensions: [
+				this.example_exercice['lang'], // Language
+				EditorState.tabSize.of(4), // Tab size
+				minimalSetup,
+				oneDark, // Theme
+				lineNumbers(), // Creates line number gutter
+				foldGutter(), // Allows to fold gutters
+				dropCursor(), // Cursor on drag and drop
+				indentOnInput(), // Auto indent semantically
+				bracketMatching(), // Highlight opposing bracket
+				closeBrackets(), // Add closing bracket after cursor
+				autocompletion(), // Semantic autocompletion
+				indentUnit.of('    '), // Default size of indentation
+			],
 		});
 
 		this.view = new EditorView({
@@ -112,6 +132,11 @@ export class CoursePage implements OnInit, OnDestroy {
 		// Sandboxed iframes which lack the 'allow-same-origin' header
 		// don't have an origin which you can target
 		this.game_frame.contentWindow.postMessage(data, '*');
+	}
+
+	test_code() {
+		console.log('TEST CODE ON');
+		//new VM().run('console.log("JE SUIS DANS UNE VM OMG");');
 	}
 
 	get_code() {

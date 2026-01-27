@@ -1,15 +1,15 @@
 <!--Display profile pic and username-->
 <div id="user_main">
 	<div>
-		<img src="{{ user.profile_photo }}" alt="profile" aria-hidden="true" />
+		<img src="" alt="profile" aria-hidden="true" />
 	</div>
 	<h3>{{ user.username }}</h3>
 </div>
 
 <!--Display user stats-->
 <div id="user_stats">
-	<p>Courses completed : {{ user.courses_completed.length }}</p>
-	<p>XP gained : {{ user.xp }}</p>
+	<p>Courses completed :</p>
+	<p>XP gained : {{ user.experience }}</p>
 </div>
 
 <!--Display user last course-->
@@ -25,9 +25,9 @@
 <!--Display user badges-->
 <div id="user_badges">
 	@for (badge of badges; track badge.name) {
-	<div>
-		<img src="{{ badge.logo }}" alt="{{ badge.name }}" />
-		<span>{{ badge.description }}</span>
-	</div>
+		<div>
+			<img src="{{ badge.logo }}" alt="{{ badge.name }}" />
+			<span>{{ badge.description }}</span>
+		</div>
 	}
 </div>

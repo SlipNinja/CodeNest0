@@ -41,15 +41,15 @@ export class Profile {
 
 	// Load last course done by user
 	loadLastCourse() {
-		this.parser.fetchCourse(this.user['last_course']).then((result) => {
+		this.parser.fetchCourse(this.user['id_last_course']).then((result) => {
 			this.last_course = result;
 		});
 	}
 
 	// Load user badges
 	loadBadges() {
-		this.user_handler.fetchBadges(this.user.badges).then((result) => {
-			this.badges = result;
-		});
+		// this.user_handler.fetchBadges(this.user.badges).then((result) => {
+		// 	this.badges = result;
+		// });
 	}
 }

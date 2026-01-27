@@ -2,8 +2,8 @@
 	<fieldset>
 		<legend>Connect to your account</legend>
 
-		<label for="username">Username</label>
-		<input type="text" formControlName="username" />
+		<label for="email">email</label>
+		<input type="text" formControlName="email" />
 		<label for="password">Password</label>
 		<div>
 			<input [type]="eye_open ? 'password' : 'text'" formControlName="password" />
@@ -14,6 +14,6 @@
 				class="eye_icon"
 			></lucide-angular>
 		</div>
-		<button type="submit" class="main_button" (click)="submitSignIn()">Connection</button>
+		<button type="submit" class="main_button">Connection</button>
 	</fieldset>
 </form>

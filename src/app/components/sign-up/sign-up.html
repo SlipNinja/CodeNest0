@@ -25,7 +25,7 @@
 			<input
 				id="confirm_password"
 				[type]="eye_open_confirm ? 'password' : 'text'"
-				formControlName="password"
+				formControlName="confirm_password"
 			/>
 			<lucide-angular
 				[img]="eye_open_confirm ? Eye_open : Eye_closed"
@@ -34,6 +34,6 @@
 				class="eye_icon"
 			></lucide-angular>
 		</div>
-		<button type="submit" class="main_button" (click)="submitSignUp()">Connection</button>
+		<button type="submit" class="main_button">Create account</button>
 	</fieldset>
 </form>
