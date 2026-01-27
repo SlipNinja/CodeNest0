@@ -1,7 +1,7 @@
 <!--Display profile pic and username-->
 <div id="user_main">
 	<div>
-		@if (user.photo == null) {
+		@if (user.photo) {
 			<img src="{{ `./assets/imgs/${user.photo}` }}" alt="profile" aria-hidden="true" />
 		} @else {
 			<img src="{{ './assets/imgs/empty_profile.png' }}" alt="profile" aria-hidden="true" />

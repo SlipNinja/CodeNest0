@@ -36,6 +36,7 @@ export class Profile {
 
 	loadUser() {
 		const current_user = this.user_handler.current_user();
+		console.log(current_user);
 
 		if (!current_user) {
 			this.router.navigate(['/sign-in']);
@@ -56,8 +57,6 @@ export class Profile {
 				else {
 					const body: any = data.body;
 					if (!body) throw new Error('No body found in response');
-
-					console.log(body[0]);
 					this.last_course = body[0];
 				}
 			});
