@@ -13,11 +13,11 @@
 	<h3>Recommended courses</h3>
 	<div class="course_list">
 		@for (course of data.dependencies; track course) {
-		<button class="course_button" (click)="openNew(course.id)">
-			<div><img alt="language" src="{{ course.logo }}" /></div>
-			<p>{{ course.name }}</p>
-			<div><img alt="level" src="{{ course.level }}" /></div>
-		</button>
+			<button class="course_button" (click)="openNew(course.id_course)">
+				<div><img alt="language" src="{{ course.logo }}" /></div>
+				<p>{{ course.name }}</p>
+				<div><img alt="level" src="{{ course.level }}" /></div>
+			</button>
 		}
 	</div>
 </div>

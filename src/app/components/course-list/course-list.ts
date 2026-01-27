@@ -29,16 +29,19 @@ export class CourseList {
 	getCourses() {
 		this.parser.fetchCourses().then((result) => {
 			this.course_list = result;
-			this.loadTags();
-			this.filterCourses();
+
+			// TMP
+			this.filtered_list = result;
+			//this.loadTags();
+			//this.filterCourses();
 		});
 	}
 
 	// Populate filtered courses based on filters
 	filterCourses() {
-		this.filtered_list = this.course_list.filter((course) =>
-			this.filters.find((filter) => course['tags'].includes(filter))
-		);
+		// this.filtered_list = this.course_list.filter((course) =>
+		// 	this.filters.find((filter) => course['tags'].includes(filter)),
+		// );
 	}
 
 	// Called on checkbox change
@@ -78,13 +81,13 @@ export class CourseList {
 		const tags: { [tag: string]: number } = {};
 
 		for (const course of this.course_list) {
-			for (const tag of course['tags']) {
-				if (tags[tag] == undefined) {
-					tags[tag] = 1;
-				} else {
-					tags[tag] += 1;
-				}
-			}
+			// for (const tag of course['tags']) {
+			// 	if (tags[tag] == undefined) {
+			// 		tags[tag] = 1;
+			// 	} else {
+			// 		tags[tag] += 1;
+			// 	}
+			// }
 		}
 
 		this.sortTags = Object.fromEntries(Object.entries(tags).sort(([, a], [, b]) => b - a));

@@ -21,13 +21,15 @@ export class DialogHandler {
 	generateData(course: CourseInfo) {
 		const dependencies: CourseInfo[] = [];
 		const data = {
-			id: course.id,
+			id_course: course.id_course,
 			name: course.name,
 			logo: course.logo,
 			level: course.level,
 			description: course.description,
 			dependencies: dependencies,
 		};
+
+		if (!course['dependencies']) return;
 
 		// Display course dependencies
 		for (const dep of course['dependencies']) {

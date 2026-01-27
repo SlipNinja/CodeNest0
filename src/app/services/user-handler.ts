@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { User } from '@interfaces/user';
 import { Badge } from '@interfaces/badge';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root',
@@ -9,17 +11,36 @@ import { HttpClient } from '@angular/common/http';
 export class UserHandler {
 	database_url = './assets/database.json';
 	request_url = 'http://localhost:3000';
-	users: User[] = [];
+	router: Router = new Router();
+	@Output() connected: EventEmitter<boolean> = new EventEmitter();
 
-	constructor(private http: HttpClient) {}
+	constructor(
+		private readonly http: HttpClient,
+		private readonly cookie_service: CookieService,
+	) {}
 
 	// Return an observable of users
 	get_users() {
 		return this.http.get<User>(this.request_url + '/users');
 	}
 
+	set_current_user(token: string) {
+		this.cookie_service.set('jwt_token', token);
+	}
+
+	current_user() {
+		const token = this.cookie_service.get('jwt_token');
+
+		if (!token) return null;
+
+		const token_parts: string[] = token.split('.');
+		const encoded_payload: string = token_parts[1];
+		const raw_payload: string = atob(encoded_payload);
+		return JSON.parse(raw_payload)['user'];
+	}
+
 	// Return an observable of users
-	add_user(email: string, password: string, username: string) {
+	try_add_user(email: string, password: string, username: string) {
 		const add_request = `${this.request_url}/create`;
 		const add_body = {
 			email: email,
@@ -32,7 +53,20 @@ export class UserHandler {
 		});
 	}
 
-	login(email: string, password: string) {
+	add_user(email: string, password: string, username: string) {
+		this.try_add_user(email, password, username).subscribe((data) => {
+			if (data.status != 201) throw new Error('Cant create a ne user');
+			else {
+				const body: any = data.body;
+				if (!body) throw new Error('No body found in response');
+				this.set_current_user(body['message']);
+				this.connected.emit(true);
+				this.router.navigate(['/profile']);
+			}
+		});
+	}
+
+	try_login(email: string, password: string) {
 		const login_request = `${this.request_url}/login`;
 		const login_body = {
 			email: email,
@@ -40,6 +74,20 @@ export class UserHandler {
 		};
 
 		return this.http.post(login_request, login_body, { observe: 'response' });
+	}
+
+	login(email: string, password: string) {
+		this.try_login(email, password).subscribe((data) => {
+			if (data.status != 200) {
+				throw new Error('Cant login');
+			} else {
+				const body: any = data.body;
+				if (!body) throw new Error('No body found in response');
+				this.connected.emit(true);
+				this.set_current_user(body['message']);
+				this.router.navigate(['/profile']);
+			}
+		});
 	}
 
 	// Fetch users

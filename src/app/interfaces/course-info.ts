@@ -1,9 +1,11 @@
 export interface CourseInfo {
-	id: number;
+	id_course: number;
 	name: string;
 	logo: string;
 	level: string;
 	description: string;
-	dependencies: number[];
-	tags: string[];
+	programming_language: string;
+	number_step: number;
+	dependencies?: number[];
+	tags?: string[];
 }

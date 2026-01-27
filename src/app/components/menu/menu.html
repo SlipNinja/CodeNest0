@@ -7,4 +7,8 @@
 	<a class="menu_link" [routerLink]="['/course-list']">Courses</a>
 	<a class="menu_link" [routerLink]="['/profile']">Profile</a>
 </div>
-<button [routerLink]="['/sign-in']">Sign in</button>
+@if (connected) {
+	<button [routerLink]="['/sign-in']">Log out</button>
+} @else {
+	<button [routerLink]="['/sign-in']">Sign in</button>
+}

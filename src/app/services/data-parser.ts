@@ -34,7 +34,7 @@ export class DataParser {
 		const data_json = await data.json();
 		this.courses = data_json['courses'];
 
-		return this.courses.find((course) => course['id'] == id) as CourseInfo;
+		return this.courses.find((course) => course['id_course'] == id) as CourseInfo;
 	}
 
 	// Fetch n courses

@@ -1,6 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { UserHandler } from '@services/user-handler';
 import { LucideAngularModule, Eye, EyeOff } from 'lucide-angular';
 
@@ -15,7 +14,6 @@ export class SignUp {
 	readonly Eye_closed = EyeOff;
 	eye_open: boolean = true;
 	eye_open_confirm: boolean = true;
-	private router = inject(Router);
 
 	sign_up_form = new FormGroup({
 		username: new FormControl(''),
@@ -24,18 +22,10 @@ export class SignUp {
 		confirm_password: new FormControl(''),
 	});
 
-	constructor(private user_service: UserHandler) {}
+	constructor(private readonly user_service: UserHandler) {}
 
 	add_user(email: string, password: string, username: string) {
-		this.user_service.add_user(email, password, username).subscribe((data) => {
-			if (data.status != 201) throw new Error('');
-			else {
-				console.log(data);
-
-				// Navigate to profile ( TODO : handle user session )
-				this.router.navigate(['/profile']);
-			}
-		});
+		this.user_service.add_user(email, password, username);
 	}
 
 	// Handles sign up
