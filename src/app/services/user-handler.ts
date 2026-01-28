@@ -29,6 +29,18 @@ export class UserHandler {
 		this.cookie_service.set('jwt_token', token);
 	}
 
+	process_authentification(response: any) {
+		// Request not processed correctly
+		if (response.status != 201) throw new Error('Cant create a new user');
+
+		const body: any = response.body;
+		if (!body) throw new Error('No body found in response');
+
+		this.set_current_user(body['message']);
+		this.connected.emit(true);
+		this.router.navigate(['/profile']);
+	}
+
 	// Get current user data from token
 	current_user() {
 		const token = this.cookie_service.get('jwt_token');
@@ -41,7 +53,7 @@ export class UserHandler {
 		return JSON.parse(raw_payload)['user'];
 	}
 
-	// Return an add_user observable to subscribe to
+	// Return an add_user Observable<HttpResponse<Object>> to subscribe to
 	try_add_user(email: string, password: string, username: string) {
 		const add_request = `${this.request_url}/create`;
 		const add_body = {
@@ -58,18 +70,11 @@ export class UserHandler {
 	// Handles user creation
 	add_user(email: string, password: string, username: string) {
 		this.try_add_user(email, password, username).subscribe((data) => {
-			if (data.status != 201) throw new Error('Cant create a ne user');
-			else {
-				const body: any = data.body;
-				if (!body) throw new Error('No body found in response');
-				this.set_current_user(body['message']);
-				this.connected.emit(true);
-				this.router.navigate(['/profile']);
-			}
+			this.process_authentification(data);
 		});
 	}
 
-	// Return an login observable to subscribe to
+	// Return an login Observable<HttpResponse<Object>>  to subscribe to
 	try_login(email: string, password: string) {
 		const login_request = `${this.request_url}/login`;
 		const login_body = {
@@ -83,15 +88,7 @@ export class UserHandler {
 	// Handles the login
 	login(email: string, password: string) {
 		this.try_login(email, password).subscribe((data) => {
-			if (data.status != 200) {
-				throw new Error('Cant login');
-			} else {
-				const body: any = data.body;
-				if (!body) throw new Error('No body found in response');
-				this.connected.emit(true);
-				this.set_current_user(body['message']);
-				this.router.navigate(['/profile']);
-			}
+			this.process_authentification(data);
 		});
 	}
 
