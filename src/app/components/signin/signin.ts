@@ -21,15 +21,11 @@ export class SignIn {
 
 	constructor(private readonly user_service: UserHandler) {}
 
-	login_user(email: string, password: string) {
-		this.user_service.login(email, password);
-	}
-
 	// Handles sign in
 	submitSignIn(): void {
 		const { email, password } = this.sign_in_form.value;
 		if (email && password) {
-			this.login_user(email, password);
+			this.user_service.login(email, password);
 		}
 	}
 

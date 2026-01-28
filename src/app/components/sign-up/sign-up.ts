@@ -24,15 +24,11 @@ export class SignUp {
 
 	constructor(private readonly user_service: UserHandler) {}
 
-	add_user(email: string, password: string, username: string) {
-		this.user_service.add_user(email, password, username);
-	}
-
 	// Handles sign up
 	submitSignUp(): void {
 		const { username, email, password, confirm_password } = this.sign_up_form.value;
 		if (email && username && password) {
-			this.add_user(email, password, username);
+			this.user_service.add_user(email, password, username);
 		}
 	}
 
