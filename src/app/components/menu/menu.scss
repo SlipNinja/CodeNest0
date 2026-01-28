@@ -44,4 +44,8 @@ $menu_margin: 30px;
 button {
 	@include tools.main_button;
 	margin-right: variables.$base_gap * 3;
+
+	&.logout {
+		background-color: darken(variables.$main_button_color, 30%);
+	}
 }
