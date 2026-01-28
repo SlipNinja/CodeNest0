@@ -8,7 +8,7 @@
 	<a class="menu_link" [routerLink]="['/profile']">Profile</a>
 </div>
 @if (connected) {
-	<button class="logout" [routerLink]="['/sign-in']">Log out</button>
+	<button class="logout" (click)="logout($event)">Log out</button>
 } @else {
 	<button [routerLink]="['/sign-in']">Sign in</button>
 }

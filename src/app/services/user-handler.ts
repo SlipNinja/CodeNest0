@@ -92,6 +92,12 @@ export class UserHandler {
 		});
 	}
 
+	// Handles the logout
+	logout() {
+		this.cookie_service.delete('jwt_token');
+		this.router.navigate(['/sign-in']);
+	}
+
 	// Fetch users
 	async fetchUsers(): Promise<User[]> {
 		const data = await fetch(this.database_url);
