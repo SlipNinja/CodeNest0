@@ -24,10 +24,12 @@ export class UserHandler {
 		return this.http.get<User>(this.request_url + '/users');
 	}
 
+	// Save token in cookies
 	set_current_user(token: string) {
 		this.cookie_service.set('jwt_token', token);
 	}
 
+	// Get current user data from token
 	current_user() {
 		const token = this.cookie_service.get('jwt_token');
 
@@ -39,7 +41,7 @@ export class UserHandler {
 		return JSON.parse(raw_payload)['user'];
 	}
 
-	// Return an observable of users
+	// Return an add_user observable to subscribe to
 	try_add_user(email: string, password: string, username: string) {
 		const add_request = `${this.request_url}/create`;
 		const add_body = {
@@ -53,6 +55,7 @@ export class UserHandler {
 		});
 	}
 
+	// Handles user creation
 	add_user(email: string, password: string, username: string) {
 		this.try_add_user(email, password, username).subscribe((data) => {
 			if (data.status != 201) throw new Error('Cant create a ne user');
@@ -66,6 +69,7 @@ export class UserHandler {
 		});
 	}
 
+	// Return an login observable to subscribe to
 	try_login(email: string, password: string) {
 		const login_request = `${this.request_url}/login`;
 		const login_body = {
@@ -76,6 +80,7 @@ export class UserHandler {
 		return this.http.post(login_request, login_body, { observe: 'response' });
 	}
 
+	// Handles the login
 	login(email: string, password: string) {
 		this.try_login(email, password).subscribe((data) => {
 			if (data.status != 200) {
