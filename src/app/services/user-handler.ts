@@ -31,7 +31,7 @@ export class UserHandler {
 
 	process_authentification(response: any) {
 		// Request not processed correctly
-		if (response.status != 201) throw new Error('Cant create a new user');
+		if (![200, 201].includes(response.status)) throw new Error('Cant create a new user');
 
 		const body: any = response.body;
 		if (!body) throw new Error('No body found in response');
