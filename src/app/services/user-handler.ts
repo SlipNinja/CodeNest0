@@ -95,6 +95,7 @@ export class UserHandler {
 	// Handles the logout
 	logout() {
 		this.cookie_service.delete('jwt_token');
+		this.connected.emit(false);
 		this.router.navigate(['/sign-in']);
 	}
 
