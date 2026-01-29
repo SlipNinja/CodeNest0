@@ -1,3 +1,5 @@
+import { Tag } from './tag';
+
 export interface CourseInfo {
 	id_course: number;
 	name: string;
@@ -7,5 +9,5 @@ export interface CourseInfo {
 	programming_language: string;
 	number_step: number;
 	dependencies?: number[];
-	tags?: string[];
+	tags?: Tag[];
 }

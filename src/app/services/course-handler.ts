@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CourseInfo } from '@interfaces/course-info';
+import { Tag } from '@interfaces/tag';
 
 @Injectable({
 	providedIn: 'root',
@@ -19,6 +20,13 @@ export class CourseHandler {
 
 	get_courses() {
 		return this.http.get<CourseInfo[]>(`${this.request_url}/courses`, {
+			observe: 'response',
+			withCredentials: true,
+		});
+	}
+
+	get_tags(id_course: number) {
+		return this.http.get<Tag[]>(`${this.request_url}/courses/${id_course}/tags`, {
 			observe: 'response',
 			withCredentials: true,
 		});

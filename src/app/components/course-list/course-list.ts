@@ -4,6 +4,7 @@ import { DataParser } from '@services/data-parser';
 import { RouterModule } from '@angular/router';
 import { DialogHandler } from '@services/dialog-handler';
 import { CourseHandler } from '@services/course-handler';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
 	selector: 'app-course-list',
@@ -31,6 +32,8 @@ export class CourseList {
 	getCourses() {
 		this.course_handler.get_courses().subscribe((result) => {
 			this.course_list = this.course_handler.check_response(result);
+			this.loadTags();
+
 			this.filtered_list = this.course_list;
 		});
 
@@ -83,17 +86,24 @@ export class CourseList {
 	}
 
 	// Populate checkboxes based on course tags
-	loadTags() {
+	async loadTags() {
 		const tags: { [tag: string]: number } = {};
-
 		for (const course of this.course_list) {
-			// for (const tag of course['tags']) {
-			// 	if (tags[tag] == undefined) {
-			// 		tags[tag] = 1;
-			// 	} else {
-			// 		tags[tag] += 1;
-			// 	}
-			// }
+			// Get tags by course
+			const result = await firstValueFrom(this.course_handler.get_tags(course['id_course']));
+			course['tags'] = this.course_handler.check_response(result);
+
+			// Count tags
+			if (course['tags']) {
+				for (const tag of course['tags']) {
+					const tag_name = tag['name'];
+					if (tags[tag_name] == undefined) {
+						tags[tag_name] = 1;
+					} else {
+						tags[tag_name] += 1;
+					}
+				}
+			}
 		}
 
 		this.sortTags = Object.fromEntries(Object.entries(tags).sort(([, a], [, b]) => b - a));
