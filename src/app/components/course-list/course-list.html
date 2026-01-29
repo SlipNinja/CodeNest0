@@ -12,20 +12,20 @@
 		<label for="all_tags">All - {{ course_list.length }}</label>
 	</div>
 	@for (tag of display_tags; track tag) {
-	<div>
-		<input (change)="boxChecked($event)" type="checkbox" id="{{ tag }}" name="{{ tag }}" />
-		<label for="{{ tag }}">{{ tag }} - {{ sortTags[tag] }}</label>
-	</div>
+		<div>
+			<input (change)="boxChecked($event)" type="checkbox" id="{{ tag }}" name="{{ tag }}" />
+			<label for="{{ tag }}">{{ tag }} - {{ sortTags[tag] }}</label>
+		</div>
 	}
 </fieldset>
 
 <!--Display courses-->
 <div class="all_courses">
 	@for (course of filtered_list; track course) {
-	<button class="course_button" (click)="openDialog(course)">
-		<div><img alt="language" src="{{ course.logo }}" /></div>
-		<p>{{ course.name }}</p>
-		<div><img alt="level" src="{{ course.level }}" /></div>
-	</button>
+		<button class="course_button" (click)="openDialog(course)">
+			<div><img alt="language" src="{{ `./assets/imgs/${course.logo}` }}" /></div>
+			<p>{{ course.name }}</p>
+			<div><img alt="level" src="{{ `./assets/imgs/${course.level}` }}" /></div>
+		</button>
 	}
 </div>

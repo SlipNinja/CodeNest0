@@ -3,6 +3,7 @@ import { CourseInfo } from '@interfaces/course-info';
 import { DataParser } from '@services/data-parser';
 import { RouterModule } from '@angular/router';
 import { DialogHandler } from '@services/dialog-handler';
+import { CourseHandler } from '@services/course-handler';
 
 @Component({
 	selector: 'app-course-list',
@@ -12,6 +13,7 @@ import { DialogHandler } from '@services/dialog-handler';
 })
 export class CourseList {
 	dialog_handler = inject(DialogHandler);
+	course_handler = inject(CourseHandler);
 	parser: DataParser = inject(DataParser);
 
 	course_list: CourseInfo[] = [];
@@ -27,11 +29,15 @@ export class CourseList {
 
 	// Get all courses and tags and display them
 	getCourses() {
-		this.parser.fetchCourses().then((result) => {
-			this.course_list = result;
+		this.course_handler.get_courses().subscribe((result) => {
+			this.course_list = this.course_handler.check_response(result);
+			this.filtered_list = this.course_list;
+		});
 
+		this.parser.fetchCourses().then((result) => {
+			//this.course_list = result;
 			// TMP
-			this.filtered_list = result;
+			//this.filtered_list = result;
 			//this.loadTags();
 			//this.filterCourses();
 		});
