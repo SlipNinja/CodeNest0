@@ -23,7 +23,6 @@ export class CourseList {
 	sortTags: { [key: string]: number } = {};
 	display_tags: Tag[] = [];
 	filters: Tag[] = [];
-	total_tags: number = -1;
 
 	constructor() {
 		this.getCourses();

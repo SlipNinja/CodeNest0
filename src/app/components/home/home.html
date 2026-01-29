@@ -14,9 +14,9 @@
 	<div class="course_list">
 		@for (course of course_list; track course) {
 			<button class="course_button" (click)="openDialog(course)">
-				<div><img alt="language" src="{{ course.logo }}" /></div>
+				<div><img alt="language" src="{{ `./assets/imgs/${course.logo}` }}" /></div>
 				<p>{{ course.name }}</p>
-				<div><img alt="level" src="{{ course.level }}" /></div>
+				<div><img alt="level" src="{{ `./assets/imgs/${course.level}` }}" /></div>
 			</button>
 		}
 	</div>

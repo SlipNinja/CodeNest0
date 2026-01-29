@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { CourseInfo } from '@interfaces/course-info';
 import { DialogHandler } from '@services/dialog-handler';
 import { CookieService } from 'ngx-cookie-service';
+import { CourseHandler } from '@services/course-handler';
 
 @Component({
 	selector: 'app-home',
@@ -18,7 +19,10 @@ export class Home {
 	questions: Map<string, string> = new Map();
 	connected = false;
 
-	constructor(private readonly cookie_service: CookieService) {
+	constructor(
+		private readonly cookie_service: CookieService,
+		private readonly course_handler: CourseHandler,
+	) {
 		// If user is already connected
 		const jwt_token = this.cookie_service.get('jwt_token');
 		if (jwt_token) this.connected = true;
@@ -36,8 +40,10 @@ export class Home {
 
 	// Load courses on homepage
 	loadCourses() {
-		this.parser.fetchCourses(3).then((result) => {
-			this.course_list = result;
+		this.course_handler.get_courses().subscribe((result) => {
+			let courses = this.course_handler.check_response(result);
+			if (courses.length > 3) courses = courses.slice(0, 3);
+			this.course_list = courses;
 		});
 	}
 
