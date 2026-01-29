@@ -3,6 +3,7 @@ import { DataParser } from '@services/data-parser';
 import { RouterModule } from '@angular/router';
 import { CourseInfo } from '@interfaces/course-info';
 import { DialogHandler } from '@services/dialog-handler';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
 	selector: 'app-home',
@@ -13,11 +14,15 @@ import { DialogHandler } from '@services/dialog-handler';
 export class Home {
 	dialog_handler = inject(DialogHandler);
 	parser: DataParser = inject(DataParser);
-
 	course_list: CourseInfo[] = [];
 	questions: Map<string, string> = new Map();
+	connected = false;
 
-	constructor() {
+	constructor(private readonly cookie_service: CookieService) {
+		// If user is already connected
+		const jwt_token = this.cookie_service.get('jwt_token');
+		if (jwt_token) this.connected = true;
+
 		this.loadCourses();
 		this.loadQuestions();
 	}

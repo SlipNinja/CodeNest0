@@ -4,18 +4,20 @@
 		The only code learning website where you can
 		<span>&#36;&#123;</span>fun_and_original_argument<span>&#125;</span>!
 	</p>
-	<button class="main_button" [routerLink]="['/sign-up']">Create free account</button>
+	@if (!connected) {
+		<button class="main_button" [routerLink]="['/sign-up']">Create free account</button>
+	}
 </div>
 
 <!--Display a few courses-->
 <div>
 	<div class="course_list">
 		@for (course of course_list; track course) {
-		<button class="course_button" (click)="openDialog(course)">
-			<div><img alt="language" src="{{ course.logo }}" /></div>
-			<p>{{ course.name }}</p>
-			<div><img alt="level" src="{{ course.level }}" /></div>
-		</button>
+			<button class="course_button" (click)="openDialog(course)">
+				<div><img alt="language" src="{{ course.logo }}" /></div>
+				<p>{{ course.name }}</p>
+				<div><img alt="level" src="{{ course.level }}" /></div>
+			</button>
 		}
 	</div>
 	<button class="main_button" [routerLink]="['/course-list']">See all courses</button>
@@ -26,17 +28,21 @@
 	<div id="hero_img">
 		<img src="./assets/imgs/activity.png" alt="activity example" />
 	</div>
-	<button class="main_button" [routerLink]="['/sign-in']">Get Started</button>
+	@if (connected) {
+		<button class="main_button" [routerLink]="['/course-list']">Start coding</button>
+	} @else {
+		<button class="main_button" [routerLink]="['/sign-up']">Get Started</button>
+	}
 </div>
 
 <!--Display faq-->
 <div>
 	<h2>Frequently asked questions</h2>
 	@for (question of questions.keys(); track questions.get(question)) {
-	<details>
-		<summary>{{ question }}</summary>
-		<p>{{ questions.get(question) }}</p>
-	</details>
+		<details>
+			<summary>{{ question }}</summary>
+			<p>{{ questions.get(question) }}</p>
+		</details>
 	}
 </div>
 
@@ -91,5 +97,9 @@
 			eum debitis voluptatibus velit reiciendis quis nulla.
 		</p>
 	</div>
-	<button class="main_button" [routerLink]="['/sign-in']">Get started</button>
+	@if (connected) {
+		<button class="main_button" [routerLink]="['/course-list']">Start coding</button>
+	} @else {
+		<button class="main_button" [routerLink]="['/sign-up']">Get Started</button>
+	}
 </div>
