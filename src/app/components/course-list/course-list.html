@@ -13,8 +13,13 @@
 	</div>
 	@for (tag of display_tags; track tag) {
 		<div>
-			<input (change)="boxChecked($event)" type="checkbox" id="{{ tag }}" name="{{ tag }}" />
-			<label for="{{ tag }}">{{ tag }} - {{ sortTags[tag] }}</label>
+			<input
+				(change)="boxChecked($event)"
+				type="checkbox"
+				id="{{ tag['name'] }}"
+				name="{{ tag['name'] }}"
+			/>
+			<label for="{{ tag['name'] }}">{{ tag['name'] }} - {{ sortTags[tag['name']] }}</label>
 		</div>
 	}
 </fieldset>

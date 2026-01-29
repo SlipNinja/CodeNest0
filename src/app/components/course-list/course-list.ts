@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { DialogHandler } from '@services/dialog-handler';
 import { CourseHandler } from '@services/course-handler';
 import { firstValueFrom } from 'rxjs';
+import { Tag } from '@interfaces/tag';
 
 @Component({
 	selector: 'app-course-list',
@@ -20,8 +21,8 @@ export class CourseList {
 	course_list: CourseInfo[] = [];
 	filtered_list: CourseInfo[] = [];
 	sortTags: { [key: string]: number } = {};
-	display_tags: string[] = [];
-	filters: string[] = [];
+	display_tags: Tag[] = [];
+	filters: Tag[] = [];
 	total_tags: number = -1;
 
 	constructor() {
@@ -30,27 +31,20 @@ export class CourseList {
 
 	// Get all courses and tags and display them
 	getCourses() {
-		this.course_handler.get_courses().subscribe((result) => {
+		this.course_handler.get_courses().subscribe(async (result) => {
 			this.course_list = this.course_handler.check_response(result);
-			this.loadTags();
-
+			await this.loadTags();
 			this.filtered_list = this.course_list;
-		});
-
-		this.parser.fetchCourses().then((result) => {
-			//this.course_list = result;
-			// TMP
-			//this.filtered_list = result;
-			//this.loadTags();
-			//this.filterCourses();
 		});
 	}
 
 	// Populate filtered courses based on filters
 	filterCourses() {
-		// this.filtered_list = this.course_list.filter((course) =>
-		// 	this.filters.find((filter) => course['tags'].includes(filter)),
-		// );
+		this.filtered_list = this.course_list.filter((course) => {
+			if (!course['tags']) return;
+			const tag_names = course['tags'].map((t) => t['name']);
+			return this.filters.find((filter) => tag_names.includes(filter['name']));
+		});
 	}
 
 	// Called on checkbox change
@@ -77,12 +71,12 @@ export class CourseList {
 			for (const checkbox of checked) {
 				checkbox.checked = false;
 			}
+			this.filtered_list = this.course_list;
 			// If unchecked, empty filters
 		} else {
 			this.filters = [];
+			this.filterCourses();
 		}
-
-		this.filterCourses();
 	}
 
 	// Populate checkboxes based on course tags
@@ -107,7 +101,9 @@ export class CourseList {
 		}
 
 		this.sortTags = Object.fromEntries(Object.entries(tags).sort(([, a], [, b]) => b - a));
-		this.display_tags = Object.keys(this.sortTags);
+		this.display_tags = Object.keys(this.sortTags).map((s) => {
+			return { name: s };
+		});
 		this.filters = this.display_tags;
 	}
 
@@ -117,7 +113,7 @@ export class CourseList {
 		const checked: NodeListOf<HTMLInputElement> = document.querySelectorAll(checkbox_selector);
 		this.filters = [];
 		for (const checkbox of checked) {
-			this.filters.push(checkbox['name']);
+			this.filters.push({ name: checkbox['name'] });
 		}
 	}
 
