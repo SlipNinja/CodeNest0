@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
-import { CourseInfo } from '@interfaces/course-info';
 import { DialogHandler } from '@services/dialog-handler';
 import { CourseDialogData } from '@interfaces/course-dialog-data';
 
