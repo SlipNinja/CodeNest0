@@ -5,7 +5,9 @@
 	</a>
 
 	<a class="menu_link" [routerLink]="['/course-list']">Courses</a>
-	<a class="menu_link" [routerLink]="['/profile']">Profile</a>
+	@if (connected) {
+		<a class="menu_link" [routerLink]="['/profile']">Profile</a>
+	}
 </div>
 @if (connected) {
 	<button class="logout" (click)="logout($event)">Log out</button>
