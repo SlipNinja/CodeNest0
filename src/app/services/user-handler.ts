@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { User } from '@interfaces/user';
 import { Badge } from '@interfaces/badge';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
@@ -31,11 +31,7 @@ export class UserHandler {
 
 	process_authentification(response: any) {
 		// Request not processed correctly
-		if (![200, 201].includes(response.status)) throw new Error('Cant create a new user');
-
-		const body: any = response.body;
-		if (!body) throw new Error('No body found in response');
-
+		const body = this.check_response(response);
 		this.set_current_user(body['message']);
 		this.connected.emit(true);
 		this.router.navigate(['/profile']);
@@ -97,6 +93,19 @@ export class UserHandler {
 		this.cookie_service.delete('jwt_token');
 		this.connected.emit(false);
 		this.router.navigate(['/sign-in']);
+	}
+
+	check_response(response: HttpResponse<any>) {
+		if (![200, 201].includes(response.status)) {
+			throw new Error(`Request failed with status ${response.status}`);
+		}
+
+		const body: any = response.body;
+		if (!body) {
+			throw new Error(`No body found in request`);
+		}
+
+		return body;
 	}
 
 	// Fetch users

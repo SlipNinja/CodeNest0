@@ -53,12 +53,7 @@ export class Profile {
 	loadLastCourse() {
 		if (this.user['id_last_course']) {
 			this.course_handler.get_course(this.user['id_last_course']).subscribe((data) => {
-				if (data.status != 200) throw new Error('Cant create a ne user');
-				else {
-					const body: any = data.body;
-					if (!body) throw new Error('No body found in response');
-					this.last_course = body[0];
-				}
+				this.last_course = this.user_handler.check_response(data)[0];
 			});
 		}
 	}
