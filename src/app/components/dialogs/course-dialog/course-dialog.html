@@ -1,9 +1,9 @@
 <!--Display course details-->
 <div class="course_details">
 	<div class="course_banner">
-		<div><img alt="language" src="{{ data.logo }}" /></div>
+		<div><img alt="language" src="{{ `./assets/imgs/${data.logo}` }}" /></div>
 		<h3>{{ data.name }}</h3>
-		<div><img alt="level" src="{{ data.level }}" /></div>
+		<div><img alt="level" src="{{ `./assets/imgs/${data.level}` }}" /></div>
 	</div>
 	<p>{{ data.description }}</p>
 </div>
@@ -14,15 +14,15 @@
 	<div class="course_list">
 		@for (course of data.dependencies; track course) {
 			<button class="course_button" (click)="openNew(course.id_course)">
-				<div><img alt="language" src="{{ course.logo }}" /></div>
+				<div><img alt="language" src="{{ `./assets/imgs/${course.logo}` }}" /></div>
 				<p>{{ course.name }}</p>
-				<div><img alt="level" src="{{ course.level }}" /></div>
+				<div><img alt="level" src="{{ `./assets/imgs/${course.level}` }}" /></div>
 			</button>
 		}
 	</div>
 </div>
 
 <!--Display start course button-->
-<button class="main_button" mat-dialog-close [routerLink]="['/course', data.id]">
+<button class="main_button" mat-dialog-close [routerLink]="['/course', data.id_course]">
 	Start course
 </button>

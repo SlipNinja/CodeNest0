@@ -4,6 +4,9 @@ import { DataParser } from '@services/data-parser';
 import { CourseDialog } from '@components/dialogs/course-dialog/course-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { HintDialog } from '@components/dialogs/hint-dialog/hint-dialog';
+import { CourseHandler } from './course-handler';
+import { firstValueFrom } from 'rxjs';
+import { CourseDialogData } from '@interfaces/course-dialog-data';
 
 type Hint = {
 	hint: string;
@@ -17,9 +20,14 @@ export class DialogHandler {
 	dialog = inject(MatDialog);
 	dialogRef: any;
 
+	constructor(private readonly course_handler: CourseHandler) {}
+
 	// Generate data for the dialog replacing CourseInfo ids by CourseInfo data
-	generateData(course: CourseInfo) {
-		const dependencies: CourseInfo[] = [];
+	async generateData(course: CourseInfo) {
+		const course_dependencies_ids = this.course_handler.check_response(
+			await firstValueFrom(this.course_handler.get_dependencies(course['id_course'])),
+		);
+		const dependencies: CourseDialogData[] = [];
 		const data = {
 			id_course: course.id_course,
 			name: course.name,
@@ -29,15 +37,14 @@ export class DialogHandler {
 			dependencies: dependencies,
 		};
 
-		if (!course['dependencies']) return;
+		if (!course_dependencies_ids) return;
 
 		// Display course dependencies
-		for (const dep of course['dependencies']) {
-			let course_dep: CourseInfo;
-			this.parser.fetchCourse(dep).then((result) => {
-				course_dep = result;
-				data.dependencies.push(course_dep);
-			});
+		for (const dep of course_dependencies_ids) {
+			const course_dep: CourseDialogData[] = this.course_handler.check_response(
+				await firstValueFrom(this.course_handler.get_course(dep['id_dependency_course'])),
+			);
+			data.dependencies.push(course_dep[0]);
 		}
 
 		return data;
@@ -53,20 +60,22 @@ export class DialogHandler {
 	}
 
 	// Open course dialog
-	openCourseDialog(course: CourseInfo) {
+	async openCourseDialog(course: CourseInfo) {
 		// Opens dialog
 		this.dialogRef = this.dialog.open(CourseDialog, {
-			data: this.generateData(course),
+			data: await this.generateData(course),
 			backdropClass: 'backdrop',
 			hasBackdrop: true,
 		});
 	}
 
 	// Update dialog data with a new course
-	openNewCourseDialog(id: number) {
-		this.parser.fetchCourse(id).then((result) => {
-			this.dialogRef.componentInstance.data = this.generateData(result);
-		});
+	async openNewCourseDialog(id: number) {
+		const course_dep: CourseInfo[] = this.course_handler.check_response(
+			await firstValueFrom(this.course_handler.get_course(id)),
+		);
+
+		this.dialogRef.componentInstance.data = await this.generateData(course_dep[0]);
 	}
 
 	openHintDialog(hint: Hint) {

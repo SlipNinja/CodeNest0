@@ -32,6 +32,16 @@ export class CourseHandler {
 		});
 	}
 
+	get_dependencies(id_course: number) {
+		return this.http.get<CourseInfo[]>(
+			`${this.request_url}/courses/${id_course}/dependencies`,
+			{
+				observe: 'response',
+				withCredentials: true,
+			},
+		);
+	}
+
 	check_response(response: HttpResponse<any>) {
 		if (![200, 201].includes(response.status)) {
 			throw new Error(`Request failed with status ${response.status}`);
