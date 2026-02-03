@@ -50,8 +50,7 @@ export class Profile {
 		console.log('Modify user');
 	}
 
-	delete_user(e: any) {
-		console.log('Delete user');
+	delete_user_dialog(e: any) {
 		const warning_text = 'You are about to delete your profile. Are you sure ?';
 		this.dialog_handler.openDialog('warning', warning_text);
 	}

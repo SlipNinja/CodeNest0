@@ -89,19 +89,36 @@ export class UserHandler {
 	}
 
 	// Handles the logout
-	logout() {
+	logout(redirect: string) {
 		this.cookie_service.delete('jwt_token');
 		this.connected.emit(false);
-		this.router.navigate(['/sign-in']);
+		this.router.navigate([redirect]);
+	}
+
+	delete_user() {
+		const user_id = this.current_user()['id_user'];
+		this.try_delete(user_id).subscribe((data) => {
+			this.check_response(data);
+			this.logout('/');
+		});
+	}
+
+	try_delete(id_user: number) {
+		const delete_request = `${this.request_url}/users/${id_user}`;
+
+		return this.http.delete(delete_request, {
+			observe: 'response',
+			withCredentials: true,
+		});
 	}
 
 	check_response(response: HttpResponse<any>) {
-		if (![200, 201].includes(response.status)) {
+		if (![200, 201, 204].includes(response.status)) {
 			throw new Error(`Request failed with status ${response.status}`);
 		}
 
 		const body: any = response.body;
-		if (!body) {
+		if (!body && response.status != 204) {
 			throw new Error(`No body found in request`);
 		}
 

@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { DialogHandler } from '@services/dialog-handler';
-import { CourseDialogData } from '@interfaces/course-dialog-data';
 
 interface WarningDialogData {
 	text: string;
@@ -18,7 +17,7 @@ export class WarningDialog {
 	dialog_handler: DialogHandler = inject(DialogHandler);
 	data: WarningDialogData = inject(MAT_DIALOG_DATA);
 
-	coucou(e: any) {
-		console.log('DELEEEEETE !');
+	delete_user(e: any) {
+		this.dialog_handler.delete_current_user();
 	}
 }

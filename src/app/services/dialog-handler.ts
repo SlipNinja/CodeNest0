@@ -8,6 +8,7 @@ import { CourseHandler } from './course-handler';
 import { firstValueFrom } from 'rxjs';
 import { CourseDialogData } from '@interfaces/course-dialog-data';
 import { WarningDialog } from '@components/dialogs/warning-dialog/warning-dialog';
+import { UserHandler } from './user-handler';
 
 type Hint = {
 	hint: string;
@@ -21,7 +22,10 @@ export class DialogHandler {
 	dialog = inject(MatDialog);
 	dialogRef: any;
 
-	constructor(private readonly course_handler: CourseHandler) {}
+	constructor(
+		private readonly course_handler: CourseHandler,
+		private readonly user_handler: UserHandler,
+	) {}
 
 	// Generate data for the dialog replacing CourseInfo ids by CourseInfo data
 	async generateData(course: CourseInfo) {
@@ -79,6 +83,10 @@ export class DialogHandler {
 		);
 
 		this.dialogRef.componentInstance.data = await this.generateData(course_dep[0]);
+	}
+
+	delete_current_user() {
+		this.user_handler.delete_user();
 	}
 
 	openWarningDialog(text: string) {

@@ -30,6 +30,6 @@ export class Menu {
 	}
 
 	logout(e: MouseEvent) {
-		this.user_handler.logout();
+		this.user_handler.logout('/sign-in');
 	}
 }
