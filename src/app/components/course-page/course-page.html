@@ -1,20 +1,24 @@
 <div id="steps">
 	<div>
-		<div><img src="{{ current_course?.logo }}" alt="course_logo" /></div>
+		<div>
+			<img src="{{ `./assets/imgs/${current_course?.logo}` }}" alt="course_logo" />
+		</div>
 		<h3>{{ current_course?.name }}</h3>
 	</div>
 	<div id="dot_list">
-		@for (step of step_quantity; track step.step_number) { @if (step.done){
-		<div class="dot done"></div>
-		} @else {
-		<div class="dot"></div>
-		} }
+		@for (step of step_quantity; track step.step_number) {
+			@if (step.done) {
+				<div class="dot done"></div>
+			} @else {
+				<div class="dot"></div>
+			}
+		}
 	</div>
 </div>
 <div id="activity">
 	<div id="exercise"></div>
 	<div id="console">
-		<iframe sandbox="allow-scripts" title="Game_frame" src="./assets/test/test.html"></iframe>
+		<!-- <iframe sandbox="allow-scripts" title="Game_frame" src="./assets/test/test.html"></iframe> -->
 	</div>
 	<div id="code_zone">
 		<button id="run_button">Run</button>

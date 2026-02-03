@@ -66,7 +66,7 @@ export class UserHandler {
 	// Handles user creation
 	add_user(email: string, password: string, username: string) {
 		this.try_add_user(email, password, username).subscribe((data) => {
-			this.process_authentification(data);
+			this.router.navigate(['/sign-in']);
 		});
 	}
 

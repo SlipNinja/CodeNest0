@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { minimalSetup } from 'codemirror';
 import { dropCursor, EditorView, lineNumbers } from '@codemirror/view';
 import { DataParser } from '@services/data-parser';
@@ -10,7 +10,7 @@ import { EditorState } from '@codemirror/state';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { bracketMatching, foldGutter, indentOnInput, indentUnit } from '@codemirror/language';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
-import { VM } from 'vm2';
+import { CourseHandler } from '@services/course-handler';
 
 @Component({
 	selector: 'app-course-page',
@@ -21,6 +21,7 @@ import { VM } from 'vm2';
 export class CoursePage implements OnInit, OnDestroy {
 	private route_sub: Subscription;
 	private readonly route = inject(ActivatedRoute);
+	private readonly course_handler = inject(CourseHandler);
 	view: EditorView;
 	parser: DataParser = inject(DataParser);
 	current_course: CourseInfo;
@@ -54,31 +55,35 @@ export class CoursePage implements OnInit, OnDestroy {
 		],
 	};
 
-	ngOnInit(): void {
-		this.route_sub = this.route.params.subscribe((params) => {
-			this.parser.fetchCourse(params['id']).then((course) => {
-				this.current_course = course;
-			});
+	ngOnInit() {
+		this.route_sub = this.route.params.subscribe(async (params) => {
+			const result = await firstValueFrom(this.course_handler.get_course(params['id']));
+			this.current_course = this.course_handler.check_response(result)[0];
+
+			console.log(this.current_course);
+			// TODO: Check if user has already started this course
+			// TODO: If not, create the record in course_taken and load 1st step
+			// TODO: If yes, load the next step
+
+			const exercise_text = document.getElementById('exercise');
+			if (exercise_text) exercise_text.textContent = this.example_exercice['text'];
 		});
 
 		this.game_frame = document.getElementsByTagName('iframe')[0];
 		this.init_editor();
 
-		window.addEventListener('message', (e) => {
-			// Verify it's from the sandboxed iframe
-			if (e.origin === null && e.source === this.game_frame.contentWindow) return;
+		// window.addEventListener('message', (e) => {
+		// 	// Verify it's from the sandboxed iframe
+		// 	if (e.origin === null && e.source === this.game_frame.contentWindow) return;
 
-			const results = e.data;
-			console.log(results);
-		});
+		// 	const results = e.data;
+		// 	console.log(results);
+		// });
 
 		document.getElementById('run_button')?.addEventListener('click', (e) => {
 			//this.send_iframe();
 			this.test_code();
 		});
-
-		const exercise_text = document.getElementById('exercise');
-		if (exercise_text) exercise_text.textContent = this.example_exercice['text'];
 	}
 
 	// TODO: choose and configure extensions and remove basic setup ( nearly done )
@@ -100,14 +105,11 @@ export class CoursePage implements OnInit, OnDestroy {
 				indentUnit.of('    '), // Default size of indentation
 			],
 		});
-
 		this.view = new EditorView({
 			state,
 		});
-
 		document.querySelector('#code_zone')?.appendChild(this.view.dom);
 		this.add_lines(10);
-
 		let transaction = this.view.state.update({
 			changes: {
 				from: 0,
@@ -122,13 +124,11 @@ export class CoursePage implements OnInit, OnDestroy {
 			console.error('Game frame not found');
 			return;
 		}
-
 		const data = {
 			f_name: this.example_exercice['f_name'],
 			tests: this.example_exercice['tests'],
 			code: this.get_code(),
 		};
-
 		// Sandboxed iframes which lack the 'allow-same-origin' header
 		// don't have an origin which you can target
 		this.game_frame.contentWindow.postMessage(data, '*');
