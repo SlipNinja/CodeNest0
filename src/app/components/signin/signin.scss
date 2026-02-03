@@ -4,6 +4,8 @@
 
 :host {
 	@include tools.flex_center;
+	flex-direction: column;
+	gap: 20px;
 	height: 100%;
 	color: variables.$main_text_color;
 	font-family: Roboto, sans-serif;
@@ -11,4 +13,10 @@
 
 form {
 	@include tools.signform;
+}
+
+button.secondary_button {
+	@include tools.main_button;
+	font-size: variables.$paragraph_font_size;
+	background-color: variables.$main_button_delete;
 }

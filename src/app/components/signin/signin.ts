@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LucideAngularModule, Eye, EyeOff } from 'lucide-angular';
 import { UserHandler } from '@services/user-handler';
+import { RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'app-signin',
-	imports: [ReactiveFormsModule, LucideAngularModule],
+	imports: [ReactiveFormsModule, LucideAngularModule, RouterLink],
 	templateUrl: './signin.html',
 	styleUrl: './signin.scss',
 })
