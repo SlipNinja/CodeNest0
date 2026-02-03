@@ -1,0 +1,46 @@
+@use 'tools';
+@use 'variables';
+
+:host {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	@include tools.dialog;
+	padding: variables.$base_gap * 3;
+	font-size: 1.5rem;
+
+	& h3 {
+		font-size: variables.$h3_font_size * 2;
+	}
+
+	& > div:has(h3) {
+		display: flex;
+		flex-direction: column;
+		align-self: center;
+		align-items: center;
+		text-align: center;
+		justify-content: space-evenly;
+		height: 80%;
+		width: 80%;
+		gap: 10%;
+	}
+
+	& > div:has(> button) {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	& button {
+		@include tools.main_button;
+		font-size: 1.8rem;
+
+		&.delete {
+			background-color: variables.$main_button_delete;
+
+			&:hover {
+				background-color: red;
+			}
+		}
+	}
+}

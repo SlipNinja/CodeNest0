@@ -52,6 +52,8 @@ export class Profile {
 
 	delete_user(e: any) {
 		console.log('Delete user');
+		const warning_text = 'You are about to delete your profile. Are you sure ?';
+		this.dialog_handler.openDialog('warning', warning_text);
 	}
 
 	// Open course dialog on click on last course

@@ -4,18 +4,21 @@ import { RouterModule } from '@angular/router';
 import { DialogHandler } from '@services/dialog-handler';
 import { CourseDialogData } from '@interfaces/course-dialog-data';
 
+interface WarningDialogData {
+	text: string;
+}
+
 @Component({
 	selector: 'app-course-dialog',
-	templateUrl: './course-dialog.html',
+	templateUrl: './warning-dialog.html',
 	imports: [MatDialogClose, RouterModule],
-	styleUrl: './course-dialog.scss',
+	styleUrl: './warning-dialog.scss',
 })
-export class CourseDialog {
+export class WarningDialog {
 	dialog_handler: DialogHandler = inject(DialogHandler);
-	data: CourseDialogData = inject(MAT_DIALOG_DATA);
+	data: WarningDialogData = inject(MAT_DIALOG_DATA);
 
-	// On click on dependency course
-	updateDialog(id: number) {
-		this.dialog_handler.update_course_data(id);
+	coucou(e: any) {
+		console.log('DELEEEEETE !');
 	}
 }

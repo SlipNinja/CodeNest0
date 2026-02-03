@@ -7,6 +7,7 @@ import { HintDialog } from '@components/dialogs/hint-dialog/hint-dialog';
 import { CourseHandler } from './course-handler';
 import { firstValueFrom } from 'rxjs';
 import { CourseDialogData } from '@interfaces/course-dialog-data';
+import { WarningDialog } from '@components/dialogs/warning-dialog/warning-dialog';
 
 type Hint = {
 	hint: string;
@@ -51,11 +52,13 @@ export class DialogHandler {
 	}
 
 	// Handles dialog
-	openDialog(dialog_type: string, data: object) {
+	openDialog(dialog_type: string, data: any) {
 		if (dialog_type == 'course') {
 			this.openCourseDialog(data as CourseInfo);
 		} else if (dialog_type == 'hint') {
 			this.openHintDialog(data as Hint);
+		} else if (dialog_type == 'warning') {
+			this.openWarningDialog(data);
 		}
 	}
 
@@ -70,12 +73,26 @@ export class DialogHandler {
 	}
 
 	// Update dialog data with a new course
-	async openNewCourseDialog(id: number) {
+	async update_course_data(id: number) {
 		const course_dep: CourseInfo[] = this.course_handler.check_response(
 			await firstValueFrom(this.course_handler.get_course(id)),
 		);
 
 		this.dialogRef.componentInstance.data = await this.generateData(course_dep[0]);
+	}
+
+	openWarningDialog(text: string) {
+		// Opens dialog
+		const dialogRef = this.dialog.open(WarningDialog, {
+			data: { text: text },
+			backdropClass: 'backdrop',
+			hasBackdrop: true,
+		});
+
+		// After dialog closed
+		dialogRef.afterClosed().subscribe((result) => {
+			console.log('Closed');
+		});
 	}
 
 	openHintDialog(hint: Hint) {
