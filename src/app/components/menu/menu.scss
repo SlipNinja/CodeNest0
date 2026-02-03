@@ -46,6 +46,6 @@ button {
 	margin-right: variables.$base_gap * 3;
 
 	&.logout {
-		background-color: darken(variables.$main_button_color, 30%);
+		background-color: variables.$main_button_delete;
 	}
 }
