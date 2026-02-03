@@ -7,14 +7,19 @@ import { Badge } from '@interfaces/badge';
 import { UserHandler } from '@services/user-handler';
 import { CourseHandler } from '@services/course-handler';
 import { Router } from '@angular/router';
+import { LucideAngularModule, UserRoundCog } from 'lucide-angular';
 
 @Component({
 	selector: 'app-profile',
-	imports: [],
+	imports: [LucideAngularModule],
 	templateUrl: './profile.html',
 	styleUrl: './profile.scss',
+	host: {
+		'(document:click)': 'onClick($event)',
+	},
 })
 export class Profile {
+	readonly user_cog = UserRoundCog;
 	dialog_handler = inject(DialogHandler);
 	user_handler = inject(UserHandler);
 	course_handler = inject(CourseHandler);
@@ -29,9 +34,49 @@ export class Profile {
 		this.loadUser();
 	}
 
+	onClick(e: any) {
+		// If option button clicked
+		if (
+			e.target.id == 'toggle_dropwdown' ||
+			e.target.parentNode.parentNode.id == 'toggle_dropwdown'
+		) {
+			this.toggle_dropwdown(e);
+		} else {
+			this.close_dropdown();
+		}
+	}
+
+	modify_user(e: any) {
+		console.log('Modify user');
+	}
+
+	delete_user(e: any) {
+		console.log('Delete user');
+	}
+
 	// Open course dialog on click on last course
 	openDialog(course: CourseInfo) {
 		this.dialog_handler.openDialog('course', course);
+	}
+
+	toggle_dropwdown(e: MouseEvent) {
+		const dropdown_content = document.getElementsByClassName(
+			'dropdown_content',
+		) as HTMLCollectionOf<HTMLElement>;
+
+		if (dropdown_content[0].style.display == 'block') {
+			dropdown_content[0].style.display = 'none';
+		} else {
+			dropdown_content[0].style.display = 'block';
+		}
+	}
+
+	close_dropdown() {
+		const dropdown_content = document.getElementsByClassName(
+			'dropdown_content',
+		) as HTMLCollectionOf<HTMLElement>;
+
+		dropdown_content[0].style.display = 'none';
 	}
 
 	loadUser() {

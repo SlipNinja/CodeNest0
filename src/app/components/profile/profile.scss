@@ -16,21 +16,69 @@
 	& > * {
 		background-color: variables.$light_bg_color;
 		border-radius: 5px;
-		padding: variables.$base_gap * 2;
+		padding: variables.$base_gap * 1.5;
 	}
 }
 
 #user_main {
 	@include tools.flex_center;
 	flex-direction: column;
+	justify-content: space-around;
 	gap: variables.$base_gap;
+	width: 100%;
 
-	& > div {
+	& > div.photo_container {
 		height: 60%;
 		aspect-ratio: 1;
 
 		& > img {
 			@include tools.img_contained;
+		}
+	}
+
+	& > div:not(.photo_container) {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		height: 15%;
+
+		& > .dropdown {
+			position: relative;
+
+			& > button {
+				@include tools.main_button;
+				height: 100%;
+				aspect-ratio: 1;
+			}
+
+			& > .dropdown_content {
+				display: none;
+				position: absolute;
+
+				& > div {
+					min-width: 120px;
+					min-height: 40px;
+					font-size: 1.4rem;
+					background-color: variables.$main_button_color_light;
+					color: variables.$main_bg_color;
+					@include tools.flex_center;
+					border: 1px solid variables.$main_bg_color;
+
+					&:hover {
+						background-color: variables.$main_button_color;
+						cursor: pointer;
+					}
+
+					&.delete {
+						background-color: variables.$main_button_delete;
+
+						&:hover {
+							background-color: red;
+						}
+					}
+				}
+			}
 		}
 	}
 }
