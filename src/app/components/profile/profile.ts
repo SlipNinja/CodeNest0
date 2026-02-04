@@ -35,11 +35,10 @@ export class Profile {
 	}
 
 	onClick(e: any) {
+		const dropdown_button = document.getElementById('toggle_dropwdown') as HTMLElement;
+
 		// If option button clicked
-		if (
-			e.target.id == 'toggle_dropwdown' ||
-			e.target.parentNode.parentNode.id == 'toggle_dropwdown'
-		) {
+		if (e.target == dropdown_button || dropdown_button.contains(e.target)) {
 			this.toggle_dropwdown(e);
 		} else {
 			this.close_dropdown();
