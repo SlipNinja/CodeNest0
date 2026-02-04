@@ -5,10 +5,23 @@
 :host {
 	@include tools.flex_center;
 	height: 100%;
+	width: 100vw;
 	color: variables.$main_text_color;
 	font-family: Roboto, sans-serif;
 }
 
 form {
 	@include tools.signform;
+
+	& > fieldset {
+		min-width: 100%;
+		width: 0;
+	}
+
+	& > fieldset > .error_zone {
+		display: none;
+		background-color: variables.$main_button_delete;
+		color: variables.$main_bg_color;
+		padding: variables.$base_gap;
+	}
 }
