@@ -89,7 +89,7 @@ export class UserHandler {
 
 	update_user(username: string, email: string) {
 		this.try_update_user(username, email).subscribe((data) => {
-			const body: any = data.body;
+			const body = this.check_response(data);
 			this.set_current_user(body);
 			this.router.navigate(['/profile']);
 		});
