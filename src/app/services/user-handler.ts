@@ -26,6 +26,9 @@ export class UserHandler {
 
 	// Save token in cookies
 	set_current_user(token: string) {
+		if (this.cookie_service.check('jwt_token')) {
+			this.cookie_service.delete('jwt_token');
+		}
 		this.cookie_service.set('jwt_token', token);
 	}
 
@@ -86,8 +89,9 @@ export class UserHandler {
 
 	update_user(username: string, email: string) {
 		this.try_update_user(username, email).subscribe((data) => {
-			console.log(data);
-			//this.router.navigate(['/sign-in']);
+			const body: any = data.body;
+			this.set_current_user(body);
+			this.router.navigate(['/profile']);
 		});
 	}
 
