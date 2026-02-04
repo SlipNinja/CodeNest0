@@ -70,6 +70,27 @@ export class UserHandler {
 		});
 	}
 
+	try_update_user(username: string, email: string) {
+		const id_user = this.current_user()['id_user'];
+		const update_request = `${this.request_url}/users/${id_user}/update`;
+		const add_body: any = {};
+
+		if (email != '') add_body['email'] = email;
+		if (username != '') add_body['username'] = username;
+
+		return this.http.put(update_request, add_body, {
+			observe: 'response',
+			withCredentials: true,
+		});
+	}
+
+	update_user(username: string, email: string) {
+		this.try_update_user(username, email).subscribe((data) => {
+			console.log(data);
+			//this.router.navigate(['/sign-in']);
+		});
+	}
+
 	// Return an login Observable<HttpResponse<Object>>  to subscribe to
 	try_login(email: string, password: string) {
 		const login_request = `${this.request_url}/login`;

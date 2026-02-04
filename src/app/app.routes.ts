@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from '@components/home/home';
 import { SignIn } from '@components/forms/signin/signin';
 import { SignUp } from '@components/forms/sign-up/sign-up';
+import { UpdateUser } from '@components/forms/update-user/update-user';
 import { CourseList } from '@components/course-list/course-list';
 import { Profile } from '@components/profile/profile';
 import { CoursePage } from '@components/course-page/course-page';
@@ -31,6 +32,11 @@ export const routes: Routes = [
 		path: 'profile',
 		component: Profile,
 		title: 'Profile page',
+	},
+	{
+		path: 'profile/update',
+		component: UpdateUser,
+		title: 'Update profile',
 	},
 	{
 		path: 'course/:id',

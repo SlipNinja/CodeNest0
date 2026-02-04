@@ -1,0 +1,12 @@
+<form [formGroup]="update_form" (submit)="submit_update()">
+	<fieldset>
+		<legend>Modify profile</legend>
+
+		<label for="username">Modify username</label>
+		<input id="username" type="text" formControlName="username" placeholder="optionnal" />
+		<label for="email">Modify email</label>
+		<input id="email" type="email" formControlName="email" placeholder="optionnal" />
+		<button type="submit" class="main_button">Update</button>
+		<div class="error_zone"></div>
+	</fieldset>
+</form>

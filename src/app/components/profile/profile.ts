@@ -47,7 +47,7 @@ export class Profile {
 	}
 
 	modify_user(e: any) {
-		console.log('Modify user');
+		this.router.navigate(['/profile/update']);
 	}
 
 	delete_user_dialog(e: any) {
