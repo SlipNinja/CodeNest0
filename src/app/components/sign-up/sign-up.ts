@@ -63,7 +63,7 @@ export class SignUp {
 			errors.push('• Password must match confirmation.');
 		}
 
-		if (errors) {
+		if (errors.length > 0) {
 			const error_log = errors.join('\n');
 			error_zone[0].innerText = error_log;
 			error_zone[0].style.display = 'block';
