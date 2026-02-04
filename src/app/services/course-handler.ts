@@ -32,6 +32,19 @@ export class CourseHandler {
 		});
 	}
 
+	request_course_taken(id_user: number, id_course: number) {
+		const get_request = `${this.request_url}/courses_taken?id_user=${id_user}&id_course=${id_course}`;
+
+		return this.http.get(get_request, {
+			observe: 'response',
+			withCredentials: true,
+		});
+	}
+
+	request_course_step(id_course: number, number_step: number) {
+		//
+	}
+
 	get_dependencies(id_course: number) {
 		return this.http.get<CourseInfo[]>(
 			`${this.request_url}/courses/${id_course}/dependencies`,

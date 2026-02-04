@@ -6,7 +6,7 @@
 		<h3>{{ current_course?.name }}</h3>
 	</div>
 	<div id="dot_list">
-		@for (step of step_quantity; track step.step_number) {
+		@for (step of steps; track step.step_number) {
 			@if (step.done) {
 				<div class="dot done"></div>
 			} @else {

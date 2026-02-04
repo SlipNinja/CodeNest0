@@ -11,6 +11,7 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import { bracketMatching, foldGutter, indentOnInput, indentUnit } from '@codemirror/language';
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { CourseHandler } from '@services/course-handler';
+import { UserHandler } from '@services/user-handler';
 
 @Component({
 	selector: 'app-course-page',
@@ -24,16 +25,11 @@ export class CoursePage implements OnInit, OnDestroy {
 	private readonly course_handler = inject(CourseHandler);
 	view: EditorView;
 	parser: DataParser = inject(DataParser);
+	user_handler: UserHandler = inject(UserHandler);
 	current_course: CourseInfo;
 	game_frame: HTMLIFrameElement;
 
-	step_quantity = [
-		{ step_number: 1, done: true },
-		{ step_number: 2, done: true },
-		{ step_number: 3, done: false },
-		{ step_number: 4, done: false },
-		{ step_number: 5, done: false },
-	]; // TO CHANGE
+	steps: any[] = [];
 
 	example_exercice: any = {
 		lang: javascript(),
@@ -57,13 +53,41 @@ export class CoursePage implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.route_sub = this.route.params.subscribe(async (params) => {
+			// Get course
 			const result = await firstValueFrom(this.course_handler.get_course(params['id']));
 			this.current_course = this.course_handler.check_response(result)[0];
 
 			console.log(this.current_course);
-			// TODO: Check if user has already started this course
-			// TODO: If not, create the record in course_taken and load 1st step
-			// TODO: If yes, load the next step
+
+			const id_course = this.current_course['id_course'];
+			const id_user = this.user_handler.current_user()['id_user'];
+
+			// Check if user has already started this course
+			const course_taken_result = await firstValueFrom(
+				this.course_handler.request_course_taken(id_user, id_course),
+			);
+
+			const course_taken_body: any = course_taken_result.body;
+			let course_taken;
+			let last_finished_step = 0;
+
+			// If user already started this course, get where he stopped
+			if (course_taken_body.length > 0) {
+				course_taken = course_taken_body[0];
+				last_finished_step = parseInt(course_taken['last_finished_step']);
+			}
+
+			// Generate visual markers for current step
+			for (let i = 0; i < this.current_course['number_step']; i++) {
+				const step_marker = { step_number: i + 1, done: i <= last_finished_step };
+				this.steps.push(step_marker);
+			}
+
+			console.log(course_taken['last_finished_step']);
+			this.course_handler.request_course_step(id_course, last_finished_step + 1);
+			// TODO: finish to load the right step and display
+			// TODO: the run thing
+			// TODO: update last_finished_step when code run right ( and load next step)
 
 			const exercise_text = document.getElementById('exercise');
 			if (exercise_text) exercise_text.textContent = this.example_exercice['text'];
