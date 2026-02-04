@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from '@components/home/home';
-import { SignIn } from '@components/signin/signin';
-import { SignUp } from '@components/sign-up/sign-up';
+import { SignIn } from '@components/forms/signin/signin';
+import { SignUp } from '@components/forms/sign-up/sign-up';
 import { CourseList } from '@components/course-list/course-list';
 import { Profile } from '@components/profile/profile';
 import { CoursePage } from '@components/course-page/course-page';
