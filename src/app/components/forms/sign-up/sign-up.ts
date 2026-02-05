@@ -38,7 +38,7 @@ export class SignUp {
 		const errors: string[] = [];
 
 		if (!username || !this.data_validator.valid_size_username(username)) {
-			errors.push('• Username must be between 8 and 20 characters.');
+			errors.push('• Username must be between 5 and 20 characters.');
 		}
 
 		if (!email) {

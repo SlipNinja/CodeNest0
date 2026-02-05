@@ -10,7 +10,7 @@ export class DataValidator {
 	password_min = 8;
 	password_max = 20;
 	email_max = 50;
-	username_min = 8;
+	username_min = 5;
 	username_max = 20;
 
 	valid_email(email: string) {
