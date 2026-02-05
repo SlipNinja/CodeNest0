@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CourseInfo } from '@interfaces/course-info';
 import { Tag } from '@interfaces/tag';
+import { Step } from '@interfaces/step';
 
 @Injectable({
 	providedIn: 'root',
@@ -35,14 +36,19 @@ export class CourseHandler {
 	request_course_taken(id_user: number, id_course: number) {
 		const get_request = `${this.request_url}/courses_taken?id_user=${id_user}&id_course=${id_course}`;
 
-		return this.http.get(get_request, {
+		return this.http.get<Step[]>(get_request, {
 			observe: 'response',
 			withCredentials: true,
 		});
 	}
 
-	request_course_step(id_course: number, number_step: number) {
-		//
+	request_course_step(id_course: number) {
+		const get_request = `${this.request_url}/courses/${id_course}/steps`;
+
+		return this.http.get(get_request, {
+			observe: 'response',
+			withCredentials: true,
+		});
 	}
 
 	get_dependencies(id_course: number) {

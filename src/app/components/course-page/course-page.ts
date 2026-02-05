@@ -12,6 +12,7 @@ import { bracketMatching, foldGutter, indentOnInput, indentUnit } from '@codemir
 import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { CourseHandler } from '@services/course-handler';
 import { UserHandler } from '@services/user-handler';
+import { Step } from '@interfaces/step';
 
 @Component({
 	selector: 'app-course-page',
@@ -27,6 +28,7 @@ export class CoursePage implements OnInit, OnDestroy {
 	parser: DataParser = inject(DataParser);
 	user_handler: UserHandler = inject(UserHandler);
 	current_course: CourseInfo;
+	current_step: Step;
 	game_frame: HTMLIFrameElement;
 
 	steps: any[] = [];
@@ -57,8 +59,6 @@ export class CoursePage implements OnInit, OnDestroy {
 			const result = await firstValueFrom(this.course_handler.get_course(params['id']));
 			this.current_course = this.course_handler.check_response(result)[0];
 
-			console.log(this.current_course);
-
 			const id_course = this.current_course['id_course'];
 			const id_user = this.user_handler.current_user()['id_user'];
 
@@ -83,14 +83,23 @@ export class CoursePage implements OnInit, OnDestroy {
 				this.steps.push(step_marker);
 			}
 
-			console.log(course_taken['last_finished_step']);
-			this.course_handler.request_course_step(id_course, last_finished_step + 1);
+			const steps_result = await firstValueFrom(
+				this.course_handler.request_course_step(id_course),
+			);
+
+			const steps_body: Step[] = steps_result.body as Step[];
+			steps_body.sort((a, b) => a.number - b.number);
+
+			// TODO: handle when last finished step is last step smhw
+			this.current_step = steps_body.find((s) => s.number == last_finished_step + 1) as Step;
+			console.log(this.current_step);
+
 			// TODO: finish to load the right step and display
 			// TODO: the run thing
 			// TODO: update last_finished_step when code run right ( and load next step)
 
-			const exercise_text = document.getElementById('exercise');
-			if (exercise_text) exercise_text.textContent = this.example_exercice['text'];
+			//const exercise_text = document.getElementById('exercise');
+			//if (exercise_text) exercise_text.textContent = this.example_exercice['text'];
 		});
 
 		this.game_frame = document.getElementsByTagName('iframe')[0];
