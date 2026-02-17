@@ -13,6 +13,8 @@ import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
 import { CourseHandler } from '@services/course-handler';
 import { UserHandler } from '@services/user-handler';
 import { Step } from '@interfaces/step';
+import { CodeHandler } from '@services/code-handler';
+import { TestResponse } from '@interfaces/test-response';
 
 @Component({
 	selector: 'app-course-page',
@@ -27,31 +29,11 @@ export class CoursePage implements OnInit, OnDestroy {
 	view: EditorView;
 	parser: DataParser = inject(DataParser);
 	user_handler: UserHandler = inject(UserHandler);
+	code_handler: CodeHandler = inject(CodeHandler);
 	current_course: CourseInfo;
 	current_step: Step;
-	game_frame: HTMLIFrameElement;
-
 	steps: any[] = [];
-
-	example_exercice: any = {
-		lang: javascript(),
-		f_name: 'multiply',
-		text: "Write a function named 'multiply' that takes two parameters and returns the product of them.",
-		tests: [
-			{
-				f_params: [5, 5],
-				f_result: 25,
-			},
-			{
-				f_params: [5, 0],
-				f_result: 0,
-			},
-			{
-				f_params: [234, 12],
-				f_result: 2808,
-			},
-		],
-	};
+	display_logs: string[] = [];
 
 	ngOnInit() {
 		this.route_sub = this.route.params.subscribe(async (params) => {
@@ -83,48 +65,50 @@ export class CoursePage implements OnInit, OnDestroy {
 				this.steps.push(step_marker);
 			}
 
+			// Get steps for course
 			const steps_result = await firstValueFrom(
 				this.course_handler.request_course_step(id_course),
 			);
 
+			// Sort steps by number
 			const steps_body: Step[] = steps_result.body as Step[];
 			steps_body.sort((a, b) => a.number - b.number);
 
 			// TODO: handle when last finished step is last step smhw
 			this.current_step = steps_body.find((s) => s.number == last_finished_step + 1) as Step;
+
+			console.log(this.current_course);
 			console.log(this.current_step);
 
-			// TODO: finish to load the right step and display
 			// TODO: the run thing
 			// TODO: update last_finished_step when code run right ( and load next step)
 
-			//const exercise_text = document.getElementById('exercise');
-			//if (exercise_text) exercise_text.textContent = this.example_exercice['text'];
+			this.init_editor();
 		});
 
-		this.game_frame = document.getElementsByTagName('iframe')[0];
-		this.init_editor();
-
-		// window.addEventListener('message', (e) => {
-		// 	// Verify it's from the sandboxed iframe
-		// 	if (e.origin === null && e.source === this.game_frame.contentWindow) return;
-
-		// 	const results = e.data;
-		// 	console.log(results);
-		// });
-
 		document.getElementById('run_button')?.addEventListener('click', (e) => {
-			//this.send_iframe();
-			this.test_code();
+			this.display_logs = [];
+			this.test_code().then((result: TestResponse[]) => {
+				console.log(result);
+				for (const r of result) {
+					this.display_logs.push(...r['logs'], r['test']);
+				}
+			});
 		});
 	}
 
 	// TODO: choose and configure extensions and remove basic setup ( nearly done )
 	// TODO: improve editor style ( a bit more )
 	init_editor() {
+		let language;
+
+		if (this.current_course['programming_language'] == 'js') {
+			language = javascript();
+		}
+
 		let state = EditorState.create({
 			extensions: [
-				this.example_exercice['lang'], // Language
+				language || javascript(), // Language
 				EditorState.tabSize.of(4), // Tab size
 				minimalSetup,
 				oneDark, // Theme
@@ -142,34 +126,27 @@ export class CoursePage implements OnInit, OnDestroy {
 			state,
 		});
 		document.querySelector('#code_zone')?.appendChild(this.view.dom);
-		this.add_lines(10);
-		let transaction = this.view.state.update({
-			changes: {
-				from: 0,
-				insert: "let abc = 123;\n//J'aime les patates\nfunction please_work(a, b){\n\treturn a*b;\n}\nfunction multiply(x, y){\n\treturn please_work(y,x);\n}",
-			},
-		});
-		this.view.dispatch(transaction);
+		this.add_lines(20);
+		// let transaction = this.view.state.update({
+		// 	changes: {
+		// 		from: 0,
+		// 		insert: "let abc = 123;\n//J'aime les patates\nfunction please_work(a, b){\n\treturn a*b;\n}\nfunction multiply(x, y){\n\treturn please_work(y,x);\n}",
+		// 	},
+		// });
+		// this.view.dispatch(transaction);
 	}
 
-	send_iframe() {
-		if (!this.game_frame.contentWindow) {
-			console.error('Game frame not found');
-			return;
-		}
-		const data = {
-			f_name: this.example_exercice['f_name'],
-			tests: this.example_exercice['tests'],
-			code: this.get_code(),
-		};
-		// Sandboxed iframes which lack the 'allow-same-origin' header
-		// don't have an origin which you can target
-		this.game_frame.contentWindow.postMessage(data, '*');
-	}
-
-	test_code() {
+	async test_code() {
 		console.log('TEST CODE ON');
-		//new VM().run('console.log("JE SUIS DANS UNE VM OMG");');
+		const results = await firstValueFrom(
+			this.code_handler.test_user_code(
+				this.current_step,
+				this.current_course['programming_language'],
+				this.get_code(),
+			),
+		);
+		const code_results = results.body as TestResponse[];
+		return code_results;
 	}
 
 	get_code() {

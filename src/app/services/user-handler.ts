@@ -54,7 +54,7 @@ export class UserHandler {
 
 	// Return an add_user Observable<HttpResponse<Object>> to subscribe to
 	try_add_user(email: string, password: string, username: string) {
-		const add_request = `${this.request_url}/create`;
+		const add_request = `${this.request_url}/users`;
 		const add_body = {
 			email: email,
 			password: password,
@@ -75,7 +75,7 @@ export class UserHandler {
 
 	try_update_user(username: string, email: string) {
 		const id_user = this.current_user()['id_user'];
-		const update_request = `${this.request_url}/users/${id_user}/update`;
+		const update_request = `${this.request_url}/users/${id_user}`;
 		const add_body: any = {};
 
 		if (email != '') add_body['email'] = email;
@@ -97,7 +97,7 @@ export class UserHandler {
 
 	// Return an login Observable<HttpResponse<Object>>  to subscribe to
 	try_login(email: string, password: string) {
-		const login_request = `${this.request_url}/login`;
+		const login_request = `${this.request_url}/users/login`;
 		const login_body = {
 			email: email,
 			password: password,

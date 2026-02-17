@@ -27,14 +27,14 @@ export class CourseHandler {
 	}
 
 	get_tags(id_course: number) {
-		return this.http.get<Tag[]>(`${this.request_url}/courses/${id_course}/tags`, {
+		return this.http.get<Tag[]>(`${this.request_url}/tags/course/${id_course}`, {
 			observe: 'response',
 			withCredentials: true,
 		});
 	}
 
 	request_course_taken(id_user: number, id_course: number) {
-		const get_request = `${this.request_url}/courses_taken?id_user=${id_user}&id_course=${id_course}`;
+		const get_request = `${this.request_url}/courses/taken?id_user=${id_user}&id_course=${id_course}`;
 
 		return this.http.get<Step[]>(get_request, {
 			observe: 'response',

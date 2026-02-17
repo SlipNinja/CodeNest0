@@ -18,7 +18,9 @@
 <div id="activity">
 	<div id="exercise">{{ current_step?.exercise }}</div>
 	<div id="console">
-		<!-- <iframe sandbox="allow-scripts" title="Game_frame" src="./assets/test/test.html"></iframe> -->
+		@for (log of display_logs; track log) {
+			<div>{{ log }}</div>
+		}
 	</div>
 	<div id="code_zone">
 		<button id="run_button">Run</button>
