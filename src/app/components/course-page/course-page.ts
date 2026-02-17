@@ -89,9 +89,8 @@ export class CoursePage implements OnInit, OnDestroy {
 		document.getElementById('run_button')?.addEventListener('click', (e) => {
 			this.display_logs = [];
 			this.test_code().then((result: TestResponse[]) => {
-				console.log(result);
 				for (const r of result) {
-					this.display_logs.push(...r['logs'], r['test']);
+					this.display_logs.push(r['test'], ...r['logs'], r['result_message']);
 				}
 			});
 		});
