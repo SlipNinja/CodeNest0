@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CourseInfo } from '@interfaces/course-info';
 import { Tag } from '@interfaces/tag';
 import { Step } from '@interfaces/step';
+import { last } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
@@ -37,6 +38,19 @@ export class CourseHandler {
 		const get_request = `${this.request_url}/courses/taken?id_user=${id_user}&id_course=${id_course}`;
 
 		return this.http.get<Step[]>(get_request, {
+			observe: 'response',
+			withCredentials: true,
+		});
+	}
+
+	update_course_taken(id_user: number, id_course: number, last_finished_step: number) {
+		const get_request = `${this.request_url}/courses/taken`;
+		const body = {
+			id_course: id_course,
+			id_user: id_user,
+			last_finished_step: last_finished_step,
+		};
+		return this.http.put<Step[]>(get_request, body, {
 			observe: 'response',
 			withCredentials: true,
 		});

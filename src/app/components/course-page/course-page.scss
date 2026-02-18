@@ -89,12 +89,27 @@
 		}
 
 		& > #console {
-			padding: 2%;
-			gap: 2px;
+			position: relative;
 			display: flex;
 			flex-direction: column;
 			color: white;
 			grid-row: span 2;
+
+			& > #logs {
+				overflow: scroll;
+				display: flex;
+				flex-direction: column;
+				padding: 2%;
+				gap: 2px;
+			}
+
+			& > button {
+				@include tools.main_button;
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
 		}
 	}
 }

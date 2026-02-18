@@ -15,6 +15,7 @@ import { UserHandler } from '@services/user-handler';
 import { Step } from '@interfaces/step';
 import { CodeHandler } from '@services/code-handler';
 import { TestResponse } from '@interfaces/test-response';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-course-page',
@@ -26,13 +27,16 @@ export class CoursePage implements OnInit, OnDestroy {
 	private route_sub: Subscription;
 	private readonly route = inject(ActivatedRoute);
 	private readonly course_handler = inject(CourseHandler);
+	router: Router = new Router();
 	view: EditorView;
 	parser: DataParser = inject(DataParser);
 	user_handler: UserHandler = inject(UserHandler);
 	code_handler: CodeHandler = inject(CodeHandler);
 	current_course: CourseInfo;
 	current_step: Step;
-	steps: any[] = [];
+	steps: Step[];
+	is_last_step: boolean = false;
+	display_steps: any[] = [];
 	display_logs: string[] = [];
 
 	ngOnInit() {
@@ -50,19 +54,12 @@ export class CoursePage implements OnInit, OnDestroy {
 			);
 
 			const course_taken_body: any = course_taken_result.body;
-			let course_taken;
 			let last_finished_step = 0;
 
 			// If user already started this course, get where he stopped
 			if (course_taken_body.length > 0) {
-				course_taken = course_taken_body[0];
+				const course_taken = course_taken_body[0];
 				last_finished_step = parseInt(course_taken['last_finished_step']);
-			}
-
-			// Generate visual markers for current step
-			for (let i = 0; i < this.current_course['number_step']; i++) {
-				const step_marker = { step_number: i + 1, done: i <= last_finished_step };
-				this.steps.push(step_marker);
 			}
 
 			// Get steps for course
@@ -71,18 +68,13 @@ export class CoursePage implements OnInit, OnDestroy {
 			);
 
 			// Sort steps by number
-			const steps_body: Step[] = steps_result.body as Step[];
-			steps_body.sort((a, b) => a.number - b.number);
+			this.steps = steps_result.body as Step[];
+			this.steps.sort((a, b) => a.number - b.number);
 
-			// TODO: handle when last finished step is last step smhw
-			this.current_step = steps_body.find((s) => s.number == last_finished_step + 1) as Step;
+			// Generate visual markers for current step
+			this.update_step(last_finished_step);
 
-			console.log(this.current_course);
-			console.log(this.current_step);
-
-			// TODO: the run thing
-			// TODO: update last_finished_step when code run right ( and load next step)
-
+			// Init codemirror editor
 			this.init_editor();
 		});
 
@@ -94,10 +86,43 @@ export class CoursePage implements OnInit, OnDestroy {
 				}
 			});
 		});
+
+		document.getElementById('next_button')?.addEventListener('click', async (e) => {
+			const id_course = this.current_course['id_course'];
+			const id_user = this.user_handler.current_user()['id_user'];
+			const new_last_finished = this.current_step['number'];
+
+			// If course over
+			if (this.current_course['number_step'] <= new_last_finished) {
+				this.router.navigate(['/course-list']);
+				return;
+			}
+
+			await firstValueFrom(
+				this.course_handler.update_course_taken(id_user, id_course, new_last_finished),
+			);
+			this.update_step(new_last_finished);
+		});
 	}
 
-	// TODO: choose and configure extensions and remove basic setup ( nearly done )
-	// TODO: improve editor style ( a bit more )
+	update_step(last_finished: number) {
+		this.display_steps = [];
+
+		// Update step display
+		for (let i = 0; i < this.current_course['number_step']; i++) {
+			const step_marker = { step_number: i + 1, done: i <= last_finished };
+			this.display_steps.push(step_marker);
+		}
+
+		// Check if it is the last step
+		if (last_finished + 1 == this.current_course['number_step']) {
+			this.is_last_step = true;
+		}
+
+		// Update current step
+		this.current_step = this.steps.find((s) => s.number == last_finished + 1) as Step;
+	}
+
 	init_editor() {
 		let language;
 

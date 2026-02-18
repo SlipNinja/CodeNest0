@@ -29,7 +29,9 @@ export class UserHandler {
 		if (this.cookie_service.check('jwt_token')) {
 			this.cookie_service.delete('jwt_token');
 		}
-		this.cookie_service.set('jwt_token', token);
+		this.cookie_service.set('jwt_token', token, {
+			path: '/',
+		});
 	}
 
 	process_authentification(response: any) {

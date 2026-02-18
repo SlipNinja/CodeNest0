@@ -6,7 +6,7 @@
 		<h3>{{ current_course?.name }}</h3>
 	</div>
 	<div id="dot_list">
-		@for (step of steps; track step.step_number) {
+		@for (step of display_steps; track step.step_number) {
 			@if (step.done) {
 				<div class="dot done"></div>
 			} @else {
@@ -18,9 +18,13 @@
 <div id="activity">
 	<div id="exercise">{{ current_step?.exercise }}</div>
 	<div id="console">
-		@for (log of display_logs; track log) {
-			<div>{{ log }}</div>
-		}
+		<div id="logs">
+			@for (log of display_logs; track log) {
+				<div>{{ log }}</div>
+			}
+		</div>
+
+		<button id="next_button">{{ is_last_step ? 'Finish' : 'Next' }}</button>
 	</div>
 	<div id="code_zone">
 		<button id="run_button">Run</button>
