@@ -62,7 +62,7 @@ export class CoursePage implements OnInit, OnDestroy {
 				last_finished_step = parseInt(course_taken['last_finished_step']);
 			}
 
-			// Get steps for course
+			// Get steps from course
 			const steps_result = await firstValueFrom(
 				this.course_handler.request_course_step(id_course),
 			);
@@ -71,11 +71,11 @@ export class CoursePage implements OnInit, OnDestroy {
 			this.steps = steps_result.body as Step[];
 			this.steps.sort((a, b) => a.number - b.number);
 
-			// Generate visual markers for current step
-			this.update_step(last_finished_step);
-
 			// Init codemirror editor
 			this.init_editor();
+
+			// Update current step
+			this.update_step(last_finished_step);
 		});
 
 		document.getElementById('run_button')?.addEventListener('click', (e) => {
@@ -121,8 +121,12 @@ export class CoursePage implements OnInit, OnDestroy {
 
 		// Update current step
 		this.current_step = this.steps.find((s) => s.number == last_finished + 1) as Step;
+
+		// Reset editor
+		this.reset_editor();
 	}
 
+	// Initialize codemirror editor
 	init_editor() {
 		let language;
 
@@ -149,19 +153,20 @@ export class CoursePage implements OnInit, OnDestroy {
 		this.view = new EditorView({
 			state,
 		});
+
 		document.querySelector('#code_zone')?.appendChild(this.view.dom);
+	}
+
+	// Clear codemirror content
+	reset_editor() {
+		this.view.dispatch({
+			changes: { from: 0, to: this.view.state.doc.toString().length, insert: '' },
+		});
+
 		this.add_lines(20);
-		// let transaction = this.view.state.update({
-		// 	changes: {
-		// 		from: 0,
-		// 		insert: "let abc = 123;\n//J'aime les patates\nfunction please_work(a, b){\n\treturn a*b;\n}\nfunction multiply(x, y){\n\treturn please_work(y,x);\n}",
-		// 	},
-		// });
-		// this.view.dispatch(transaction);
 	}
 
 	async test_code() {
-		console.log('TEST CODE ON');
 		const results = await firstValueFrom(
 			this.code_handler.test_user_code(
 				this.current_step,
