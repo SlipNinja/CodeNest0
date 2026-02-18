@@ -36,6 +36,7 @@ export class CoursePage implements OnInit, OnDestroy {
 	current_step: Step;
 	steps: Step[];
 	is_last_step: boolean = false;
+	is_step_passed: boolean = false;
 	display_steps: any[] = [];
 	display_logs: string[] = [];
 
@@ -77,34 +78,40 @@ export class CoursePage implements OnInit, OnDestroy {
 			// Update current step
 			this.update_step(last_finished_step);
 		});
+	}
 
-		document.getElementById('run_button')?.addEventListener('click', (e) => {
-			this.display_logs = [];
-			this.test_code().then((result: TestResponse[]) => {
-				for (const r of result) {
-					this.display_logs.push(r['test'], ...r['logs'], r['result_message']);
-				}
-			});
-		});
-
-		document.getElementById('next_button')?.addEventListener('click', async (e) => {
-			const id_course = this.current_course['id_course'];
-			const id_user = this.user_handler.current_user()['id_user'];
-			const new_last_finished = this.current_step['number'];
-
-			// If course over
-			if (this.current_course['number_step'] <= new_last_finished) {
-				this.router.navigate(['/course-list']);
-				return;
+	// On run button clicked
+	run_button_clicked(e: MouseEvent) {
+		this.display_logs = [];
+		this.test_code().then((result: TestResponse[]) => {
+			for (const r of result) {
+				this.display_logs.push(r['test'], ...r['logs'], r['result_message']);
 			}
 
-			await firstValueFrom(
-				this.course_handler.update_course_taken(id_user, id_course, new_last_finished),
-			);
-			this.update_step(new_last_finished);
+			this.is_step_passed = result.every((r) => r['passed']);
 		});
 	}
 
+	// On next button clicked
+	async next_button_clicked(e: MouseEvent) {
+		const id_course = this.current_course['id_course'];
+		const id_user = this.user_handler.current_user()['id_user'];
+		const new_last_finished = this.current_step['number'];
+
+		// If course over
+		if (this.current_course['number_step'] <= new_last_finished) {
+			this.router.navigate(['/course-list']);
+			return;
+		}
+
+		await firstValueFrom(
+			this.course_handler.update_course_taken(id_user, id_course, new_last_finished),
+		);
+		this.update_step(new_last_finished);
+		this.is_step_passed = false;
+	}
+
+	// Handles current step update including display
 	update_step(last_finished: number) {
 		this.display_steps = [];
 
@@ -166,6 +173,7 @@ export class CoursePage implements OnInit, OnDestroy {
 		this.add_lines(20);
 	}
 
+	// Send code to backend for execution and return results
 	async test_code() {
 		const results = await firstValueFrom(
 			this.code_handler.test_user_code(
@@ -178,10 +186,12 @@ export class CoursePage implements OnInit, OnDestroy {
 		return code_results;
 	}
 
+	// Get code from codemirror editor
 	get_code() {
 		return this.view.state.doc.toString();
 	}
 
+	// Add n empty lines in editor
 	add_lines(n: number) {
 		let transaction = this.view.state.update({
 			changes: { from: 0, insert: '\n'.repeat(n) },

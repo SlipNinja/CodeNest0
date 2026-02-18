@@ -24,9 +24,13 @@
 			}
 		</div>
 
-		<button id="next_button">{{ is_last_step ? 'Finish' : 'Next' }}</button>
+		@if (is_step_passed) {
+			<button id="next_button" (click)="next_button_clicked($event)">
+				{{ is_last_step ? 'Finish' : 'Next' }}
+			</button>
+		}
 	</div>
 	<div id="code_zone">
-		<button id="run_button">Run</button>
+		<button id="run_button" (click)="run_button_clicked($event)">Run</button>
 	</div>
 </div>
