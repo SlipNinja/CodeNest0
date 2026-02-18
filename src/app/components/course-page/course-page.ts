@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { minimalSetup } from 'codemirror';
 import { dropCursor, EditorView, lineNumbers } from '@codemirror/view';
@@ -15,7 +15,6 @@ import { UserHandler } from '@services/user-handler';
 import { Step } from '@interfaces/step';
 import { CodeHandler } from '@services/code-handler';
 import { TestResponse } from '@interfaces/test-response';
-import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-course-page',
@@ -82,12 +81,17 @@ export class CoursePage implements OnInit, OnDestroy {
 
 	// On run button clicked
 	run_button_clicked(e: MouseEvent) {
+		// Reset logs
 		this.display_logs = [];
+
+		// Execute code on backend
 		this.test_code().then((result: TestResponse[]) => {
+			// Display logs
 			for (const r of result) {
 				this.display_logs.push(r['test'], ...r['logs'], r['result_message']);
 			}
 
+			// Check if all test passed
 			this.is_step_passed = result.every((r) => r['passed']);
 		});
 	}
@@ -104,6 +108,7 @@ export class CoursePage implements OnInit, OnDestroy {
 			return;
 		}
 
+		// Update last step finished
 		await firstValueFrom(
 			this.course_handler.update_course_taken(id_user, id_course, new_last_finished),
 		);
@@ -137,10 +142,12 @@ export class CoursePage implements OnInit, OnDestroy {
 	init_editor() {
 		let language;
 
+		// Get programmign language ( currently unused )
 		if (this.current_course['programming_language'] == 'js') {
 			language = javascript();
 		}
 
+		// Create new editor state
 		let state = EditorState.create({
 			extensions: [
 				language || javascript(), // Language
@@ -161,6 +168,7 @@ export class CoursePage implements OnInit, OnDestroy {
 			state,
 		});
 
+		// Append editor DOM as #code_zone child
 		document.querySelector('#code_zone')?.appendChild(this.view.dom);
 	}
 
