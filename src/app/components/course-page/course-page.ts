@@ -109,16 +109,17 @@ export class CoursePage implements OnInit, OnDestroy {
 		const id_user = this.user_handler.current_user()['id_user'];
 		const new_last_finished = this.current_step['number'];
 
+		// Update last step finished
+		await firstValueFrom(
+			this.course_handler.update_course_taken(id_user, id_course, new_last_finished),
+		);
+
 		// If course over
 		if (this.current_course['number_step'] <= new_last_finished) {
 			this.router.navigate(['/course-list']);
 			return;
 		}
 
-		// Update last step finished
-		await firstValueFrom(
-			this.course_handler.update_course_taken(id_user, id_course, new_last_finished),
-		);
 		this.update_step(new_last_finished);
 		this.is_step_passed = false;
 	}
