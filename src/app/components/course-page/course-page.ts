@@ -46,7 +46,14 @@ export class CoursePage implements OnInit, OnDestroy {
 			this.current_course = this.course_handler.check_response(result)[0];
 
 			const id_course = this.current_course['id_course'];
-			const id_user = this.user_handler.current_user()['id_user'];
+			const user = this.user_handler.current_user();
+
+			if (!user) {
+				this.router.navigate(['/sign-in']);
+				return;
+			}
+
+			const id_user = user['id_user'];
 
 			// Check if user has already started this course
 			const course_taken_result = await firstValueFrom(
