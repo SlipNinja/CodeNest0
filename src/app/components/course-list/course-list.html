@@ -27,10 +27,22 @@
 <!--Display courses-->
 <div class="all_courses">
 	@for (course of filtered_list; track course) {
-		<button class="course_button" (click)="openDialog(course)">
-			<div><img alt="language" src="{{ `./assets/imgs/${course.logo}` }}" /></div>
-			<p>{{ course.name }}</p>
-			<div><img alt="level" src="{{ `./assets/imgs/${course.level}` }}" /></div>
-		</button>
+		@if (course.completed) {
+			<button
+				class="course_button"
+				style="background-color: #2a572a"
+				(click)="openDialog(course)"
+			>
+				<div><img alt="language" src="{{ `./assets/imgs/${course.logo}` }}" /></div>
+				<p>{{ course.name }}</p>
+				<div><img alt="level" src="{{ `./assets/imgs/${course.level}` }}" /></div>
+			</button>
+		} @else {
+			<button class="course_button" (click)="openDialog(course)">
+				<div><img alt="language" src="{{ `./assets/imgs/${course.logo}` }}" /></div>
+				<p>{{ course.name }}</p>
+				<div><img alt="level" src="{{ `./assets/imgs/${course.level}` }}" /></div>
+			</button>
+		}
 	}
 </div>

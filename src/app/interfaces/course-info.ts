@@ -10,4 +10,5 @@ export interface CourseInfo {
 	number_step: number;
 	dependencies?: number[];
 	tags?: Tag[];
+	completed?: boolean;
 }

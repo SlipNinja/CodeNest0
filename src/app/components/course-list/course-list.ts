@@ -4,6 +4,7 @@ import { DataParser } from '@services/data-parser';
 import { RouterModule } from '@angular/router';
 import { DialogHandler } from '@services/dialog-handler';
 import { CourseHandler } from '@services/course-handler';
+import { UserHandler } from '@services/user-handler';
 import { firstValueFrom } from 'rxjs';
 import { Tag } from '@interfaces/tag';
 
@@ -16,6 +17,7 @@ import { Tag } from '@interfaces/tag';
 export class CourseList {
 	dialog_handler = inject(DialogHandler);
 	course_handler = inject(CourseHandler);
+	user_handler = inject(UserHandler);
 	parser: DataParser = inject(DataParser);
 
 	course_list: CourseInfo[] = [];
@@ -25,12 +27,25 @@ export class CourseList {
 	filters: Tag[] = [];
 
 	constructor() {
-		this.getCourses();
+		const user = this.user_handler.current_user();
+		if (user) {
+			this.getCoursesForUser(user['id_user']);
+		} else {
+			this.getCourses();
+		}
 	}
 
 	// Get all courses and tags and display them
 	getCourses() {
 		this.course_handler.get_courses().subscribe(async (result) => {
+			this.course_list = this.course_handler.check_response(result);
+			await this.loadTags();
+			this.filtered_list = this.course_list;
+		});
+	}
+
+	getCoursesForUser(id_user: number) {
+		this.course_handler.get_courses_for_user(id_user).subscribe(async (result) => {
 			this.course_list = this.course_handler.check_response(result);
 			await this.loadTags();
 			this.filtered_list = this.course_list;

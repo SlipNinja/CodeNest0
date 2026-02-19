@@ -27,6 +27,13 @@ export class CourseHandler {
 		});
 	}
 
+	get_courses_for_user(id_user: number) {
+		return this.http.get<CourseInfo[]>(`${this.request_url}/courses/user/${id_user}`, {
+			observe: 'response',
+			withCredentials: true,
+		});
+	}
+
 	get_tags(id_course: number) {
 		return this.http.get<Tag[]>(`${this.request_url}/tags/course/${id_course}`, {
 			observe: 'response',
