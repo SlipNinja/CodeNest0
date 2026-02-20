@@ -7,6 +7,7 @@ export class DataValidator {
 	email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	special_chars = '!@#$%*&';
 	special_char_regex = /[!@#$%*&]/;
+	alphanumeric_regex = /^[\w]+$/;
 	password_min = 8;
 	password_max = 20;
 	email_max = 50;
@@ -15,6 +16,10 @@ export class DataValidator {
 
 	valid_email(email: string) {
 		return this.email_regex.test(email);
+	}
+
+	valid_username(username: string) {
+		return this.alphanumeric_regex.test(username);
 	}
 
 	valid_size_email(email: string) {

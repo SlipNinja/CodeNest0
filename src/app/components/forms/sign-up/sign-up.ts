@@ -37,6 +37,9 @@ export class SignUp {
 		) as HTMLCollectionOf<HTMLElement>;
 		const errors: string[] = [];
 
+		if (username && !this.data_validator.valid_username(username)) {
+			errors.push('• Username must only contain alphanumerical characters.');
+		}
 		if (!username || !this.data_validator.valid_size_username(username)) {
 			errors.push('• Username must be between 5 and 20 characters.');
 		}
