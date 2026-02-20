@@ -55,22 +55,23 @@ export class Profile {
 	get_user_xp() {
 		this.user_handler.get_user_xp(this.user['id_user']).subscribe(async (result) => {
 			const xp_response = await this.user_handler.check_response(result);
-			this.total_xp = parseInt(xp_response['total_xp']);
+			this.total_xp = parseInt(xp_response['total_xp'] || 0);
 			[this.level, this.xp_next, this.percent_to_next] = this.calculate_user_level(
 				this.total_xp,
 			);
 			const inner_xp = document.getElementById('inner') as HTMLElement;
 			if (inner_xp) {
-				inner_xp.style.width = `${(100 - this.percent_to_next).toString()}%`;
+				inner_xp.style.width = `${this.percent_to_next.toString()}%`;
 			}
 		});
 	}
 
 	calculate_user_level(xp: number) {
+		if (!xp) xp = 0;
 		let lvl_cost = 10;
 		let lvl = 0;
 
-		while (xp > lvl_cost) {
+		while (xp >= lvl_cost) {
 			lvl++;
 			xp -= lvl_cost;
 			lvl_cost += 10;
@@ -78,7 +79,7 @@ export class Profile {
 
 		const percent_to_next = (xp / lvl_cost) * 100;
 
-		return [lvl, xp, percent_to_next];
+		return [lvl, lvl_cost - xp, percent_to_next];
 	}
 
 	modify_user(e: any) {
