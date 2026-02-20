@@ -29,9 +29,14 @@ export class Profile {
 	user: User;
 	badges: Badge[] = [];
 	router: Router = new Router();
+	total_xp: number;
+	level: number;
+	xp_next: number;
+	percent_to_next: number;
 
 	constructor() {
 		this.loadUser();
+		this.get_user_xp();
 	}
 
 	onClick(e: any) {
@@ -43,6 +48,35 @@ export class Profile {
 		} else {
 			this.close_dropdown();
 		}
+	}
+
+	get_user_xp() {
+		this.user_handler.get_user_xp(this.user['id_user']).subscribe(async (result) => {
+			const xp_response = await this.user_handler.check_response(result);
+			this.total_xp = parseInt(xp_response['total_xp']);
+			[this.level, this.xp_next, this.percent_to_next] = this.calculate_user_level(
+				this.total_xp,
+			);
+			const inner_xp = document.getElementById('inner') as HTMLElement;
+			if (inner_xp) {
+				inner_xp.style.width = `${(100 - this.percent_to_next).toString()}%`;
+			}
+		});
+	}
+
+	calculate_user_level(xp: number) {
+		let lvl_cost = 10;
+		let lvl = 0;
+
+		while (xp > lvl_cost) {
+			lvl++;
+			xp -= lvl_cost;
+			lvl_cost += 10;
+		}
+
+		const percent_to_next = (xp / lvl_cost) * 100;
+
+		return [lvl, xp, percent_to_next];
 	}
 
 	modify_user(e: any) {

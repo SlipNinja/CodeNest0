@@ -94,12 +94,40 @@
 		}
 	}
 }
+
 #user_stats {
 	display: flex;
 	flex-direction: column;
 	grid-row-start: span 2;
 	gap: variables.$base_gap;
+
+	& > #level {
+		height: 1.1rem;
+		display: flex;
+		align-items: center;
+
+		& > p {
+			flex-basis: 100px;
+		}
+
+		& > #outer {
+			display: flex;
+			align-items: center;
+			border-radius: 5px;
+			overflow: hidden;
+
+			background-color: variables.$main_bg_color;
+			height: 100%;
+			width: 100%;
+
+			& > #inner {
+				background-color: variables.$main_button_color;
+				height: 100%;
+			}
+		}
+	}
 }
+
 #user_last {
 	display: flex;
 	justify-content: center;

@@ -24,7 +24,14 @@
 <!--Display user stats-->
 <div id="user_stats">
 	<p>Courses completed :</p>
-	<p>XP gained : {{ user.experience }}</p>
+	<p>Total XP gained : {{ total_xp }}</p>
+	<div id="level">
+		<p>Level {{ level }}</p>
+		<div id="outer">
+			<div id="inner"></div>
+		</div>
+	</div>
+	<p>{{ xp_next }} XP left to next level</p>
 </div>
 
 <!--Display user last course-->

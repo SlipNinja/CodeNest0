@@ -24,6 +24,15 @@ export class UserHandler {
 		return this.http.get<User>(this.request_url + '/users');
 	}
 
+	get_user_xp(id_user: number) {
+		const xp_request = `${this.request_url}/users/${id_user}/xp`;
+
+		return this.http.get(xp_request, {
+			observe: 'response',
+			withCredentials: true,
+		});
+	}
+
 	// Save token in cookies
 	set_current_user(token: string) {
 		if (this.cookie_service.check('jwt_token')) {
@@ -140,6 +149,7 @@ export class UserHandler {
 	}
 
 	check_response(response: HttpResponse<any>) {
+		console.log(response);
 		if (![200, 201, 204].includes(response.status)) {
 			throw new Error(`Request failed with status ${response.status}`);
 		}
