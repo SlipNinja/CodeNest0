@@ -106,6 +106,19 @@ export class UserHandler {
 		});
 	}
 
+	update_last_course(id_course: number) {
+		const id_user = this.current_user()['id_user'];
+		const update_request = `${this.request_url}/users/${id_user}/last_course/${id_course}`;
+		return this.http.put(
+			update_request,
+			{},
+			{
+				observe: 'response',
+				withCredentials: true,
+			},
+		);
+	}
+
 	// Return an login Observable<HttpResponse<Object>>  to subscribe to
 	try_login(email: string, password: string) {
 		const login_request = `${this.request_url}/users/login`;

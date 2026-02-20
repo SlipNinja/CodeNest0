@@ -87,7 +87,7 @@ export class CoursePage implements OnInit, OnDestroy {
 	}
 
 	// On run button clicked
-	run_button_clicked(e: MouseEvent) {
+	async run_button_clicked(e: MouseEvent) {
 		// Reset logs
 		this.display_logs = [];
 
@@ -101,6 +101,14 @@ export class CoursePage implements OnInit, OnDestroy {
 			// Check if all test passed
 			this.is_step_passed = result.every((r) => r['passed']);
 		});
+
+		// Set current course as user's last course
+		const update_result = await firstValueFrom(
+			this.user_handler.update_last_course(this.current_course['id_course']),
+		);
+
+		const new_token = this.user_handler.check_response(update_result);
+		this.user_handler.set_current_user(new_token);
 	}
 
 	// On next button clicked
@@ -140,7 +148,7 @@ export class CoursePage implements OnInit, OnDestroy {
 		}
 
 		// Update current step
-		this.current_step = this.steps.find((s) => s.number == last_finished + 1) as Step;
+		this.current_step = this.steps.find((s) => s.number == last_finished) as Step;
 
 		// Reset editor
 		this.reset_editor();
