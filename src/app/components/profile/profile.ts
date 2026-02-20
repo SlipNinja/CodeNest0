@@ -8,6 +8,7 @@ import { UserHandler } from '@services/user-handler';
 import { CourseHandler } from '@services/course-handler';
 import { Router } from '@angular/router';
 import { LucideAngularModule, UserRoundCog } from 'lucide-angular';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
 	selector: 'app-profile',
@@ -33,6 +34,7 @@ export class Profile {
 	level: number;
 	xp_next: number;
 	percent_to_next: number;
+	count_courses: number = 0;
 
 	constructor() {
 		this.loadUser();
@@ -125,6 +127,7 @@ export class Profile {
 		this.user = current_user;
 
 		this.loadLastCourse();
+		this.count_courses_finished();
 		// 	this.loadBadges();
 	}
 
@@ -135,6 +138,14 @@ export class Profile {
 				this.last_course = this.user_handler.check_response(data)[0];
 			});
 		}
+	}
+
+	async count_courses_finished() {
+		const count_courses_response = await firstValueFrom(
+			this.course_handler.get_courses_count_for_user(this.user['id_user']),
+		);
+		const count_body = this.course_handler.check_response(count_courses_response);
+		this.count_courses = count_body['count'];
 	}
 
 	// Load user badges
