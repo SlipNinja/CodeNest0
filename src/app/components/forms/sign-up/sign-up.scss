@@ -5,6 +5,8 @@
 :host {
 	@include tools.flex_center;
 	height: 100%;
+	max-height: 90%;
+	min-height: 90%;
 	width: 100vw;
 	color: variables.$main_text_color;
 	font-family: Roboto, sans-serif;
@@ -12,10 +14,15 @@
 
 form {
 	@include tools.signform;
+	height: 100%;
+	max-height: 100%;
+	min-height: 100%;
 
 	& > fieldset {
 		min-width: 100%;
+		max-height: 100%;
 		width: 0;
+		overflow: scroll;
 	}
 
 	& > fieldset > .error_zone {

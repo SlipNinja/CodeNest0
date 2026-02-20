@@ -86,7 +86,7 @@
 	& fieldset {
 		display: flex;
 		flex-direction: column;
-		gap: variables.$base_gap;
+		gap: variables.$base_gap / 2;
 		width: 100%;
 		padding: variables.$base_gap;
 		border-radius: 5px;
@@ -94,6 +94,7 @@
 		& input {
 			padding: 0px variables.$base_gap;
 			height: 3rem;
+			min-height: 3rem;
 			font-family: Roboto, sans-serif;
 			font-size: variables.$paragraph_font_size;
 		}
