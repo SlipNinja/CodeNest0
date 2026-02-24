@@ -148,7 +148,11 @@ export class CoursePage implements OnInit, OnDestroy {
 		}
 
 		// Update current step
-		this.current_step = this.steps.find((s) => s.number == last_finished) as Step;
+		this.current_step = this.steps.find((s) => s.number == last_finished + 1) as Step;
+
+		// Last step already done
+		if (!this.current_step)
+			this.current_step = this.steps.find((s) => s.number == last_finished) as Step;
 
 		// Reset editor
 		this.reset_editor();

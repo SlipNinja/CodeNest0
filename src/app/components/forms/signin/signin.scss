@@ -13,6 +13,20 @@
 
 form {
 	@include tools.signform;
+
+	& > fieldset {
+		min-width: 100%;
+		max-height: 100%;
+		width: 0;
+		overflow: scroll;
+	}
+
+	& > fieldset > .error_zone {
+		display: none;
+		background-color: variables.$main_button_delete;
+		color: variables.$main_bg_color;
+		padding: variables.$base_gap;
+	}
 }
 
 button.secondary_button {

@@ -4,6 +4,7 @@ import { Badge } from '@interfaces/badge';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
@@ -43,10 +44,8 @@ export class UserHandler {
 		});
 	}
 
-	process_authentification(response: any) {
-		// Request not processed correctly
-		const body = this.check_response(response);
-		this.set_current_user(body['message']);
+	authenticate_user(token: string) {
+		this.set_current_user(token);
 		this.connected.emit(true);
 		this.router.navigate(['/profile']);
 	}
@@ -119,8 +118,9 @@ export class UserHandler {
 		);
 	}
 
-	// Return an login Observable<HttpResponse<Object>>  to subscribe to
-	try_login(email: string, password: string) {
+	// Return an Observable to subscribe to
+	login(email: string, password: string) {
+		console.log('LOGIN');
 		const login_request = `${this.request_url}/users/login`;
 		const login_body = {
 			email: email,
@@ -128,13 +128,6 @@ export class UserHandler {
 		};
 
 		return this.http.post(login_request, login_body, { observe: 'response' });
-	}
-
-	// Handles the login
-	login(email: string, password: string) {
-		this.try_login(email, password).subscribe((data) => {
-			this.process_authentification(data);
-		});
 	}
 
 	// Handles the logout
