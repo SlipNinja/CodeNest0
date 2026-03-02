@@ -37,7 +37,7 @@
 <!--Display user last course-->
 <div id="user_last">
 	<p>Last course :</p>
-	@if (user.id_last_course) {
+	@if (last_course) {
 		<button class="course_button" (click)="openDialog(last_course)">
 			<div><img alt="language" src="{{ `./assets/imgs/${last_course.logo}` }}" /></div>
 			<p>{{ last_course.name }}</p>
