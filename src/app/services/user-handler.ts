@@ -63,7 +63,7 @@ export class UserHandler {
 	}
 
 	// Return an add_user Observable<HttpResponse<Object>> to subscribe to
-	try_add_user(email: string, password: string, username: string) {
+	request_add_user(email: string, password: string, username: string) {
 		const add_request = `${this.request_url}/users`;
 		const add_body = {
 			email: email,
@@ -78,12 +78,12 @@ export class UserHandler {
 
 	// Handles user creation
 	add_user(email: string, password: string, username: string) {
-		this.try_add_user(email, password, username).subscribe((data) => {
+		this.request_add_user(email, password, username).subscribe((data) => {
 			this.router.navigate(['/sign-in']);
 		});
 	}
 
-	try_update_user(username: string, email: string) {
+	request_update_user(username: string, email: string) {
 		const id_user = this.current_user()['id_user'];
 		const update_request = `${this.request_url}/users/${id_user}`;
 		const add_body: any = {};
@@ -98,7 +98,7 @@ export class UserHandler {
 	}
 
 	update_user(username: string, email: string) {
-		this.try_update_user(username, email).subscribe((data) => {
+		this.request_update_user(username, email).subscribe((data) => {
 			const body = this.check_response(data);
 			this.set_current_user(body);
 			this.router.navigate(['/profile']);
