@@ -27,9 +27,6 @@ export class SignIn {
 	// Handles sign in
 	submitSignIn(): void {
 		const { email, password } = this.sign_in_form.value;
-		const error_zone = (
-			document.getElementsByClassName('error_zone') as HTMLCollectionOf<HTMLElement>
-		)[0];
 		const errors: string[] = [];
 
 		if (!email) {
@@ -40,15 +37,9 @@ export class SignIn {
 			errors.push('• Password required.');
 		}
 
-		if (errors.length > 0) {
-			const error_log = errors.join('\n');
-			error_zone.innerText = error_log;
-			error_zone.style.display = 'block';
-		}
-
 		if (email && password) {
-			this.user_service.login(email, password).subscribe(
-				(response) => {
+			this.user_service.login(email, password).subscribe({
+				next: (response) => {
 					if (response.status == 200) {
 						const body: any = response.body;
 						const token: string = body['message'];
@@ -56,21 +47,28 @@ export class SignIn {
 						this.user_service.authenticate_user(token);
 					}
 				},
-				(error) => {
+				error: (error) => {
 					if (error.status == 404) errors.push('• User not found.');
 					if (error.status == 401) errors.push('• Wrong credentials.');
 
 					if (![401, 404].includes(error.status))
 						errors.push(`• Unknown error : ${error.error}`);
 
-					if (errors.length > 0) {
-						const error_log = errors.join('\n');
-						error_zone.innerText = error_log;
-						error_zone.style.display = 'block';
-					}
+					this.display_errors(errors);
 				},
-			);
+			});
+		} else {
+			this.display_errors(errors);
 		}
+	}
+
+	display_errors(errors: string[]) {
+		const error_zone = (
+			document.getElementsByClassName('error_zone') as HTMLCollectionOf<HTMLElement>
+		)[0];
+		const error_log = errors.join('\n');
+		error_zone.innerText = error_log;
+		error_zone.style.display = 'block';
 	}
 
 	// Handles toggle password visibility on icon click
