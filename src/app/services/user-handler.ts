@@ -54,7 +54,10 @@ export class UserHandler {
 	current_user() {
 		const token = this.cookie_service.get('jwt_token');
 
-		if (!token) return null;
+		if (!token) {
+			console.table('No token found');
+			return null;
+		}
 
 		const token_parts: string[] = token.split('.');
 		const encoded_payload: string = token_parts[1];
