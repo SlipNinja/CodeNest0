@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CourseInfo } from '@interfaces/course-info';
+import { env } from 'app/environments/env';
 
 type QuestionsInfos = { [key: string]: string | number };
 
@@ -7,7 +8,7 @@ type QuestionsInfos = { [key: string]: string | number };
 	providedIn: 'root',
 })
 export class DataParser {
-	base_url: string = 'https://jsonplaceholder.typicode.com';
+	base_url: string = env.placeholder_url;
 	users_url: string = this.base_url + '/users';
 	questions_url: string = this.base_url + '/posts';
 	database_url = './assets/database.json';

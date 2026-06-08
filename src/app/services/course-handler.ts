@@ -3,13 +3,13 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CourseInfo } from '@interfaces/course-info';
 import { Tag } from '@interfaces/tag';
 import { Step } from '@interfaces/step';
-import { last } from 'rxjs';
+import { env } from 'app/environments/env';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class CourseHandler {
-	private readonly request_url = 'http://localhost:3000';
+	private readonly request_url = env.request_url;
 
 	constructor(private readonly http: HttpClient) {}
 
